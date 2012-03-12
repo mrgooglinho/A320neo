@@ -10,10 +10,10 @@
 	<pid-controller>
 		<name>Elevator Surface</name>
 		<debug type="bool">false</debug>
-		<enable>
+		<!--enable>
 			<property>/autopilot/settings/engaged</property>
 			<value type="bool">true</value>
-		</enable>
+		</enable-->
 		<input>
 			<property>/orientation/pitch-deg</property>
 			<!--prop>/velocities/vertical-speed-fps</prop-->
@@ -25,7 +25,8 @@
 		<output>
 			<!--prop>/controls/flight/elevator-trim</prop-->
 			<!--property>/fdm/jsbsim/fcs/elevator-cmd-norm</property-->
-			<property>/controls/flight/elevator</property>
+			<!--property>/controls/flight/elevator</property-->
+			<property>/fdm/jsbsim/fcs/elevator-fbw-norm</property>
 		</output>
 		<!--config>
 			<Kp>-0.01</Kp>

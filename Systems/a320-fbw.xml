@@ -10,17 +10,29 @@ fcs/elevator-cmd-norm
 max PITCH -1G +2.5g
 max BANK 15º/sec upto 33º. 67º if full deflect maintained
 -->
-<pi-simple-controller>
+<pid-controller>
 		<name>pitch down</name>
 		<debug type="bool">true</debug>
-		<!--enable>
+		<enable>
 			<condition>
+			<and>
+				<or>
 				<greater-than-equals>
 					<property>/fdm/jsbsim/fcs/elevator-cmd-norm</property>
 					<value type="bool">0.01</value>
 				</greater-than-equals>
+				<less-than-equals>
+					<property>/fdm/jsbsim/fcs/elevator-cmd-norm</property>
+					<value type="bool">0.01</value>
+				</less-than-equals>
+				</or>
+				<equals>
+					<property>/autopilot/settings/engaged</property>
+					<value type="bool">false</value>
+				</equals>
+			</and>
 			</condition>
-		</enable-->
+		</enable>
 		<input>
 			<expression>
 				<sum> <!-- 1G is neutral, so make neutral to value 0 --> 
@@ -31,24 +43,26 @@ max BANK 15º/sec upto 33º. 67º if full deflect maintained
 		</input>
 		<reference>
 			<property>/controls/flight/elevator</property>
-			<scale>2</scale>
+			<scale>-2</scale>
 		</reference>
 		<output>
 			<!--property>/controls/flight/elevator</property-->
-			<!--property>/autopilot/internal/target-pitch-deg</property-->
-			<property>fdm/jsbsim/fcs/elevator-cmd-norm</property>
+			<property>/autopilot/internal/target-pitch-deg</property>
+			<!--property>fdm/jsbsim/fcs/elevator-fbw-norm</property-->
 		</output>
 
 		<config>
-			<!--Kp>0.015</Kp-->
-			<Kp>1</Kp>
-			<Ki>0.015</Ki>
-
-			<u_min>-1</u_min>
-			<u_max>1</u_max>
+			<Kp>2</Kp>
+			<!--beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma-->
+			<Ti>1</Ti>
+			<Td>0.0001</Td>
+			<u_min>-17</u_min>
+			<u_max>17</u_max>
 			
 		</config>
-	</pi-simple-controller>
+	</pid-controller>
 
 
 
