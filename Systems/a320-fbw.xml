@@ -9,41 +9,79 @@ fcs/elevator-cmd-norm
 
 max PITCH -1G +2.5g
 max BANK 15º/sec upto 33º. 67º if full deflect maintained
+
+var RAD2DEG = 57.2957795;
+var DEG2RAD = 0.0174532925;
+
+max 0.261799387 rad_sec
 -->
-<pid-controller>
-		<name>pitch down</name>
-		<debug type="bool">true</debug>
-		<enable>
-			<condition>
-			<and>
-				<or>
-				<greater-than-equals>
-					<property>/fdm/jsbsim/fcs/elevator-cmd-norm</property>
-					<value type="bool">0.01</value>
-				</greater-than-equals>
-				<less-than-equals>
-					<property>/fdm/jsbsim/fcs/elevator-cmd-norm</property>
-					<value type="bool">0.01</value>
-				</less-than-equals>
-				</or>
-				<equals>
-					<property>/autopilot/settings/engaged</property>
-					<value type="bool">false</value>
-				</equals>
-			</and>
-			</condition>
-		</enable>
+
+ <!-- =============================================================== -->
+ <!--  Initial Filters                                                -->
+ <!-- =============================================================== -->
+
+
+	<!-- Filters yoke -->
+	<filter>
+		<type>exponential</type>
+		<filter-time>0.16</filter-time>
+		<input>/controls/flight/elevator</input>
+		<output>/controls/flight/elevator-filtered</output>
+	</filter>
+	<filter>
+		<type>exponential</type>
+		<filter-time>0.16</filter-time>
+		<input>/controls/flight/aileron</input>
+		<output>/controls/flight/aileron-filtered</output>
+	</filter>
+
+	<!-- Target Pitch Gload (relative to 1G neutral) -->
+	<filter>
+		<type>gain</type>
+		<gain>-1.5</gain><!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
+		<input>/controls/flight/elevator-filtered</input>
+		<output>/autopilot/fbw/targer-pitch-Gload</output>
+	</filter>
+
+
+	<!-- Actual Gload (relative to 1G neutral) --> 
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
 		<input>
 			<expression>
-				<sum> <!-- 1G is neutral, so make neutral to value 0 --> 
+				<sum> 
 					<property>/accelerations/pilot-gdamped</property>
 					<value>-1</value>
 				</sum>
 			</expression>
 		</input>
+		<output>/autopilot/fbw/actual-pitch-Gload</output>
+	</filter>
+
+<!-- Target Pitch Gload (relative to 1G neutral) -->
+	<filter>
+		<type>gain</type>
+		<gain>0.261799387</gain><!-- Max Rad Sec -->
+		<input>/controls/flight/aileron-filtered</input>
+		<output>/autopilot/fbw/targer-roll-rad_sec</output>
+	</filter>
+
+
+	<pi-simple-controller>
+		<name>FBW Elevator</name>
+		<debug type="bool">false</debug>
+			<condition>
+				<equals>
+					<property>/autopilot/settings/engaged</property>
+					<value type="bool">false</value>
+				</equals>
+			</condition>
+		<input>
+			<property>/autopilot/fbw/actual-pitch-Gload</property>
+		</input>
 		<reference>
-			<property>/controls/flight/elevator</property>
-			<scale>-2</scale>
+			<property>/autopilot/fbw/targer-pitch-Gload</property>
 		</reference>
 		<output>
 			<!--property>/controls/flight/elevator</property-->
@@ -52,18 +90,57 @@ max BANK 15º/sec upto 33º. 67º if full deflect maintained
 		</output>
 
 		<config>
-			<Kp>2</Kp>
+			<Kp>5</Kp>
+			<Ki>2</Ki>
 			<!--beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma-->
-			<Ti>1</Ti>
-			<Td>0.0001</Td>
+			<!--Ti>1</Ti>
+			<Td>0.0001</Td-->
 			<u_min>-17</u_min>
 			<u_max>17</u_max>
 			
 		</config>
-	</pid-controller>
+	</pi-simple-controller>
 
 
+
+	<pi-simple-controller>
+		<name>FBW Aileron</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<condition>
+			
+				<equals>
+					<property>/autopilot/settings/engaged</property>
+					<value type="bool">false</value>
+				</equals>
+			</condition>
+		</enable>
+		<input>
+			<property>velocities/p-aero-rad_sec</property>
+		</input>
+		<reference>
+			<property>/autopilot/fbw/targer-roll-rad_sec</property>
+		</reference>
+		<output>
+			<!--property>/controls/flight/elevator</property-->
+			<property>/autopilot/internal/target-roll-deg</property>
+			<!--property>fdm/jsbsim/fcs/elevator-fbw-norm</property-->
+		</output>
+
+		<config>
+			<Kp>50</Kp>
+			<Ki>20</Ki>
+			<!--beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma-->
+			<!--Ti>1</Ti>
+			<Td>0.0001</Td-->
+			<u_min>-33</u_min>
+			<u_max>33</u_max>
+			
+		</config>
+	</pi-simple-controller>
 
 </PropertyList>
