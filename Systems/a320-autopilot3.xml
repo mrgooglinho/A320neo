@@ -51,10 +51,10 @@
 	<pid-controller>
 		<name>Aileron Surface</name>
 		<debug type="bool">false</debug>
-		<!--enable>
+		<enable>
 			<property>/autopilot/settings/engaged</property>
 			<value type="bool">true</value>
-		</enable-->
+		</enable>
 		<input>
 			<property>/orientation/roll-deg</property>
 		</input>
@@ -77,7 +77,9 @@
 		</config-->
 		<config>
 			<Kp>0.015</Kp>
-			<Ti>15</Ti>
+			<Ti>15</Ti> 
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
 			<u_min>-1.0</u_min>
 			<u_max>1.0</u_max>
 		</config>
@@ -433,7 +435,6 @@
 		<enable>
 			<condition>
 				<and>
-				<property>/autopilot/settings/engaged</property>
 				<property>/autopilot/internal/altitude-hold</property>
 				<greater-than>
 					<expression>

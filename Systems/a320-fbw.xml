@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Airbus A320neo Fly-By-Wire -->
+<!-- Airbus A320neo Fly-By-Wire 
+Author: Jon Ortuondo (Bicyus) -->
 
 <PropertyList>
 <!--
@@ -36,9 +37,10 @@ max 0.261799387 rad_sec
 	</filter>
 
 	<!-- Target Pitch Gload (relative to 1G neutral) -->
+<!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
 	<filter>
 		<type>gain</type>
-		<gain>-1.5</gain><!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
+		<gain>-1.5</gain>
 		<input>/controls/flight/elevator-filtered</input>
 		<output>/autopilot/fbw/targer-pitch-Gload</output>
 	</filter>
@@ -68,7 +70,7 @@ max 0.261799387 rad_sec
 	</filter>
 
 
-	<pi-simple-controller>
+	<pid-controller>
 		<name>FBW Elevator</name>
 		<debug type="bool">false</debug>
 			<condition>
@@ -85,27 +87,24 @@ max 0.261799387 rad_sec
 		</reference>
 		<output>
 			<!--property>/controls/flight/elevator</property-->
-			<property>/autopilot/internal/target-pitch-deg</property>
-			<!--property>fdm/jsbsim/fcs/elevator-fbw-norm</property-->
+			<!--property>/autopilot/internal/target-pitch-deg</property-->
+			<property>fdm/jsbsim/fcs/elevator-fbw-norm</property>
 		</output>
 
 		<config>
-			<Kp>5</Kp>
-			<Ki>2</Ki>
-			<!--beta>1</beta>
-			<alpha>0.1</alpha>
-			<gamma>0</gamma-->
-			<!--Ti>1</Ti>
-			<Td>0.0001</Td-->
-			<u_min>-17</u_min>
-			<u_max>17</u_max>
-			
+			<Kp>-0.66</Kp>
+			<Ti>200</Ti> 
+			<!--Td>1000</Td-->
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
 		</config>
-	</pi-simple-controller>
+	</pid-controller>
 
 
 
-	<pi-simple-controller>
+	<pid-controller>
 		<name>FBW Aileron</name>
 		<debug type="bool">false</debug>
 		<enable>
@@ -118,29 +117,26 @@ max 0.261799387 rad_sec
 			</condition>
 		</enable>
 		<input>
-			<property>velocities/p-aero-rad_sec</property>
+			<property>/fdm/jsbsim/velocities/p-aero-rad_sec</property>
 		</input>
 		<reference>
 			<property>/autopilot/fbw/targer-roll-rad_sec</property>
 		</reference>
 		<output>
 			<!--property>/controls/flight/elevator</property-->
-			<property>/autopilot/internal/target-roll-deg</property>
-			<!--property>fdm/jsbsim/fcs/elevator-fbw-norm</property-->
+			<!--property>/autopilot/internal/target-roll-deg</property-->
+			<property>fdm/jsbsim/fcs/aileron-fbw-norm</property>
 		</output>
 
 		<config>
-			<Kp>50</Kp>
-			<Ki>20</Ki>
-			<!--beta>1</beta>
-			<alpha>0.1</alpha>
-			<gamma>0</gamma-->
-			<!--Ti>1</Ti>
-			<Td>0.0001</Td-->
-			<u_min>-33</u_min>
-			<u_max>33</u_max>
+			<Kp>15</Kp>
+			<Ti>10</Ti> 
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
 			
 		</config>
-	</pi-simple-controller>
+	</pid-controller>
 
 </PropertyList>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Airbus A320neo Fly-By-Wire 
+Author: Jon Ortuondo (Bicyus) -->
+
+<PropertyList>
+<!--
+/autopilot/fbw/engaged
+/autopilot/fbw/law
+/autopilot/fbw/mode
+
+/autopilot/fbw/protections/overspeed
+/autopilot/fbw/protections/alpha-prot   - max on stick neutral 
+/autopilot/fbw/protections/alpha-floor  - TOGA thrust
+/autopilot/fbw/protections/alpha-max    - FULL STICK deflect
+/autopilot/fbw/protections/alpha-min
+/autopilot/fbw/protections/stall
+/autopilot/fbw/protections/bank
+/autopilot/fbw/protections/windshear
+
+/autopilot/fbw/autotrim/elevator
+/autopilot/fbw/autotrim/rudder
+/autopilot/fbw/autotrim/ailerons
+
+
+/limits/fbw/max-bank-angle-soft		- 33 
+/limits/fbw/max-bank-angle-hard		- 67
+/limits/fbw/max-roll-speed
+/limits/fbw/alpha-prot
+/limits/fbw/alpha-floor
+/limits/fbw/alpha-max 			- 30
+/limits/fbw/alpha-min			- 15
+
+-->
+
+	<logic>
+		<name>Fly by Wire Engage</name>
+		
+		<input>	
+				<not><property>/autopilot/settings/engaged</property></not>
+
+		</input>
+		<output>/autopilot/fbw/engaged</output>
+	</logic>
+
+ <!-- =============================================================== -->
+ <!--  Modes                                                          -->
+ <!-- =============================================================== -->
+	<logic>
+		<name>Ground</name>
+		<enable>
+
+			<and>
+				<property>/gear/gear[0]/wow</property>
+				<property>/gear/gear[1]/wow</property>
+				<property>/gear/gear[2]/wow</property>
+			</and>
+		</enable>
+		<input>
+			<value type="string">ground</value>
+
+		</input>
+		<output><property type="string">/autopilot/fbw/mode3</property><value type="string">ground</value></output>
+	</logic>
+
+
+
+</PropertyList>
