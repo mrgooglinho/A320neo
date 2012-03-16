@@ -45,57 +45,59 @@ setprop("/limits/fbw/alpha-min", -15);
 # <!-- =============================================================== -->
 # <!--   Functions                                                     -->
 # <!-- =============================================================== -->
-
-
-
-
-var EFCS = {
 	## Position and Orientation
 
-	altitudeagl: getprop("/position/altitude-agl-ft");
- 	altitudemsl: getprop("/position/altitude-ft");
- 	pitch: getprop("/orientation/pitch-deg");
-	roll: getprop("/orientation/roll-deg");
+	var altitudeagl = getprop("/position/altitude-agl-ft");
+ 	var altitudemsl = getprop("/position/altitude-ft");
+ 	var pitch = getprop("/orientation/pitch-deg");
+	var roll = getprop("/orientation/roll-deg");
  
 	## Alpha Protection Limits
-	alpha_prot: getprop("/limits/fbw/alpha-prot");
-	alpha_floor: getprop("/limits/fbw/alpha-floor");
-	alpha_max:  getprop("/limits/fbw/alpha-max");
-	alpha_min: getprop("/limits/fbw/alpha-min");
+	var alpha_prot = getprop("/limits/fbw/alpha-prot");
+	var alpha_floor = getprop("/limits/fbw/alpha-floor");
+	var alpha_max =  getprop("/limits/fbw/alpha-max");
+	var alpha_min = getprop("/limits/fbw/alpha-min");
 
 	##
 	# a wrapper to determine if a value is within a certain range
 	# usage:in_range(1,[min,max] );
 	# e.g.: in_range(1, [-1,+1] );
 	#
-	in_range: func(value, range) {
+	var in_range = func(value, range) {
 		var min=range[0];
 		var max=range[1];
 		return ((value <= min) and (value >= max));
 	}
 
-	on_ground: func() {
+	var on_ground = func() {
 		if (getprop("/gear/gear[0]/wow") and getprop("/gear/gear[1]/wow") and getprop("/gear/gear[2]/wow") )
 			{ return true; }
 		else
 			{ return false; }
 	}
 
+
+
+
+
+
 	
 
 
-	Update_law: func {
+	var Update_law = func {
 	# Flight mode
-		if (altitudeagl >= '500')
-			{ var mode = 'Flight'; var engaged = 1; }
-		elseif (me.on_ground())
-			{ var mode = 'Ground';  }
-		else
-			{ var mode = 'Transition'; var engaged = 0; }
+		if (altitudeagl >= '500') {
+			 var mode = 'Flight'; var engaged = 1; 
+		} elseif (on_ground()) {
+				var mode = 'Ground';
+				var engaged = 0;
+		} else {
+			 var mode = 'Transition'; var engaged = 0; 
+		}
 
 	# Law mode
 	# 
-		if (me.in_range(pitch, [alpha_min,alpha_prot]);)
+		if (in_range(pitch, [alpha_min,alpha_prot]);)
 			{ var law = 'AOA'; }
 		else 
 			{ var law = 'Normal'; }
@@ -103,5 +105,5 @@ var EFCS = {
 		setprop(fbw_root~"law", law);
 		setprop(fbw_root~"mode", mode);
 	}
-} # EFCS end
+
 
