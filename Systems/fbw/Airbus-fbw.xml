@@ -33,36 +33,7 @@ Author: Jon Ortuondo (Bicyus) -->
 
 -->
 
-	<logic>
-		<name>Fly by Wire Engage</name>
-		
-		<input>	
-				<not><property>/autopilot/settings/engaged</property></not>
-
-		</input>
-		<output>/autopilot/fbw/engaged</output>
-	</logic>
-
- <!-- =============================================================== -->
- <!--  Modes                                                          -->
- <!-- =============================================================== -->
-	<logic>
-		<name>Ground</name>
-		<enable>
-
-			<and>
-				<property>/gear/gear[0]/wow</property>
-				<property>/gear/gear[1]/wow</property>
-				<property>/gear/gear[2]/wow</property>
-			</and>
-		</enable>
-		<input>
-			<value type="string">ground</value>
-
-		</input>
-		<output><property type="string">/autopilot/fbw/mode3</property><value type="string">ground</value></output>
-	</logic>
-
+	
 
 
 </PropertyList>

@@ -73,12 +73,14 @@ max 0.261799387 rad_sec
 	<pid-controller>
 		<name>FBW Elevator</name>
 		<debug type="bool">false</debug>
+		<enable>
 			<condition>
 				<equals>
 					<property>/autopilot/settings/engaged</property>
 					<value type="bool">false</value>
 				</equals>
 			</condition>
+		</enable>
 		<input>
 			<property>/autopilot/fbw/actual-pitch-Gload</property>
 		</input>
