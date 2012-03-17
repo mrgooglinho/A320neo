@@ -40,12 +40,18 @@ max 0.261799387 rad_sec
 	</filter>
 
 	<!-- Target Pitch Gload (relative to 1G neutral) -->
-<!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
+	<!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
 	<filter>
 		<type>gain</type>
 		<gain>-1.5</gain>
-		<input>/controls/flight/elevator-filtered</input>
+		<input>/controls/flight/elevator</input>
 		<output>/autopilot/fbw/targer-pitch-Gload</output>
+	</filter>
+	<filter>
+		<type>exponential</type>
+		<filter-time>0.16</filter-time>
+		<input>/autopilot/fbw/targer-pitch-Gload</input>
+		<output>/autopilot/fbw/targer-pitch-Gload-filtered</output>
 	</filter>
 
 
@@ -64,12 +70,47 @@ max 0.261799387 rad_sec
 		<output>/autopilot/fbw/actual-pitch-Gload</output>
 	</filter>
 
-<!-- Target Pitch Gload (relative to 1G neutral) -->
+	<!-- Target Pitch Gload (relative to 1G neutral) -->
 	<filter>
 		<type>gain</type>
 		<gain>0.261799387</gain><!-- Max Rad Sec -->
 		<input>/controls/flight/aileron-filtered</input>
 		<output>/autopilot/fbw/targer-roll-rad_sec</output>
+	</filter>
+
+	<!-- Actual pith-rate. a²/v²=w² -->
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<rad2deg>
+					<div>	
+						<product><property>/autopilot/fbw/actual-pitch-Gload</property><value>9.80665</value></product>
+					
+						<product><property>/velocities/groundspeed-kt</property><value>0.514444444</value></product> <!-- real speed in m/s-->
+					</div>
+				</rad2deg>
+			</expression>
+		</input>
+		<output>/autopilot/fbw/actual-pitch-rate_degps</output>
+	</filter>
+	<!-- Desired pith-rate. a²/v²=w² -->
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<rad2deg>
+					<div>	
+						<product><property>/autopilot/fbw/targer-pitch-Gload-filtered</property><value>9.80665</value></product>
+					
+						<product><property>/velocities/groundspeed-kt</property><value>0.514444444</value></product> <!-- real speed in m/s-->
+					</div>
+				</rad2deg>
+			</expression>
+		</input>
+		<output>/autopilot/fbw/target-pitch-rate_degps</output>
 	</filter>
 
 
@@ -80,10 +121,10 @@ max 0.261799387 rad_sec
 			<property>/autopilot/fbw/engaged</property>
 		</enable>
 		<input>
-			<property>/autopilot/fbw/actual-pitch-Gload</property>
+			<property>/autopilot/fbw/actual-pitch-rate_degps</property>
 		</input>
 		<reference>
-			<property>/autopilot/fbw/targer-pitch-Gload</property>
+			<property>/autopilot/fbw/target-pitch-rate_degps</property>
 		</reference>
 		<output>
 			<!--property>/controls/flight/elevator</property-->
@@ -92,8 +133,8 @@ max 0.261799387 rad_sec
 		</output>
 
 		<config>
-			<Kp>-0.66</Kp>
-			<Ti>200</Ti> 
+			<Kp>-0.6</Kp>
+			<Ti>100</Ti> 
 			<!--Td>1000</Td-->
 <!--			<Kp>0.040</Kp>
 			<Ti>100</Ti>-->
