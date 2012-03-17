@@ -5,35 +5,150 @@ Author: Jon Ortuondo (Bicyus) -->
 
 <PropertyList>
 <!--
-/autopilot/fbw/engaged
-/autopilot/fbw/law
-/autopilot/fbw/mode
+fcs/aileron-cmd-norm
+fcs/elevator-cmd-norm
 
-/autopilot/fbw/protections/overspeed
-/autopilot/fbw/protections/alpha-prot   - max on stick neutral 
-/autopilot/fbw/protections/alpha-floor  - TOGA thrust
-/autopilot/fbw/protections/alpha-max    - FULL STICK deflect
-/autopilot/fbw/protections/alpha-min
-/autopilot/fbw/protections/stall
-/autopilot/fbw/protections/bank
-/autopilot/fbw/protections/windshear
+max PITCH -1G +2.5g
+max BANK 15º/sec upto 33º. 67º if full deflect maintained
 
-/autopilot/fbw/autotrim/elevator
-/autopilot/fbw/autotrim/rudder
-/autopilot/fbw/autotrim/ailerons
+<<<<<<< HEAD
+	
+=======
+var RAD2DEG = 57.2957795;
+var DEG2RAD = 0.0174532925;
 
-
-/limits/fbw/max-bank-angle-soft		- 33 
-/limits/fbw/max-bank-angle-hard		- 67
-/limits/fbw/max-roll-speed
-/limits/fbw/alpha-prot
-/limits/fbw/alpha-floor
-/limits/fbw/alpha-max 			- 30
-/limits/fbw/alpha-min			- 15
-
+max 0.261799387 rad_sec
 -->
 
-	
+ <!-- =============================================================== -->
+ <!--  Initial Filters                                                -->
+ <!-- =============================================================== -->
 
+
+	<!-- Filters yoke -->
+	<filter>
+		<type>exponential</type>
+		<filter-time>0.16</filter-time>
+		<input>/controls/flight/elevator</input>
+		<output>/controls/flight/elevator-filtered</output>
+	</filter>
+	<filter>
+		<type>exponential</type>
+		<filter-time>0.16</filter-time>
+		<input>/controls/flight/aileron</input>
+		<output>/controls/flight/aileron-filtered</output>
+	</filter>
+
+	<!-- Target Pitch Gload (relative to 1G neutral) -->
+<!--need to be changed by /limits/max-positive-g and /limits/max-negative-g -->
+	<filter>
+		<type>gain</type>
+		<gain>-1.5</gain>
+		<input>/controls/flight/elevator-filtered</input>
+		<output>/autopilot/fbw/targer-pitch-Gload</output>
+	</filter>
+
+
+	<!-- Actual Gload (relative to 1G neutral) --> 
+	<filter>
+		<type>gain</type>
+		<gain>1.0</gain>
+		<input>
+			<expression>
+				<sum> 
+					<property>/accelerations/pilot-gdamped</property>
+					<value>-1</value>
+				</sum>
+			</expression>
+		</input>
+		<output>/autopilot/fbw/actual-pitch-Gload</output>
+	</filter>
+
+<!-- Target Pitch Gload (relative to 1G neutral) -->
+	<filter>
+		<type>gain</type>
+		<gain>0.261799387</gain><!-- Max Rad Sec -->
+		<input>/controls/flight/aileron-filtered</input>
+		<output>/autopilot/fbw/targer-roll-rad_sec</output>
+	</filter>
+
+
+	<pid-controller>
+		<name>FBW Elevator</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<property>/autopilot/fbw/engaged</property>
+		</enable>
+		<input>
+			<property>/autopilot/fbw/actual-pitch-Gload</property>
+		</input>
+		<reference>
+			<property>/autopilot/fbw/targer-pitch-Gload</property>
+		</reference>
+		<output>
+			<!--property>/controls/flight/elevator</property-->
+			<!--property>/autopilot/internal/target-pitch-deg</property-->
+			<property>fdm/jsbsim/fcs/elevator-fbw-norm</property>
+		</output>
+
+		<config>
+			<Kp>-0.66</Kp>
+			<Ti>200</Ti> 
+			<!--Td>1000</Td-->
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
+		</config>
+	</pid-controller>
+
+	<pid-controller>
+		<name>FBW Aileron</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<property>/autopilot/fbw/engaged</property>
+		</enable>
+		<input>
+			<property>/fdm/jsbsim/velocities/p-aero-rad_sec</property>
+		</input>
+		<reference>
+			<property>/autopilot/fbw/targer-roll-rad_sec</property>
+		</reference>
+		<output>
+			<!--property>/controls/flight/elevator</property-->
+			<!--property>/autopilot/internal/target-roll-deg</property-->
+			<property>fdm/jsbsim/fcs/aileron-fbw-norm</property>
+		</output>
+
+		<config>
+			<Kp>15</Kp>
+			<Ti>10</Ti> 
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
+			
+		</config>
+	</pid-controller>
+<filter>
+		<type>gain</type>
+		<enable>
+			<property>/autopilot/fbw/engaged</property>
+			<value type="bool">false</value>
+		</enable>
+		<gain>1.0</gain>
+		<input>fdm/jsbsim/fcs/aileron-cmd-norm</input>
+		<output>fdm/jsbsim/fcs/aileron-fbw-norm</output>
+	</filter>
+<filter>
+		<type>gain</type>
+		<enable>
+			<property>/autopilot/fbw/engaged</property>
+			<value type="bool">false</value>
+		</enable>
+		<gain>1.0</gain>
+		<input>fdm/jsbsim/fcs/elevator-cmd-norm</input>
+		<output>fdm/jsbsim/fcs/elevator-fbw-norm</output>
+	</filter>
 
 </PropertyList>

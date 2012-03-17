@@ -108,7 +108,7 @@ var alpha_min = getprop("/limits/fbw/alpha-min");
 
 	var Update_law = func {
 	# Flight mode
-		if ((getprop("/position/altitude-agl-ft")) >= '500') {var mode = 'Flight'; var engaged = 1; } 
+		if ((getprop("/position/altitude-agl-ft")) >= '100') {var mode = 'Flight'; var engaged = 1; } 
 		else if ( on_ground()) {var mode = 'Ground';var engaged = 0;}
 		else {var mode = 'Transition'; var engaged = 0; }
 
@@ -121,7 +121,7 @@ var alpha_min = getprop("/limits/fbw/alpha-min");
 
 	# Triger Protections
 	#
-		
+		get_prot_alpha();
 	# Output Props
 	#
 		setprop(fbw_root~"law", law);
