@@ -11,8 +11,12 @@
 		<name>Elevator Surface</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/autopilot/settings/engaged</property>
-			<value type="bool">true</value>
+			<condition>
+				<or>
+					<property>/autopilot/settings/engaged</property>
+					<property>/autopilot/fbw/stabpitch</property>
+				</or>
+			</condition>
 		</enable>
 		<input>
 			<property>/orientation/pitch-deg</property>
@@ -26,7 +30,7 @@
 			<!--prop>/controls/flight/elevator-trim</prop-->
 			<!--property>/fdm/jsbsim/fcs/elevator-cmd-norm</property-->
 			<!--property>/controls/flight/elevator</property-->
-			<property>/fdm/jsbsim/fcs/elevator-fbw-norm</property>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
 		<!--config>
 			<Kp>-0.01</Kp>
@@ -52,8 +56,12 @@
 		<name>Aileron Surface</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/autopilot/settings/engaged</property>
-			<value type="bool">true</value>
+			<condition>
+				<or>
+					<property>/autopilot/settings/engaged</property>
+					<property>/autopilot/fbw/stabroll</property>
+				</or>
+			</condition>
 		</enable>
 		<input>
 			<property>/orientation/roll-deg</property>
@@ -63,7 +71,7 @@
 		</reference>
 		<output>
 			<!--property>/controls/flight/aileron</property-->
-			<property>/fdm/jsbsim/fcs/aileron-fbw-norm</property>
+			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
 		<!--config>
 			<Kp>-0.01</Kp>

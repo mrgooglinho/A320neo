@@ -103,11 +103,6 @@
 				<path>Aircraft/A320neo/Systems/fbw/Airbus-fbw.xml</path>
 			</autopilot>
 			<autopilot>
-				<name>Airbus Fly By Wire</name>
-				<path>Aircraft/A320neo/Systems/fbw/Airbus-fbw.xml</path>
-			</autopilot>
-
-			<autopilot>
 				<name>Autobrake</name>
 				<path>Aircraft/A320neo/Systems/a320-autobrake.xml</path>
 			</autopilot>
@@ -862,7 +857,9 @@
 <fdm>
 <jsbsim>
 <fcs>
-<elevator-fbw-norm type="double" />
+<elevator-fbw-output type="double" />
+<aileron-fbw-output type="double" />
+<rudder-fbw-output type="double" />
 </fcs>
 </jsbsim>
 </fdm>
