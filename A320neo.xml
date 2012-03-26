@@ -1305,7 +1305,7 @@ YAW MOI_________3950000______23089847_______24848934
 			</product>
 		</function-->
 
-		<function name="aero/moment/Roll_damp">
+		<!--function name="aero/moment/Roll_damp">
 			<description>Roll moment due to roll rate</description>
 			<product>
 				<property>aero/qbar-psf</property>
@@ -1315,7 +1315,7 @@ YAW MOI_________3950000______23089847_______24848934
 				<property>velocities/p-aero-rad_sec</property>
 				<value>-0.4</value>
 			</product>
-		</function>
+		</function-->
 
 
 		<!--function name="aero/coefficient/Clr">
@@ -1446,7 +1446,7 @@ YAW MOI_________3950000______23089847_______24848934
 			</table>
 			</product>
 		</function>
-		<function name="aero/moment/Pitch_damp">
+		<!--function name="aero/moment/Pitch_damp">
 			<description>Pitch_moment_due_to_pitch_rate</description>
 			<product>
 			<property>aero/qbar-psf</property>
@@ -1454,10 +1454,10 @@ YAW MOI_________3950000______23089847_______24848934
 			<property>metrics/cbarw-ft</property>
 			<property>aero/ci2vel</property>
 			<property>velocities/q-aero-rad_sec</property>
-			<!--value>-10.0000</value-->
+			<!-value>-10.0000</value->
 			<value>-10</value>
 			</product>
-		</function>
+		</function-->
 		<function name="aero/moment/Pitch_alpha_rate">
 			<description>Pitch_moment_due_to_alpha_rate</description>
 			<product>

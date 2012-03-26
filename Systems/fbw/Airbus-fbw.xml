@@ -22,4 +22,75 @@ Author: Jon Ortuondo (Bicyus) -->
 		<input>/controls/flight/aileron</input>
 		<output>/controls/flight/aileron-filtered</output>
 	</filter>
+
+
+	<pid-controller>
+		<name>FBW Elevator</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<condition>
+				<and>
+					<property>/autopilot/fbw/engaged</property>
+					<not><property>/autopilot/fbw/stabpitch</property></not>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<property>/autopilot/fbw/actual-pitch-rate_degps</property>
+		</input>
+		<reference>
+			<property>/autopilot/fbw/target-pitch-rate_degps</property>
+		</reference>
+		<output>
+			<!--property>/controls/flight/elevator</property-->
+			<!--property>/autopilot/internal/target-pitch-deg</property-->
+			<property>fdm/jsbsim/fcs/elevator-fbw-output</property>
+		</output>
+
+		<config>
+			<Kp>-6</Kp>
+			<Ti>100</Ti> 
+			<!--Td>1000</Td-->
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
+		</config>
+	</pid-controller>
+
+	<pid-controller>
+		<name>FBW Aileron</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<condition>
+				<and>
+					<property>/autopilot/fbw/engaged</property>
+					<not><property>/autopilot/fbw/stabroll</property></not>
+				</and>
+			</condition>
+		</enable>
+		<input>
+			<property>/fdm/jsbsim/velocities/p-aero-rad_sec</property>
+		</input>
+		<reference>
+			<property>/autopilot/fbw/targer-roll-rad_sec</property>
+		</reference>
+		<output>
+			<property>fdm/jsbsim/fcs/aileron-fbw-output</property>
+		</output>
+
+		<config>
+			<Kp>15</Kp>
+			<Ti>10</Ti> 
+<!--			<Kp>0.040</Kp>
+			<Ti>100</Ti>-->
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
+			
+		</config>
+	</pid-controller>
+
+
+
+
 </PropertyList>

@@ -107,6 +107,9 @@ var fbw = {
 
 		me.throttle0 = getprop("controls/engines/engine[0]/throttle");
 		me.throttle1 = getprop("controls/engines/engine[1]/throttle");
+		
+		## AP status
+		me.autopilot = getprop("/autopilot/settings/engaged");
 	},
 	
 	Airbus_law : func {
@@ -142,32 +145,35 @@ var fbw = {
 		### Get the aircraft to maintain pitch and roll when stick is at the center 
 		### PID USED
 
-		#### PITCH ####
-		if ((me.elevatorin <= 0.1) and (me.elevatorin >= -0.1) ) {
-			if (me.stabpitch == 0) {
-				setprop("/autopilot/internal/target-pitch-deg", me.pitch);
-				me.stabpitch = 1;
-			}	
-			setprop(me.fbw_root~"stabpitch", 1);
-		} else { 
-			setprop(me.fbw_root~"stabpitch", 0);
-			me.stabpitch = 0;
-		}
+		#if(!me.autopilot){ #onli stabilize if AP is off
+if(1 == 2){ #onli stabilize if AP is off
 
-
-		#### ROLL ####
-		if ((me.aileronin <= 0.1) and (me.aileronin >= -0.1)) {
-			if (me.stabroll == 0) {
-				setprop("/autopilot/internal/target-roll-deg", me.roll);
-				me.stabroll = 1;
+			#### PITCH ####
+			if ((me.elevatorin <= 0.1) and (me.elevatorin >= -0.1) ) {
+				if (me.stabpitch == 0) {
+					setprop("/autopilot/internal/target-pitch-deg", me.pitch);
+					me.stabpitch = 1;
+				}	
+				setprop(me.fbw_root~"stabpitch", 1);
+			} else { 
+				setprop(me.fbw_root~"stabpitch", 0);
+				me.stabpitch = 0;
 			}
-			setprop(me.fbw_root~"stabroll", 1);
-		} else { 
-			setprop("/autopilot/internal/target-roll-deg", me.roll);
-			setprop(me.fbw_root~"stabroll", 0);
-			me.stabroll = 0;
-		}
 
+
+			#### ROLL ####
+			if ((me.aileronin <= 0.1) and (me.aileronin >= -0.1)) {
+				if (me.stabroll == 0) {
+					setprop("/autopilot/internal/target-roll-deg", me.roll);
+					me.stabroll = 1;
+				}
+				setprop(me.fbw_root~"stabroll", 1);
+			} else { 
+				setprop("/autopilot/internal/target-roll-deg", me.roll);
+				setprop(me.fbw_root~"stabroll", 0);
+				me.stabroll = 0;
+			}
+		}
 	},
 	demand_pitch : func{
 		# pitch rate w=a/v
@@ -176,15 +182,17 @@ var fbw = {
 		me.actual_pitch_rate = (me.actual_G * G_force) / (me.groundspeedkt * KT2MS);
 		me.desired_pitch_rate = (me.desired_G * G_force) / (me.groundspeedkt * KT2MS);
 
-		me.elevatorout = (me.desired_pitch_rate - me.actual_pitch_rate ) * -5 * me.fpsfix;
-
+		#me.elevatorout = (me.desired_pitch_rate - me.actual_pitch_rate ) * -10 * me.fpsfix;
+		setprop(me.fbw_root~"actual-pitch-rate_degps", me.actual_pitch_rate);
+		setprop(me.fbw_root~"target-pitch-rate_degps", me.desired_pitch_rate);
 	},
 	demand_roll : func{
 
 		me.actual_roll_rate = getprop("/fdm/jsbsim/velocities/p-aero-rad_sec");
 		me.desired_roll_rate = me.aileronin * me.max_roll;
 
-		me.aileronout = (me.desired_roll_rate - me.actual_roll_rate) * 15 * me.fpsfix;
+		#me.aileronout = (me.desired_roll_rate - me.actual_roll_rate) * 20 * me.fpsfix;
+		setprop(me.fbw_root~"targer-roll-rad_sec", me.desired_roll_rate);
 	},
 
 	update : func{
@@ -201,14 +209,15 @@ var fbw = {
 		if (me.active) { # FBW is in demand
 			if (!me.stabroll) { #when not stable calculate roll
 				me.demand_roll();
-				setprop(me.fcs_root~"aileron-fbw-output", me.aileronout);
+				#setprop(me.fcs_root~"aileron-fbw-output", me.aileronout);
 			}
 
 		
 			if (!me.stabpitch) { #when not stable calculate pitch
 				
 				me.demand_pitch();
-				setprop(me.fcs_root~"elevator-fbw-output", me.elevatorout);
+				#setprop(me.fcs_root~"elevator-fbw-output", me.elevatorout);
+				
 			}
 			
 
