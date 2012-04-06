@@ -46,6 +46,8 @@ var fbw_loop = {
 		
 		var pitch_gforce = (stick_pitch * -1.75) + 1;
 		
+		var pitch_rate = (stick_pitch * -20);
+		
 		## Roll Rate Control
 		
 		var roll_rate = (stick_roll * 30);
@@ -54,6 +56,7 @@ var fbw_loop = {
 		
 		setprop("/fbw/target-pitch-gforce", pitch_gforce);
 		setprop("/fbw/target-roll-rate", roll_rate);
+		setprop("/fbw/target-pitch-rate", pitch_rate);
 		
 		# Limit Pitch and Bank Angles
 		
