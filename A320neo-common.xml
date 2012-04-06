@@ -831,6 +831,9 @@
 		<fbw>
 			<file>Aircraft/A320neo/Nasal/fbw.nas</file>
 		</fbw>
+		<terrain>
+			<file>Aircraft/A320neo/Nasal/terrain-map.nas</file>
+		</terrain>
 		<cdu>
 			<file>Aircraft/Instruments-3d/cdu/boeing.nas</file>
 		</cdu>

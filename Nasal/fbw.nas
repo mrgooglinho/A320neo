@@ -95,12 +95,12 @@ var fbw_loop = {
 			
 		# Turn off FBW when bank or pitch limiters are active
 			
-		if getprop("/fbw/pitch-hold")
+		if (getprop("/fbw/pitch-hold"))
 			setprop("/fbw/active-pitch", 0);
 		else
 			setprop("/fbw/active-pitch", 1);
 			
-		if getprop("/fbw/bank-hold")
+		if (getprop("/fbw/bank-hold"))
 			setprop("/fbw/active-bank", 0);
 		else
 			setprop("/fbw/active-bank", 1);
