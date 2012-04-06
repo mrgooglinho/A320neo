@@ -1,55 +1,119 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!-- Airbus A320neo Fly-By-Wire -->
+<!-- Airbus Fly-by-Wire -->
 
 <PropertyList>
-<!--
-fcs/aileron-cmd-norm
-fcs/elevator-cmd-norm
 
-max PITCH -1G +2.5g
-max BANK 15º/sec upto 33º. 67º if full deflect maintained
--->
-<pi-simple-controller>
-		<name>pitch down</name>
-		<debug type="bool">true</debug>
-		<!--enable>
-			<condition>
-				<greater-than-equals>
-					<property>/fdm/jsbsim/fcs/elevator-cmd-norm</property>
-					<value type="bool">0.01</value>
-				</greater-than-equals>
-			</condition>
-		</enable-->
+	<!-- Basic Pitch and Roll Rate Controls -->
+
+	<pid-controller>
+		<name>FBW Pitch Rate Control</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<prop>/fbw/active-pitch</prop>
+		</enable>
 		<input>
-			<expression>
-				<sum> <!-- 1G is neutral, so make neutral to value 0 --> 
-					<property>/accelerations/pilot-gdamped</property>
-					<value>-1</value>
-				</sum>
-			</expression>
+			<prop>/accelerations/pilot-gdamped</prop>
 		</input>
 		<reference>
-			<property>/controls/flight/elevator</property>
-			<scale>2</scale>
+			<prop>/fbw/target-pitch-gforce</prop>
 		</reference>
 		<output>
-			<!--property>/controls/flight/elevator</property-->
-			<!--property>/autopilot/internal/target-pitch-deg</property-->
-			<property>fdm/jsbsim/fcs/elevator-cmd-norm</property>
+			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
 		</output>
-
 		<config>
-			<!--Kp>0.015</Kp-->
-			<Kp>1</Kp>
-			<Ki>0.015</Ki>
-
+			<Kp>-1</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.00001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
-			
 		</config>
-	</pi-simple-controller>
-
-
+	</pid-controller>
+	
+	<pid-controller>
+		<name>FBW Roll Rate Control</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<prop>/fbw/active-bank</prop>
+		</enable>
+		<input>
+			<prop>/orientation/roll-rate-degps</prop>
+		</input>
+		<reference>
+			<prop>/fbw/target-roll-rate</prop>
+		</reference>
+		<output>
+			<prop>/fdm/jsbsim/fcs/aileron-fbw-output</prop>
+		</output>
+		<config>
+			<Kp>0.05</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.000000001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config>
+	</pid-controller>
+	
+	<!-- Pitch and Bank Limiters -->
+	
+	<pid-controller>
+		<name>FBW Pitch Hold</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<prop>/fbw/pitch-hold</prop>
+		</enable>
+		<input>
+			<prop>/orientation/pitch-deg</prop>
+		</input>
+		<reference>
+			<prop>/fbw/target-pitch</prop>
+		</reference>
+		<output>
+			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
+		</output>
+		<config>
+			<Kp>-0.01</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.00001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config>
+	</pid-controller>
+	
+	<pid-controller>
+		<name>FBW Bank Hold</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<prop>/fbw/bank-hold</prop>
+		</enable>
+		<input>
+			<prop>/orientation/roll-deg</prop>
+		</input>
+		<reference>
+			<prop>/fbw/target-bank</prop>
+		</reference>
+		<output>
+			<prop>/fdm/jsbsim/fcs/aileron-fbw-output</prop>
+		</output>
+		<config>
+			<Kp>0.01</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.000000001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config>
+	</pid-controller>
 
 </PropertyList>
