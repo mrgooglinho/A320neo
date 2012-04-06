@@ -24,12 +24,12 @@
 			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
 		</output>
 		<config>
-			<Kp>-0.05</Kp>
+			<Kp>-1</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
 			<Ti>10</Ti>
-			<Td>0.000000001</Td>
+			<Td>0.00001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -80,7 +80,7 @@
 			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
 		</output>
 		<config>
-			<Kp>-0.01</Kp>
+			<Kp>-1</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
@@ -107,7 +107,7 @@
 			<prop>/fdm/jsbsim/fcs/aileron-fbw-output</prop>
 		</output>
 		<config>
-			<Kp>0.01</Kp>
+			<Kp>0.05</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
