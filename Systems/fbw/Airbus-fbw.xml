@@ -4,6 +4,7 @@
 Author: Jon Ortuondo (Bicyus) -->
 
 <PropertyList>
+
  <!-- =============================================================== -->
  <!--  Initial Filters                                                -->
  <!-- =============================================================== -->
@@ -30,8 +31,8 @@ Author: Jon Ortuondo (Bicyus) -->
 		<enable>
 			<condition>
 				<and>
-					<property>/autopilot/fbw/engaged</property>
-					<not><property>/autopilot/fbw/stabpitch</property></not>
+					<property>/autopilot/fbw/active</property>
+					<not><property>/autopilot/fbw/stabpitchNOT</property></not>
 				</and>
 			</condition>
 		</enable>
@@ -50,8 +51,8 @@ Author: Jon Ortuondo (Bicyus) -->
 		<config>
 			<Kp>-6</Kp>
 			<Ti>100</Ti> 
-			<!--Td>1000</Td-->
-<!--			<Kp>0.040</Kp>
+			<!--Td>1000</Td>
+			<Kp>0.040</Kp>
 			<Ti>100</Ti>-->
 			<u_min>-1.0</u_min>
 			<u_max>1.0</u_max>
@@ -64,8 +65,8 @@ Author: Jon Ortuondo (Bicyus) -->
 		<enable>
 			<condition>
 				<and>
-					<property>/autopilot/fbw/engaged</property>
-					<not><property>/autopilot/fbw/stabroll</property></not>
+					<property>/autopilot/fbw/active</property>
+					<not><property>/autopilot/fbw/stabrollNOT</property></not>
 				</and>
 			</condition>
 		</enable>
@@ -80,13 +81,21 @@ Author: Jon Ortuondo (Bicyus) -->
 		</output>
 
 		<config>
-			<Kp>15</Kp>
+<!--			<Kp>15</Kp>
 			<Ti>10</Ti> 
-<!--			<Kp>0.040</Kp>
-			<Ti>100</Ti>-->
+<!-			<Kp>0.040</Kp>
+			<Ti>100</Ti>->
 			<u_min>-1.0</u_min>
 			<u_max>1.0</u_max>
-			
+			 <Kp>0.05</Kp>-->
+			<Kp>0.05</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.000000001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
 		</config>
 	</pid-controller>
 

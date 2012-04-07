@@ -93,8 +93,10 @@ var fbw = {
 		#me.elevtrim = getprop("/controls/flight/elevator-trim");
 		#me.ailtrim = getprop("/controls/flight/aileron-trim");
 
-		me.aileronin = getprop("/controls/flight/aileron-filtered");
-		me.elevatorin =  getprop("/controls/flight/elevator-filtered");
+		#me.aileronin = getprop("/controls/flight/aileron-filtered");
+		#me.elevatorin =  getprop("/controls/flight/elevator-filtered");
+		me.aileronin = getprop("/controls/flight/aileron");
+		me.elevatorin =  getprop("/controls/flight/elevator");
 		me.rudderin = getprop("/controls/flight/rudder");
 
 		## FBW Output (actual surface positions)
@@ -145,8 +147,7 @@ var fbw = {
 		### Get the aircraft to maintain pitch and roll when stick is at the center 
 		### PID USED
 
-		#if(!me.autopilot){ #onli stabilize if AP is off
-if(1 == 2){ #onli stabilize if AP is off
+		if(!me.autopilot){ #onli stabilize if AP is off
 
 			#### PITCH ####
 			if ((me.elevatorin <= 0.1) and (me.elevatorin >= -0.1) ) {
@@ -173,7 +174,7 @@ if(1 == 2){ #onli stabilize if AP is off
 				setprop(me.fbw_root~"stabroll", 0);
 				me.stabroll = 0;
 			}
-		}
+		} 
 	},
 	demand_pitch : func{
 		# pitch rate w=a/v
@@ -208,24 +209,27 @@ if(1 == 2){ #onli stabilize if AP is off
 
 		if (me.active) { # FBW is in demand
 			if (!me.stabroll) { #when not stable calculate roll
-				me.demand_roll();
+				me.demand_roll(); # Set values for PID
 				#setprop(me.fcs_root~"aileron-fbw-output", me.aileronout);
 			}
 
 		
 			if (!me.stabpitch) { #when not stable calculate pitch
 				
-				me.demand_pitch();
+				me.demand_pitch(); # Set values for PID
 				#setprop(me.fcs_root~"elevator-fbw-output", me.elevatorout);
 				
 			}
 			
 
 			
-			setprop(me.fcs_root~"rudder-fbw-output", me.rudderin);  #IN
+			setprop(me.fcs_root~"rudder-fbw-output", me.rudderin);  #Direct rudder
 
 
 		} else {
+			# <!-- =============================================================== -->
+			# <!--  "Direct" law when fbw not Active                               -->
+			# <!-- =============================================================== -->
 			setprop(me.fcs_root~"aileron-fbw-output", me.aileronin);
 			setprop(me.fcs_root~"elevator-fbw-output", me.elevatorin);
 			setprop(me.fcs_root~"rudder-fbw-output", me.rudderin);

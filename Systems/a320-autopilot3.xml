@@ -12,10 +12,7 @@
 		<debug type="bool">false</debug>
 		<enable>
 			<condition>
-				<or>
 					<property>/autopilot/settings/engaged</property>
-					<property>/autopilot/fbw/stabpitch</property>
-				</or>
 			</condition>
 		</enable>
 		<input>
@@ -57,10 +54,7 @@
 		<debug type="bool">false</debug>
 		<enable>
 			<condition>
-				<or>
-					<property>/autopilot/settings/engaged</property>
-					<property>/autopilot/fbw/stabroll</property>
-				</or>
+					<property>/autopilot/settings/engaged</property>	
 			</condition>
 		</enable>
 		<input>
