@@ -10,7 +10,7 @@
 		<name>FBW Pitch Rate G-force Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/active-pitch</prop>
+			<prop>/fbw/elevator/load-factor</prop>
 		</enable>
 		<input>
 			<prop>/accelerations/pilot-gdamped</prop>
@@ -36,10 +36,37 @@
 	</pid-controller>
 	
 	<pid-controller>
+		<name>FBW Pitch Rate Degps Control</name>
+		<debug type="bool">false</debug>
+		<enable>
+			<prop>/fbw/elevator/pitch-rate</prop>
+		</enable>
+		<input>
+			<prop>/orientation/pitch-rate-degps</prop>
+		</input>
+		<reference>
+			<prop>/fbw/target-pitch-rate</prop>
+		</reference>
+		<output>
+			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
+		</output>
+		<config>
+			<Kp>-0.5</Kp>
+			<beta>1</beta>
+			<alpha>0.1</alpha>
+			<gamma>0</gamma>
+			<Ti>10</Ti>
+			<Td>0.00001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config>
+	</pid-controller>
+	
+	<pid-controller>
 		<name>FBW Roll Rate Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/active-bank</prop>
+			<prop>/fbw/control/aileron</prop>
 		</enable>
 		<input>
 			<prop>/orientation/roll-rate-degps</prop>

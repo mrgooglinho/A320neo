@@ -1,0 +1,95 @@
+The Airbus Flight Control System uses a "fly-by-wire" to transmit side-stick input into the aircraft's control surfaces' servos. These inputs are modified using certain system algorithms and then converted to control surface position.
+
+Airbus divides the Flight Control system algorithms into several flight laws-
+
+1. NORMAL LAW ------------------------------------------------------------------
+
+Summary: The Normal Law is active during normal flight conditions. A single system failure would still mean the aircraft flies according to the normal law. While using this law, the fly-by-wire has 3-axis control, provides flight envelope and load limit protection. It has 3 modes according to phases of flight.
+
+a. Ground Mode
+
+> Active when aircraft is on ground to about 250 ft AGL after take-off
+> Side-stick Input --> Control Surface Position
+
+b. Flight Mode
+
+> Active when aircraft passes 250 AGL after take-off
+> Side-stick Input --> Load Factor (G-Force) --> Control Surface Position 
+> With Side-stick neutral, aircraft maintains 1g pitch load and 0 deg/s roll
+> Pitch-trim is not required, aircraft stabilizes with elevators
+> Side-stick Pitch Deflection commands g-force (-0.75 at full forward and 2.75 at fully pulled back)
+> Side-stick Roll Deflection commands roll-rate (30 deg/s at full deflection)
+> Load Factor and Roll-rate are independant of airspeed
+
+c. Flare Mode
+
+> Transition occurs at 50 ft AGL and changes to Ground mode after touch down
+> At 50 ft, system memorizes pitch and progressively changes according to throttle input to give a smooth touchdown
+> In case of a go-around, transition to flight mode occurs at 50 ft AGL.
+
+- Normal Law Protections
+
+a. Load Factor Limitation
+
+> Prevents aircraft from overstressing even if side-stick is fully deflected
+
+b. Attitude Protections
+
+> Pitch Limits to 30 degrees up and 15 degrees down
+> With side-stick deflected all the way (roll-axis), roll limits to 67 degrees 
+> If side-stick is NOT deflected all hte way, roll limits to 33 degrees
+
+2. ALTERNATE LAW ---------------------------------------------------------------
+
+Summary: The alternate law is active if multiple system failures occur. In case of alternate law, ECAM displays 'ALTN LAW: PROT LOST'. This law too is active in different ways during different flight phases-
+
+a. Ground Mode
+
+> Performs similar to NORMAL LAW
+
+b. Flight Mode
+
+> Performs simular to NORMAL LAW when landing gears are retracted.
+> Pitch control shifts to DIRECT LAW when landing gears are lowered for landing.
+
+c. Flare Mode
+
+This mode does NOT exist- pitch control uses DIRECT LAW for manual flare.
+
+- Alternate Law Protections
+
+a. Load Factor Limitation
+
+> Similar to that under NORMAL LAW
+
+b. Attitude Protection
+
+> Attitude protection is lost under ALTERNATE LAW
+> In case of extreme low speeds, aircraft reduces pitch but CAN BE OVERRIDDEN
+
+3. ABNORMAL ALTERNATE LAW ------------------------------------------------------
+
+Summary: This law is active when the aircrafte enters an unusual attitude (includes roll-over, over 60 degrees pitch up or over 30 degrees pitch down).
+
+> Pitch Control shifts to ALTERNATE LAW
+> Roll Control shifts to DIRECT LAW
+> Returns to NORMAL/ALTERNATE LAW when out of unusual attitude.
+
+4. DIRECT LAW ------------------------------------------------------------------
+
+Summary: This law is the lowest level of flight control systems and is used only in the case of major multiple system failures. 
+
+> Side-stick Input is transmitted unmodified to control surfaces
+> 'USE MAN PITCH TRIM' appears on PFD
+> No protections provided
+
+5. MECHANICAL BACKUP -----------------------------------------------------------
+
+Summary: The mechanical backup system is used in case of completed electrical or hydraulic system failure.
+
+> Side-stick does NOT control anything
+> Rudder Pedals must be used to control YAW
+> Elevator Trim wheels must be used to control PITCH
+> ROLL cannot be controlled while using the mechanical backup
+
+--------------------------------------------------------------------------------
