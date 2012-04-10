@@ -49,7 +49,14 @@ var fbw_loop = {
 				
 		# Servo Control Modes (0 - direct | 1 - fbw)
 		# Servo Protection Modes (0 - off | 1 - protect)
-		# Servo Working (0 - not working/use mech backup | 1 - working)		
+		# Servo Working (0 - not working/use mech backup | 1 - working)
+		
+		setprop("/fbw/stable/elevator", 0);
+		setprop("/fbw/stable/aileron", 0);
+		
+		# The Stabilizer (Trimmers) are used to maintain pitch and/or bank angle when the control stick is brought to the center. The active fbw controls "try" to maintain 0 pitch-rate/roll-rate/1g but if by any chance (for example during turbulence) the attitude's changed, the stabilizer can get it back to the original attitude
+		
+		# Stabilizer works ONLY in NORMAL LAW Flight Mode
 
 		me.reset(); 
 	},  #Init Function end
@@ -102,6 +109,9 @@ var fbw_loop = {
 		var bank_limit = getprop("/fbw/bank-limit");
 		var manual_bank = getprop("/fbw/bank-manual");
 		
+		var stick_pitch = getprop(input~ "elevator");
+		var stick_roll = getprop(input~ "aileron");
+		
 #####################################################################
 
 		# Dis-engage Fly-by-wire input modification if autopilot is engaged
@@ -143,8 +153,41 @@ var fbw_loop = {
 			
 				} elsif (mode == "Flight Mode") {
 				
-					setprop("/fbw/control/aileron", 1);
-					setprop("/fbw/control/elevator", 1);
+					if (math.abs(stick_pitch) >= 0.02) {
+					
+						setprop("/fbw/control/elevator", 1);
+						setprop("/fbw/stable/elevator", 0);
+					
+					} else {
+					
+						if (getprop("/fbw/stable/elevator") != 1) {
+						
+							setprop("/fbw/stable/pitch-deg", pitch);
+							
+							setprop("/fbw/control/elevator", 0);
+							setprop("/fbw/stable/elevator", 1);
+						
+						}
+						
+					}
+					
+					if (math.abs(stick_roll) >= 0.02) {
+					
+						setprop("/fbw/control/aileron", 1);
+						setprop("/fbw/stable/aileron", 0);
+						
+					} else {
+					
+						if (getprop("/fbw/stable/aileron") == 0) {
+						
+							setprop("/fbw/stable/bank-deg", bank);
+							
+							setprop("/fbw/control/aileron", 0);
+							setprop("/fbw/stable/aileron", 1);
+						
+						}
+										
+					}
 				
 				# Flare Mode
 				
@@ -255,9 +298,6 @@ var fbw_loop = {
 		} # End of Autopilot Check
 		
 		# Load Limit and Flight Envelope Protection
-		
-		var stick_pitch = getprop(input~ "elevator");
-		var stick_roll = getprop(input~ "aileron");
 		
 		var pitch = getprop(deg~ "pitch-deg");
 		var bank = getprop(deg~ "roll-deg");
