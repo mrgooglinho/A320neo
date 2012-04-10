@@ -40,6 +40,9 @@ var fbw_loop = {
 		setprop("/fbw/bank-limit",33);
 		setprop("/fbw/bank-manual", 67);
 		
+		setprop("/fbw/max-pitch-rate", 15);
+		setprop("/fbw/max-roll-rate", 15);
+		
 		setprop("/fbw/active-law", "NORMAL LAW");
 		setprop("/fbw/flight-phase", "Ground Mode");
 		
@@ -153,9 +156,12 @@ var fbw_loop = {
 			
 				} elsif (mode == "Flight Mode") {
 				
+					setprop("/fbw/control/elevator", 1);
+					setprop("/fbw/control/aileron", 1);
+				
 					if (math.abs(stick_pitch) >= 0.02) {
 					
-						setprop("/fbw/control/elevator", 1);
+						# setprop("/fbw/control/elevator", 1);
 						setprop("/fbw/stable/elevator", 0);
 					
 					} else {
@@ -164,7 +170,7 @@ var fbw_loop = {
 						
 							setprop("/fbw/stable/pitch-deg", pitch);
 							
-							setprop("/fbw/control/elevator", 0);
+							# setprop("/fbw/control/elevator", 0);
 							setprop("/fbw/stable/elevator", 1);
 						
 						}
@@ -173,7 +179,7 @@ var fbw_loop = {
 					
 					if (math.abs(stick_roll) >= 0.02) {
 					
-						setprop("/fbw/control/aileron", 1);
+						# setprop("/fbw/control/aileron", 1);
 						setprop("/fbw/stable/aileron", 0);
 						
 					} else {
@@ -182,7 +188,7 @@ var fbw_loop = {
 						
 							setprop("/fbw/stable/bank-deg", bank);
 							
-							setprop("/fbw/control/aileron", 0);
+							# setprop("/fbw/control/aileron", 0);
 							setprop("/fbw/stable/aileron", 1);
 						
 						}
@@ -370,11 +376,11 @@ var fbw_loop = {
 		
 		var pitch_gforce = (stick_pitch * -1.75) + 1;
 		
-		var pitch_rate = (stick_pitch * -15);
+		var pitch_rate = (stick_pitch * -1 * getprop("/fbw/max-pitch-rate"));
 		
 		## Roll Rate Control
 		
-		var roll_rate = (stick_roll * 30);
+		var roll_rate = (stick_roll * getprop("/fbw/max-roll-rate"));
 		
 		## Set G-forces to properties for xml to read
 		
