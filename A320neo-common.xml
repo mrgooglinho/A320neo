@@ -100,7 +100,7 @@
 			</autopilot>
 			<autopilot>
 				<name>Fly By Wire</name>
-				<path>Aircraft/A320neo/Systems/a320-fbw.xml</path>
+				<path>Aircraft/A320neo/Systems/Airbus-fbw/Airbus-fbw.xml</path>
 			</autopilot>
 
 			<autopilot>
@@ -829,7 +829,7 @@
 			<file>Aircraft/A320neo/Nasal/walk.nas</file>
 		</walk>
 		<fbw>
-			<file>Aircraft/A320neo/Nasal/fbw.nas</file>
+			<file>Aircraft/A320neo/Systems/Airbus-fbw/Airbus-fbw.nas</file>
 		</fbw>
 		<terrain>
 			<file>Aircraft/A320neo/Nasal/terrain-map.nas</file>
