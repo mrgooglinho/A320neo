@@ -10,18 +10,18 @@
 		<name>FBW Pitch Rate G-force Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/elevator/load-factor</prop>
+			<property>/fbw/elevator/load-factor</property>
 		</enable>
 		<input>
-			<prop>/accelerations/pilot-gdamped</prop>
+			<property>/accelerations/pilot-gdamped</property>
 			<!-- prop>/orientation/pitch-rate-degps</prop -->
 		</input>
 		<reference>
-			<prop>/fbw/target-pitch-gforce</prop>
+			<property>/fbw/target-pitch-gforce</property>
 			<!-- prop>/fbw/target-pitch-rate</prop -->
 		</reference>
 		<output>
-			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
 		<config>
 			<Kp>-1</Kp>
@@ -39,16 +39,16 @@
 		<name>FBW Pitch Rate Degps Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/elevator/pitch-rate</prop>
+			<property>/fbw/elevator/pitch-rate</property>
 		</enable>
 		<input>
-			<prop>/orientation/pitch-rate-degps</prop>
+			<property>/orientation/pitch-rate-degps</property>
 		</input>
 		<reference>
-			<prop>/fbw/target-pitch-rate</prop>
+			<property>/fbw/target-pitch-rate</property>
 		</reference>
 		<output>
-			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
 		<config>
 			<Kp>-0.5</Kp>
@@ -66,16 +66,16 @@
 		<name>FBW Roll Rate Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/control/aileron</prop>
+			<property>/fbw/control/aileron</property>
 		</enable>
 		<input>
-			<prop>/orientation/roll-rate-degps</prop>
+			<property>/orientation/roll-rate-degps</property>
 		</input>
 		<reference>
-			<prop>/fbw/target-roll-rate</prop>
+			<property>/fbw/target-roll-rate</property>
 		</reference>
 		<output>
-			<prop>/fdm/jsbsim/fcs/aileron-fbw-output</prop>
+			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
 		<config>
 			<Kp>0.05</Kp>
@@ -95,16 +95,16 @@
 		<name>FBW Pitch Hold</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/pitch-hold</prop>
+			<property>/fbw/pitch-hold</property>
 		</enable>
 		<input>
-			<prop>/orientation/pitch-deg</prop>
+			<property>/orientation/pitch-deg</property>
 		</input>
 		<reference>
-			<prop>/fbw/target-pitch</prop>
+			<property>/fbw/target-pitch</property>
 		</reference>
 		<output>
-			<prop>/fdm/jsbsim/fcs/elevator-fbw-output</prop>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
 		<config>
 			<Kp>-1</Kp>
@@ -122,16 +122,16 @@
 		<name>FBW Bank Hold</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/bank-hold</prop>
+			<property>/fbw/bank-hold</property>
 		</enable>
 		<input>
-			<prop>/orientation/roll-deg</prop>
+			<property>/orientation/roll-deg</property>
 		</input>
 		<reference>
-			<prop>/fbw/target-bank</prop>
+			<property>/fbw/target-bank</property>
 		</reference>
 		<output>
-			<prop>/fdm/jsbsim/fcs/aileron-fbw-output</prop>
+			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
 		<config>
 			<Kp>0.05</Kp>
@@ -151,16 +151,16 @@
 		<name>FBW Stabilize Bank</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/stable/aileron</prop>
+			<property>/fbw/stable/aileron</property>
 		</enable>
 		<input>
-			<prop>/orientation/roll-deg</prop>
+			<property>/orientation/roll-deg</property>
 		</input>
 		<reference>
-			<prop>/fbw/stable/bank-deg</prop>
+			<property>/fbw/stable/bank-deg</property>
 		</reference>
 		<output>
-			<prop>/controls/flight/aileron-trim</prop>
+			<property>/controls/flight/aileron-trim</property>
 		</output>
 		<config>
 			<Kp>0.05</Kp>
@@ -178,16 +178,16 @@
 		<name>FBW Stabilize Pitch</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<prop>/fbw/stable/elevator</prop>
+			<property>/fbw/stable/elevator</property>
 		</enable>
 		<input>
-			<prop>/orientation/pitch-deg</prop>
+			<property>/orientation/pitch-deg</property>
 		</input>
 		<reference>
-			<prop>/fbw/stable/pitch-deg</prop>
+			<property>/fbw/stable/pitch-deg</property>
 		</reference>
 		<output>
-			<prop>/controls/flight/elevator-trim</prop>
+			<property>/controls/flight/elevator-trim</property>
 		</output>
 		<config>
 			<Kp>-0.15</Kp>

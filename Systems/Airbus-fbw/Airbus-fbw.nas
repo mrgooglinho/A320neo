@@ -21,8 +21,9 @@ var DEG2RAD = 0.0174532925;
 var fcs = "/fdm/jsbsim/fcs/";
 var input = "/controls/flight/";
 var deg = "/orientation/";
+var fbw_root = "/fbw/";
 
-var fbw_loop = {
+var fbw = {
 	
 	init : func { 
 		me.UPDATE_INTERVAL = 0.001; 
@@ -32,9 +33,9 @@ var fbw_loop = {
 
 		## Initialize Control Surfaces
 
-		setprop("/fdm/jsbsim/fcs/aileron-fbw-output", 0);
-		setprop("/fdm/jsbsim/fcs/rudder-fbw-output", 0);
-		setprop("/fdm/jsbsim/fcs/elevator-fbw-output", 0);
+		setprop(fcs~"aileron-fbw-output", 0);
+		setprop(fcs~"rudder-fbw-output", 0);
+		setprop(fcs~"elevator-fbw-output", 0);
 		
 		## Flight envelope
 
@@ -46,15 +47,15 @@ var fbw_loop = {
 		setprop("/limits/fbw/alpha-max", '30');
 		setprop("/limits/fbw/alpha-min", '-15');
 
-		setprop("/fbw/pitch-limit",30);
-		setprop("/fbw/bank-limit",33);
-		setprop("/fbw/bank-manual", 67);
+		setprop(fbw_root~"pitch-limit",30);
+		setprop(fbw_root~"bank-limit",33);
+		setprop(fbw_root~"bank-manual", 67);
 		
-		setprop("/fbw/max-pitch-rate", 15);
-		setprop("/fbw/max-roll-rate", 15);
+		setprop(fbw_root~"max-pitch-rate", 15);
+		setprop(fbw_root~"max-roll-rate", 15);
 		
-		setprop("/fbw/active-law", "NORMAL LAW");
-		setprop("/fbw/flight-phase", "Ground Mode");
+		setprop(fbw_root~"active-law", "NORMAL LAW");
+		setprop(fbw_root~"flight-phase", "Ground Mode");
 		
 		# This should be moved to 'failures.nas' but as I haven't written it yet, we'll just keep the systems working fine at all times. (0 - all working | 1 - moderate failures | 2 - major failures | 3 - elec/hyd failure)
 		
@@ -64,8 +65,8 @@ var fbw_loop = {
 		# Servo Protection Modes (0 - off | 1 - protect)
 		# Servo Working (0 - not working/use mech backup | 1 - working)
 		
-		props.globals.initNode("/fbw/stable/elevator", 0);
-		props.globals.initNode("/fbw/stable/aileron", 0);
+		props.globals.initNode(fbw_root~"stable/elevator", 0);
+		props.globals.initNode(fbw_root~"stable/aileron", 0);
 		
 		# The Stabilizer (Trimmers) are used to maintain pitch and/or bank angle when the control stick is brought to the center. The active fbw controls "try" to maintain 0 pitch-rate/roll-rate/1g but if by any chance (for example during turbulence) the attitude's changed, the stabilizer can get it back to the original attitude
 		
@@ -80,14 +81,13 @@ var fbw_loop = {
 		me.condition = getprop("/systems/condition");
 		me.pitch = getprop("/orientation/pitch-deg");
 		me.bank = getprop("/orientation/roll-deg");
-		me.phase = getprop("/fbw/flight-phase");
 		me.agl = getprop("/position/altitude-agl-ft");
 
-		me.law = getprop("/fbw/active-law");
-		me.mode = getprop("/fbw/flight-phase");
-		me.pitch_limit = getprop("/fbw/pitch-limit");
-		me.bank_limit = getprop("/fbw/bank-limit");
-		me.manual_bank = getprop("/fbw/bank-manual");
+		me.law = getprop(fbw_root~"active-law");
+		me.mode = getprop(fbw_root~"flight-phase");
+		me.pitch_limit = getprop(fbw_root~"pitch-limit");
+		me.bank_limit = getprop(fbw_root~"bank-limit");
+		me.manual_bank = getprop(fbw_root~"bank-manual");
 		
 		me.stick_pitch = getprop(input~ "elevator");
 		me.stick_roll = getprop(input~ "aileron");
@@ -129,14 +129,14 @@ var fbw_loop = {
 		# Find out the current flight phase (Ground/Flight/Flare)
 		
 				
-		if ((me.agl > 250) or ((me.phase == "Flare Mode") and (me.agl > 50)))
-			setprop("/fbw/flight-phase", "Flight Mode");
+		if ((me.agl > 250) or ((me.mode == "Flare Mode") and (me.agl > 50)))
+			setprop(fbw_root~"flight-phase", "Flight Mode");
 			
-		if ((me.phase == "Flight Mode") and (me.agl <= 50))
-			setprop("/fbw/flight-phase", "Flare Mode");
+		if ((me.mode == "Flight Mode") and (me.agl <= 50))
+			setprop(fbw_root~"flight-phase", "Flare Mode");
 			
 		if (getprop("/gears/gear/wow"))
-			setprop("/fbw/flight-phase", "Ground Mode");
+			setprop(fbw_root~"flight-phase", "Ground Mode");
 
 	},
 	law_normal : func {
@@ -144,42 +144,42 @@ var fbw_loop = {
 		
 		if ((me.pitch > me.pitch_limit) or (me.pitch < -0.5 * me.pitch_limit) or (math.abs(me.bank) > me.bank_limit)) {
 		
-			setprop("/fbw/control/aileron", 0);
-			setprop("/fbw/control/elevator", 0);
+			setprop(fbw_root~"control/aileron", 0);
+			setprop(fbw_root~"control/elevator", 0);
 			
-			setprop("/fbw/protect-mode", 1);
+			setprop(fbw_root~"protect-mode", 1);
 		
 		} else {
 		
-			setprop("/fbw/protect-mode", 0);
+			setprop(fbw_root~"protect-mode", 0);
 	
 			# Ground Mode
 	
 			if (me.mode == "Ground Mode") {
 		
-				setprop("/fbw/control/aileron", 0);
-				setprop("/fbw/control/elevator", 0);
+				setprop(fbw_root~"control/aileron", 0);
+				setprop(fbw_root~"control/elevator", 0);
 		
 			# Flight Mode
 		
 			} elsif (me.mode == "Flight Mode") {
 			
-				setprop("/fbw/control/elevator", 1);
-				setprop("/fbw/control/aileron", 1);
+				setprop(fbw_root~"control/elevator", 1);
+				setprop(fbw_root~"control/aileron", 1);
 			
 				if (math.abs(me.stick_pitch) >= 0.02) {
 				
-					# setprop("/fbw/control/elevator", 1);
-					setprop("/fbw/stable/elevator", 0);
+					# setprop(fbw_root~"control/elevator", 1);
+					setprop(fbw_root~"stable/elevator", 0);
 				
 				} else {
 				
-					if (getprop("/fbw/stable/elevator") != 1) {
+					if (getprop(fbw_root~"stable/elevator") != 1) {
 					
-						setprop("/fbw/stable/pitch-deg", me.pitch);
+						setprop(fbw_root~"stable/pitch-deg", me.pitch);
 						
-						# setprop("/fbw/control/elevator", 0);
-						setprop("/fbw/stable/elevator", 1);
+						# setprop(fbw_root~"control/elevator", 0);
+						setprop(fbw_root~"stable/elevator", 1);
 					
 					}
 					
@@ -187,17 +187,17 @@ var fbw_loop = {
 				
 				if (math.abs(me.stick_roll) >= 0.02) {
 				
-					# setprop("/fbw/control/aileron", 1);
-					setprop("/fbw/stable/aileron", 0);
+					# setprop(fbw_root~"control/aileron", 1);
+					setprop(fbw_root~"stable/aileron", 0);
 					
 				} else {
 				
-					if (getprop("/fbw/stable/aileron") == 0) {
+					if (getprop(fbw_root~"stable/aileron") == 0) {
 					
-						setprop("/fbw/stable/bank-deg", me.bank);
+						setprop(fbw_root~"stable/bank-deg", me.bank);
 						
-						# setprop("/fbw/control/aileron", 0);
-						setprop("/fbw/stable/aileron", 1);
+						# setprop(fbw_root~"control/aileron", 0);
+						setprop(fbw_root~"stable/aileron", 1);
 					
 					}
 									
@@ -209,16 +209,16 @@ var fbw_loop = {
 			
 				# STILL HAVE SOME WORK HERE. Atm, we'll just shift to direct control.
 				
-				setprop("/fbw/control/aileron", 0);
-				setprop("/fbw/control/elevator", 0);
+				setprop(fbw_root~"control/aileron", 0);
+				setprop(fbw_root~"control/elevator", 0);
 			
 			}
 		
 		}
 	},
 	law_direct : func {
-		setprop("/fbw/control/aileron", 0);
-		setprop("/fbw/control/elevator", 0);
+		setprop(fbw_root~"control/aileron", 0);
+		setprop(fbw_root~"control/elevator", 0);
 	},
 	law_alternate : func {
 		## Flight Envelope Protection is NOT offered
@@ -226,8 +226,8 @@ var fbw_loop = {
 		# Ground Mode
 		if (me.mode == "Ground Mode") {
 		
-			setprop("/fbw/control/aileron", 0);
-			setprop("/fbw/control/elevator", 0);
+			setprop(fbw_root~"control/aileron", 0);
+			setprop(fbw_root~"control/elevator", 0);
 
 		# Flight Mode
 		} elsif (me.mode == "Flight Mode") {
@@ -236,13 +236,13 @@ var fbw_loop = {
 		
 			if (getprop("controls/gear/gear-down")) {
 		
-				setprop("/fbw/control/aileron", 0);
-				setprop("/fbw/control/elevator", 0);
+				setprop(fbw_root~"control/aileron", 0);
+				setprop(fbw_root~"control/elevator", 0);
 			
 			} else {
 		
-				setprop("/fbw/control/aileron", 1);
-				setprop("/fbw/control/elevator", 1);
+				setprop(fbw_root~"control/aileron", 1);
+				setprop(fbw_root~"control/elevator", 1);
 		
 			}
 
@@ -252,8 +252,8 @@ var fbw_loop = {
 		
 			# STILL HAVE SOME WORK HERE. Atm, we'll just shift to direct control.
 			
-			setprop("/fbw/control/aileron", 0);
-			setprop("/fbw/control/elevator", 0);
+			setprop(fbw_root~"control/aileron", 0);
+			setprop(fbw_root~"control/elevator", 0);
 		}
 	
 	},
@@ -262,7 +262,7 @@ var fbw_loop = {
 		# Ground Mode
 		if (me.mode == "Ground Mode") {
 		
-			setprop("/fbw/control/elevator", 0);
+			setprop(fbw_root~"control/elevator", 0);
 	
 
 		# Flight Mode
@@ -272,16 +272,16 @@ var fbw_loop = {
 		
 			if (getprop("controls/gear/gear-down")) {
 		
-				setprop("/fbw/control/elevator", 0);
+				setprop(fbw_root~"control/elevator", 0);
 			
 			} else {
 		
-				setprop("/fbw/control/elevator", 1);
+				setprop(fbw_root~"control/elevator", 1);
 		
 			}
 		}
 					
-		setprop("/fbw/control/aileron", 0);
+		setprop(fbw_root~"control/aileron", 0);
 	},
 
 	update : func {
@@ -300,10 +300,10 @@ var fbw_loop = {
 
 		if (getprop("/autopilot/settings/engaged")) {
 		
-			setprop("/fbw/control/aileron", 0);
-			setprop("/fbw/control/elevator", 0);
+			setprop(fbw_root~"control/aileron", 0);
+			setprop(fbw_root~"control/elevator", 0);
 			
-			setprop("/fbw/protect-mode", 0);
+			setprop(fbw_root~"protect-mode", 0);
 		
 		} else {
 			if (me.law == "NORMAL LAW") me.law_normal();
@@ -316,49 +316,49 @@ var fbw_loop = {
 
 
 		# Load Limit and Flight Envelope Protection
-		if (getprop("/fbw/protect-mode")) {
+		if (getprop(fbw_root~"protect-mode")) {
 		
 			 # PITCH AXIS
 			 
 			 if ((me.pitch > me.pitch_limit) and (me.stick_pitch <= 0)) {
 			 
-			 	setprop("/fbw/target-pitch", me.pitch_limit);
-				setprop("/fbw/pitch-hold", 1);
+			 	setprop(fbw_root~"target-pitch", me.pitch_limit);
+				setprop(fbw_root~"pitch-hold", 1);
 			 
 			 } elsif ((me.pitch < -0.5 * me.pitch_limit) and (me.stick_pitch >= 0)) {
 			 
-			 	setprop("/fbw/target-pitch", -0.5 * me.pitch_limit);
-				setprop("/fbw/pitch-hold", 1);
+			 	setprop(fbw_root~"target-pitch", -0.5 * me.pitch_limit);
+				setprop(fbw_root~"pitch-hold", 1);
 			 
 			 } else
 			 	
-			 	setprop("/fbw/pitch-hold", 0);
+			 	setprop(fbw_root~"pitch-hold", 0);
 			 
 			 # ROLL AXIS 
 			 
 			 if ((me.stick_roll >= 0.5) and (me.bank > me.manual_bank)) {
 			 
-			 	setprop("/fbw/target-bank", me.manual_bank);
-				setprop("/fbw/bank-hold", 1);
+			 	setprop(fbw_root~"target-bank", me.manual_bank);
+				setprop(fbw_root~"bank-hold", 1);
 			 
 			 } elsif ((me.stick_roll <= -0.5) and (me.bank < -1 * me.manual_bank)) {
 			 
-			 	setprop("/fbw/target-bank", -1 * me.manual_bank);
-				setprop("/fbw/bank-hold", 1);
+			 	setprop(fbw_root~"target-bank", -1 * me.manual_bank);
+				setprop(fbw_root~"bank-hold", 1);
 			 
 			 } elsif ((me.stick_roll < 0.5) and (me.stick_roll >= 0) and (me.bank > me.bank_limit)) {
 			 
-			 	setprop("/fbw/target-bank", me.bank_limit);
-				setprop("/fbw/bank-hold", 1);
+			 	setprop(fbw_root~"target-bank", me.bank_limit);
+				setprop(fbw_root~"bank-hold", 1);
 			 
 			 } elsif ((me.stick_roll > -0.5) and (me.stick_roll <= 0) and (me.bank < -1 * me.bank_limit)) {
 			 
-			 	setprop("/fbw/target-bank", -1 * me.bank_limit);
-				setprop("/fbw/bank-hold", 1);
+			 	setprop(fbw_root~"target-bank", -1 * me.bank_limit);
+				setprop(fbw_root~"bank-hold", 1);
 			 
 			 } else
 			 
-			 	setprop("/fbw/bank-hold", 0);
+			 	setprop(fbw_root~"bank-hold", 0);
 		
 		}
 		
@@ -366,11 +366,11 @@ var fbw_loop = {
 
 		# DIRECT Servo Control (just simple copying)
 		
-		if (getprop("/fbw/control/aileron") == 0)
+		if (getprop(fbw_root~"control/aileron") == 0)
 				
 			setprop("/fdm/jsbsim/fcs/aileron-fbw-output", getprop("/controls/flight/aileron"));
 			
-		if (getprop("/fbw/control/elevator") == 0)
+		if (getprop(fbw_root~"control/elevator") == 0)
 		
 			setprop("/fdm/jsbsim/fcs/elevator-fbw-output", getprop("/controls/flight/elevator"));
 		
@@ -384,31 +384,31 @@ var fbw_loop = {
 		
 		me.pitch_gforce = (me.stick_pitch * -1.75) + 1;
 		
-		me.pitch_rate = (me.stick_pitch * -1 * getprop("/fbw/max-pitch-rate"));
+		me.pitch_rate = (me.stick_pitch * -1 * getprop(fbw_root~"max-pitch-rate"));
 		
 		## Roll Rate Control
 		
-		me.roll_rate = (me.stick_roll * getprop("/fbw/max-roll-rate"));
+		me.roll_rate = (me.stick_roll * getprop(fbw_root~"max-roll-rate"));
 		
 		## Set G-forces to properties for xml to read
 		
-		setprop("/fbw/target-pitch-gforce", me.pitch_gforce);
-		setprop("/fbw/target-roll-rate", me.roll_rate);
-		setprop("/fbw/target-pitch-rate", me.pitch_rate);
+		setprop(fbw_root~"target-pitch-gforce", me.pitch_gforce);
+		setprop(fbw_root~"target-roll-rate", me.roll_rate);
+		setprop(fbw_root~"target-pitch-rate", me.pitch_rate);
 		
-		if (getprop("/fbw/control/elevator")) {
+		if (getprop(fbw_root~"control/elevator")) {
 		
 			# Load Factor over 210 kts
 			
 			if (getprop("/velocities/airspeed-kt") > 210) {
 				
-				setprop("/fbw/elevator/pitch-rate", 0);
-				setprop("/fbw/elevator/load-factor", 1);
+				setprop(fbw_root~"elevator/pitch-rate", 0);
+				setprop(fbw_root~"elevator/load-factor", 1);
 				
 			} else {
 			
-				setprop("/fbw/elevator/pitch-rate", 1);
-				setprop("/fbw/elevator/load-factor", 0);
+				setprop(fbw_root~"elevator/pitch-rate", 1);
+				setprop(fbw_root~"elevator/load-factor", 0);
 			
 			}
 		
@@ -432,5 +432,5 @@ var fbw_loop = {
 # END fwb_loop var
 ###
 
-fbw_loop.init();
+fbw.init();
 print("Airbus Fly-by-wire Initialized");
