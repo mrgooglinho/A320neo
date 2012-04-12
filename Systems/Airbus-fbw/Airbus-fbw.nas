@@ -1,8 +1,8 @@
-###############################
-## AIRBUS FLY-BY-WIRE SYSTEM ##
-###############################
-## Written by Narendran      ##
-###############################
+##################################
+## AIRBUS FLY-BY-WIRE SYSTEM    ##
+##################################
+## Written by Narendran and Jon ##
+##################################
 
 # FLIGHT CONTROL LAWS -
 ## Normal Law
@@ -135,7 +135,7 @@ var fbw_loop = {
 		if ((me.phase == "Flight Mode") and (me.agl <= 50))
 			setprop("/fbw/flight-phase", "Flare Mode");
 			
-		if (getprop("/gears/gear/wow"))
+		if (getprop("/gear/gear/wow"))
 			setprop("/fbw/flight-phase", "Ground Mode");
 
 	},
@@ -283,6 +283,19 @@ var fbw_loop = {
 					
 		setprop("/fbw/control/aileron", 0);
 	},
+	
+	neutralize_trim : func(stab) {
+	
+		var trim_prop = "/controls/flight/" ~ stab ~ "-trim";
+		
+		var trim = getprop(trim_prop);
+		
+		if (trim > 0.005)
+			setprop(trim_prop, trim - 0.01);
+		elsif (trim < -0.005)
+			setprop(trim_prop, trim + 0.01);
+	
+	},
 
 	update : func {
 
@@ -294,6 +307,27 @@ var fbw_loop = {
 		
 		# Find out the current flight phase (Ground/Flight/Flare)
 		me.flight_phase();
+
+		# Bring Stabilizers to 0 gradually when stabilizer mode is turned off
+		
+		if (getprop("/fbw/stable/elevator") != 1)
+			me.neutralize_trim("elevator");
+			
+		if (getprop("/fbw/stable/aileron") != 1)
+			me.neutralize_trim("aileron");
+
+########################### PRECAUTIONS #############################
+
+		# Reset Stabilizers when out of NORMAL LAW Flight Mode
+		
+		if ((me.law != "NORMAL LAW") or (me.mode != "Flight Mode")) {
+		
+			setprop("/controls/flight/aileron-trim", 0);
+			setprop("/controls/flight/elevator-trim", 0);
+		
+		}
+		
+#####################################################################
 
 
 		# Dis-engage Fly-by-wire input modification if autopilot is engaged
