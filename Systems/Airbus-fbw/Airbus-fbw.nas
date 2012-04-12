@@ -1,8 +1,8 @@
-###############################
-## AIRBUS FLY-BY-WIRE SYSTEM ##
-###############################
-## Written by Narendran      ##
-###############################
+##################################
+## AIRBUS FLY-BY-WIRE SYSTEM    ##
+##################################
+## Written by Narendran and Jon ##
+##################################
 
 # FLIGHT CONTROL LAWS -
 ## Normal Law
@@ -36,6 +36,11 @@ var fbw = {
 		setprop(fcs~"aileron-fbw-output", 0);
 		setprop(fcs~"rudder-fbw-output", 0);
 		setprop(fcs~"elevator-fbw-output", 0);
+
+		## FBW Status
+
+		setprop(fbw_root~"active-law", "NORMAL LAW");
+		setprop(fbw_root~"flight-phase", "Ground Mode");
 		
 		## Flight envelope
 
@@ -53,9 +58,6 @@ var fbw = {
 		
 		setprop(fbw_root~"max-pitch-rate", 15);
 		setprop(fbw_root~"max-roll-rate", 15);
-		
-		setprop(fbw_root~"active-law", "NORMAL LAW");
-		setprop(fbw_root~"flight-phase", "Ground Mode");
 		
 		# This should be moved to 'failures.nas' but as I haven't written it yet, we'll just keep the systems working fine at all times. (0 - all working | 1 - moderate failures | 2 - major failures | 3 - elec/hyd failure)
 		
@@ -77,14 +79,17 @@ var fbw = {
 
 
 	get_state : func{
+
 		#me.law = "NORMAL LAW";
+
+		me.law = getprop(fbw_root~"active-law");
+		me.mode = getprop(fbw_root~"flight-phase");
 		me.condition = getprop("/systems/condition");
+
 		me.pitch = getprop("/orientation/pitch-deg");
 		me.bank = getprop("/orientation/roll-deg");
 		me.agl = getprop("/position/altitude-agl-ft");
 
-		me.law = getprop(fbw_root~"active-law");
-		me.mode = getprop(fbw_root~"flight-phase");
 		me.pitch_limit = getprop(fbw_root~"pitch-limit");
 		me.bank_limit = getprop(fbw_root~"bank-limit");
 		me.manual_bank = getprop(fbw_root~"bank-manual");
@@ -116,8 +121,6 @@ var fbw = {
 			
 		## Check for abnormal attitude
 
-
-		
 		if ((me.pitch >= 60) or (me.pitch <= -30) or (math.abs(me.bank) >= 80))
 			me.law = "ABNORMAL ALTERNATE LAW";
 			
@@ -135,8 +138,9 @@ var fbw = {
 		if ((me.mode == "Flight Mode") and (me.agl <= 50))
 			setprop(fbw_root~"flight-phase", "Flare Mode");
 			
-		if (getprop("/gears/gear/wow"))
+		if (getprop("/gear/gear/wow"))
 			setprop(fbw_root~"flight-phase", "Ground Mode");
+
 
 	},
 	law_normal : func {
@@ -283,6 +287,19 @@ var fbw = {
 					
 		setprop(fbw_root~"control/aileron", 0);
 	},
+	
+	neutralize_trim : func(stab) {
+	
+		var trim_prop = "/controls/flight/" ~ stab ~ "-trim";
+		
+		var trim = getprop(trim_prop);
+		
+		if (trim > 0.005)
+			setprop(trim_prop, trim - 0.01);
+		elsif (trim < -0.005)
+			setprop(trim_prop, trim + 0.01);
+	
+	},
 
 	update : func {
 
@@ -294,6 +311,27 @@ var fbw = {
 		
 		# Find out the current flight phase (Ground/Flight/Flare)
 		me.flight_phase();
+
+		# Bring Stabilizers to 0 gradually when stabilizer mode is turned off
+		
+		if (getprop("/fbw/stable/elevator") != 1)
+			me.neutralize_trim("elevator");
+			
+		if (getprop("/fbw/stable/aileron") != 1)
+			me.neutralize_trim("aileron");
+
+########################### PRECAUTIONS #############################
+
+		# Reset Stabilizers when out of NORMAL LAW Flight Mode
+		
+		if ((me.law != "NORMAL LAW") or (me.mode != "Flight Mode")) {
+		
+			setprop("/controls/flight/aileron-trim", 0);
+			setprop("/controls/flight/elevator-trim", 0);
+		
+		}
+		
+#####################################################################
 
 
 		# Dis-engage Fly-by-wire input modification if autopilot is engaged
@@ -429,7 +467,7 @@ var fbw = {
 
 };
 ###
-# END fwb_loop var
+# END fwb var
 ###
 
 fbw.init();
