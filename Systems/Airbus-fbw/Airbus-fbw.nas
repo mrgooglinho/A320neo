@@ -21,7 +21,7 @@ var DEG2RAD = 0.0174532925;
 var fcs = "/fdm/jsbsim/fcs/";
 var input = "/controls/flight/";
 var deg = "/orientation/";
-var fbw_root = "/fbw/";
+var fbw_root = "/systems/fbw/";
 
 var fbw = {
 	
@@ -43,25 +43,28 @@ var fbw = {
 
 		## FBW Status
 
-		setprop(fbw_root~"active-law", "NORMAL LAW");
-		setprop(fbw_root~"flight-phase", "Ground Mode");
+		setprop(fbw_root~"law", "NORMAL LAW");
+		setprop(fbw_root~"mode", "Ground Mode");
 		
 		## Flight envelope
 
-		setprop("/limits/fbw/max-bank-soft", '33' );
-		setprop("/limits/fbw/max-bank-hard", '67' );	
-		setprop("/limits/fbw/max-roll-speed", '0.261799387'); # max 0.261799387 rad_sec, 15 deg_sec
-		setprop("/limits/fbw/alpha-prot", '19');
-		setprop("/limits/fbw/alpha-floor", '25');
-		setprop("/limits/fbw/alpha-max", '30');
-		setprop("/limits/fbw/alpha-min", '-15');
+		setprop(fbw_root~"limits/max-bank-soft", '33' );
+		setprop(fbw_root~"limits/max-bank-hard", '67' );
+	
+		setprop(fbw_root~"limits/alpha-prot", '19');
+		setprop(fbw_root~"limits/alpha-floor", '25');
+		setprop(fbw_root~"limits/alpha-max", '30');
+		setprop(fbw_root~"limits/alpha-min", '-15');
 
-		setprop(fbw_root~"pitch-limit",30);
-		setprop(fbw_root~"bank-limit",33);
-		setprop(fbw_root~"bank-manual", 67);
+		setprop(fbw_root~"limits/max-pitch-rate", '15' );
+		setprop(fbw_root~"limits/max-roll-rate", '15' );
+
+		#setprop(fbw_root~"pitch-limit",30);
+		#setprop(fbw_root~"bank-limit",33);
+		#setprop(fbw_root~"bank-manual", 67);
 		
-		setprop(fbw_root~"max-pitch-rate", 15);
-		setprop(fbw_root~"max-roll-rate", 15);
+		#setprop(fbw_root~"max-pitch-rate", 15);
+		#setprop(fbw_root~"max-roll-rate", 15);
 		
 		# This should be moved to 'failures.nas' but as I haven't written it yet, we'll just keep the systems working fine at all times. (0 - all working | 1 - moderate failures | 2 - major failures | 3 - elec/hyd failure)
 		
@@ -86,8 +89,8 @@ var fbw = {
 
 		#me.law = "NORMAL LAW";
 
-		me.law = getprop(fbw_root~"active-law");
-		me.mode = getprop(fbw_root~"flight-phase");
+		me.law = getprop(fbw_root~"law");
+		me.mode = getprop(fbw_root~"mode");
 		me.condition = getprop("/systems/condition");
 
 
@@ -95,12 +98,28 @@ var fbw = {
 		me.bank = getprop("/orientation/roll-deg");
 		me.agl = getprop("/position/altitude-agl-ft");
 
-		me.pitch_limit = getprop(fbw_root~"pitch-limit");
-		me.bank_limit = getprop(fbw_root~"bank-limit");
-		me.manual_bank = getprop(fbw_root~"bank-manual");
+		## Alpha Protection Limits
+		me.alpha_prot = getprop(fbw_root~"/limits/alpha-prot");
+		me.alpha_floor = getprop(fbw_root~"/limits/alpha-floor");
+		me.alpha_max =  getprop(fbw_root~"/limits/alpha-max");
+		me.alpha_min = getprop(fbw_root~"/limits/alpha-min");
+		me.max_roll_rate = getprop(fbw_root~"/limits/max-roll-rate");
+		me.max_pitch_rate = getprop(fbw_root~"/limits/max-pitch-rate");
+
+		## Bank Limit Setting
+		me.bank_limit_soft = getprop(fbw_root~"/limits/max-bank-soft");
+		me.bank_limit_hard = getprop(fbw_root~"/limits/max-bank-hard");
+
+		#me.pitch_limit = getprop(fbw_root~"pitch-limit");
+		#me.bank_limit = getprop(fbw_root~"bank-limit");
+		#me.manual_bank = getprop(fbw_root~"bank-manual");
 		
 		me.stick_pitch = getprop(input~ "elevator");
 		me.stick_roll = getprop(input~ "aileron");
+
+		## AP status
+		me.autopilot = getprop("/autopilot/settings/engaged");
+
 
 	}, 
 	get_alpha_prot : func{
@@ -117,22 +136,29 @@ var fbw = {
 
 		# Decide which law to use according to system condition
 		
-		if (me.condition == 1)
-			me.law = "ALTERNATE LAW";
-		elsif (me.condition == 2)
-			me.law = "DIRECT LAW";
-		elsif (me.condition == 3)
-			me.law = "MECH BACKUP";
+		#if (me.condition == 1)
+		#	me.law = "ALTERNATE LAW";
+		#elsif (me.condition == 2)
+		#	me.law = "DIRECT LAW";
+		#elsif (me.condition == 3)
+		#	me.law = "MECH BACKUP";
 			
 		## Check for abnormal attitude
+		if(!me.autopilot) {
+	
+			if ((me.pitch >= 60) or (me.pitch <= -30) or (math.abs(me.bank) >= 80))
+				me.law = "ABNORMAL ALTERNATE LAW";
+			else
+				me.law = "NORMAL LAW";
+		}
+		else {
+			me.law = "AP";
+		}		
 
-		if ((me.pitch >= 60) or (me.pitch <= -30) or (math.abs(me.bank) >= 80))
-			me.law = "ABNORMAL ALTERNATE LAW";
-			
-		setprop("/fbw/active-law", me.law);
+		setprop(fbw_root~"law", me.law);
 
 	},
-	flight_phase : func {
+	flight_mode : func {
 
 		# Find out the current flight phase (Ground/Flight/Flare)
 						
@@ -140,13 +166,13 @@ var fbw = {
 		else if ((me.mode == "Flight Mode") and (me.agl <= 50)) me.mode = "Flare Mode";
 		else if (getprop("/gear/gear/wow")) me.mode = "Ground Mode";
 
-		setprop(fbw_root~"flight-phase", me.mode);
+		setprop(fbw_root~"mode", me.mode);
 
 	},
 	law_normal : func {
 		# Protection
 		
-		if ((me.pitch > me.pitch_limit) or (me.pitch < -0.5 * me.pitch_limit) or (math.abs(me.bank) > me.bank_limit)) {
+		if ((me.pitch > me.alpha_prot) or (me.pitch < me.alpha_min) or (math.abs(me.bank) > me.bank_limit_soft)) {
 		
 			me.active_bank = 0;
 			me.active_pitch = 0;
@@ -294,60 +320,62 @@ var fbw = {
 	},
 	flight_envelope : func {
 			# PITCH AXIS
-			 
-			if ((me.pitch > me.pitch_limit) and (me.stick_pitch <= 0)) {
 			
-				setprop(fbw_root~"target-pitch", me.pitch_limit);
-				setprop(fbw_root~"pitch-hold", 1);
+			# Alpha Prot + joke backwards
+			if ((me.pitch > me.alpha_prot) and (me.stick_pitch <= 0)) {
 			
-			} elsif ((me.pitch < -0.5 * me.pitch_limit) and (me.stick_pitch >= 0)) {
+				setprop(fbw_root~"elevator/target-pitch-deg", me.alpha_prot);
+				setprop(fbw_root~"elevator/PID-pitch-hold", 1);
 			
-				setprop(fbw_root~"target-pitch", -0.5 * me.pitch_limit);
-				setprop(fbw_root~"pitch-hold", 1);
+			# Alpha min + joke fordwards
+			} elsif ((me.pitch < me.alpha_min) and (me.stick_pitch >= 0)) {
+			
+				setprop(fbw_root~"elevator/target-pitch-deg", me.alpha_min);
+				setprop(fbw_root~"elevator/PID-pitch-hold", 1);
 			
 			} else
 				
-				setprop(fbw_root~"pitch-hold", 0);
+				setprop(fbw_root~"elevator/PID-pitch-hold", 0);
 			
 			# ROLL AXIS 
 			
-			if ((me.stick_roll >= 0.5) and (me.bank > me.manual_bank)) {
+			if ((me.stick_roll >= 0.5) and (me.bank > me.bank_limit_hard)) {
 			
-				setprop(fbw_root~"target-bank", me.manual_bank);
-				setprop(fbw_root~"bank-hold", 1);
+				setprop(fbw_root~"ailerons/target-bank-deg", me.bank_limit_hard);
+				setprop(fbw_root~"ailerons/PID-bank-hold", 1);
 			
-			} elsif ((me.stick_roll <= -0.5) and (me.bank < -1 * me.manual_bank)) {
+			} elsif ((me.stick_roll <= -0.5) and (me.bank < -1 * me.bank_limit_hard)) {
 			
-				setprop(fbw_root~"target-bank", -1 * me.manual_bank);
-				setprop(fbw_root~"bank-hold", 1);
+				setprop(fbw_root~"ailerons/target-bank-deg", -1 * me.bank_limit_hard);
+				setprop(fbw_root~"ailerons/PID-bank-hold", 1);
 			
-			} elsif ((me.stick_roll < 0.5) and (me.stick_roll >= 0) and (me.bank > me.bank_limit)) {
+			} elsif ((me.stick_roll < 0.5) and (me.stick_roll >= 0) and (me.bank > me.bank_limit_soft)) {
 			
-				setprop(fbw_root~"target-bank", me.bank_limit);
-				setprop(fbw_root~"bank-hold", 1);
+				setprop(fbw_root~"ailerons/target-bank-deg", me.bank_limit_soft);
+				setprop(fbw_root~"ailerons/PID-bank-hold", 1);
 			
-			} elsif ((me.stick_roll > -0.5) and (me.stick_roll <= 0) and (me.bank < -1 * me.bank_limit)) {
+			} elsif ((me.stick_roll > -0.5) and (me.stick_roll <= 0) and (me.bank < -1 * me.bank_limit_soft)) {
 			
-				setprop(fbw_root~"target-bank", -1 * me.bank_limit);
-				setprop(fbw_root~"bank-hold", 1);
+				setprop(fbw_root~"ailerons/target-bank-deg", -1 * me.bank_limit_soft);
+				setprop(fbw_root~"ailerons/PID-bank-hold", 1);
 			
 			} else
 			
-				setprop(fbw_root~"bank-hold", 0);
+				setprop(fbw_root~"ailerons/PID-bank-hold", 0);
 
 	},
-	neutralize_trim : func(stab) {
-	
-		var trim_prop = "/controls/flight/" ~ stab ~ "-trim";
-		
-		var trim = getprop(trim_prop);
-		
-		if (trim > 0.005)
-			setprop(trim_prop, trim - 0.01);
-		elsif (trim < -0.005)
-			setprop(trim_prop, trim + 0.01);
-	
-	},
+	#neutralize_trim : func(stab) {
+	#
+	#	var trim_prop = "/controls/flight/" ~ stab ~ "-trim";
+	#	
+	#	var trim = getprop(trim_prop);
+	#	
+	#	if (trim > 0.005)
+	#		setprop(trim_prop, trim - 0.01);
+	#	elsif (trim < -0.005)
+	#		setprop(trim_prop, trim + 0.01);
+	#
+	#},
 
 	update : func {
 
@@ -358,7 +386,7 @@ var fbw = {
 		me.airbus_law();
 		
 		# Find out the current flight phase (Ground/Flight/Flare)
-		me.flight_phase();
+		me.flight_mode();
 
 
 
@@ -386,7 +414,7 @@ var fbw = {
 
 		# Dis-engage Fly-by-wire input modification if autopilot is engaged
 
-		if (getprop("/autopilot/settings/engaged")) {
+		if (me.autopilot) {
 		
 			me.active_bank = 0;
 			me.active_pitch = 0;
@@ -405,21 +433,23 @@ var fbw = {
 
 		# Load Limit and Flight Envelope Protection
 		if (me.protect_mode) me.flight_envelope();
+		else {
+			setprop(fbw_root~"ailerons/PID-bank-hold", 0);
+			setprop(fbw_root~"elevator/PID-pitch-hold", 0);
+		}
 		
 #####################################################################
 
 		# DIRECT Servo Control (just simple copying)
 		
-		if (!me.active_bank)
-				
+		if (!me.active_bank and !me.autopilot)
 			setprop(fcs~"aileron-fbw-output", getprop("/controls/flight/aileron"));
 			
-		if (!me.active_pitch)
-		
+		if (!me.active_pitch and !me.autopilot)
 			setprop(fcs~"elevator-fbw-output", getprop("/controls/flight/elevator"));
 
-
-		setprop(fcs~"rudder-fbw-output", getprop(fcs~"rudder-cmd-norm"));
+		if (!me.autopilot)
+			setprop(fcs~"rudder-fbw-output", getprop(fcs~"rudder-cmd-norm"));
 		
 #####################################################################
 
@@ -435,17 +465,18 @@ var fbw = {
 
 		me.pitch_gforce = (me.stick_pitch * -1.75) + 1;
 		
-		me.pitch_rate = (me.stick_pitch * -1 * getprop(fbw_root~"max-pitch-rate"));
+		me.pitch_rate = (me.stick_pitch * -1 * me.max_pitch_rate);
 		
 		## Roll Rate Control
 		
-		me.roll_rate = (me.stick_roll * getprop(fbw_root~"max-roll-rate"));
+		me.roll_rate = (me.stick_roll * me.max_roll_rate);
 		
 		## Set G-forces to properties for xml to read
 		
-		setprop(fbw_root~"target-pitch-gforce", me.pitch_gforce);
-		setprop(fbw_root~"target-roll-rate", me.roll_rate);
-		setprop(fbw_root~"target-pitch-rate", me.pitch_rate);
+		setprop(fbw_root~"elevator/target-pitch-gforce", me.pitch_gforce);
+		setprop(fbw_root~"elevator/target-pitch-rate", me.pitch_rate);
+		setprop(fbw_root~"ailerons/target-roll-rate", me.roll_rate);
+
 		
 		## Activate PIDs
 		if (me.active_pitch) {
@@ -454,20 +485,20 @@ var fbw = {
 			
 			if (getprop("/velocities/airspeed-kt") > 210) {
 				
-				setprop(fbw_root~"elevator/pitch-rate", 0);
-				setprop(fbw_root~"elevator/load-factor", 1);
+				setprop(fbw_root~"elevator/PID-pitch-rate", 0);
+				setprop(fbw_root~"elevator/PID-load-factor", 1);
 				
 			} else {
 			
-				setprop(fbw_root~"elevator/pitch-rate", 1);
-				setprop(fbw_root~"elevator/load-factor", 0);
+				setprop(fbw_root~"elevator/PID-pitch-rate", 1);
+				setprop(fbw_root~"elevator/PID-load-factor", 0);
 			
 			}
 		
 		}
 		
-		if (me.active_bank) setprop(fbw_root~"control/aileron", 1);
-		else setprop(fbw_root~"control/aileron", 0);
+		if (me.active_bank) setprop(fbw_root~"ailerons/PID-roll-rate", 1);
+		else setprop(fbw_root~"ailerons/PID-roll-rate", 0);
 
 	}, # Update Fuction end
 

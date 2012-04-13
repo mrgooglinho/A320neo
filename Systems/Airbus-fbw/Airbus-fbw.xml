@@ -7,10 +7,10 @@
 	<!-- Basic Pitch and Roll Rate Controls -->
 
 	<pid-controller>
-		<name>FBW Pitch Rate G-force Control</name>
+		<name>FBW Pitch G-force Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/elevator/load-factor</property>
+			<property>/systems/fbw/elevator/PID-load-factor</property>
 		</enable>
 		<input>
 			<!--property>/accelerations/pilot-gdamped</property-->
@@ -24,8 +24,7 @@
 			</expression>  
 		</input>
 		<reference>
-			<property>/fbw/target-pitch-gforce</property>
-			<!-- prop>/fbw/target-pitch-rate</prop -->
+			<property>/systems/fbw/elevator/target-pitch-gforce</property>
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
@@ -57,13 +56,13 @@
 		<name>FBW Pitch Rate Degps Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/elevator/pitch-rate</property>
+			<property>/systems/fbw/elevator/PID-pitch-rate</property>
 		</enable>
 		<input>
 			<property>/orientation/pitch-rate-degps</property>
 		</input>
 		<reference>
-			<property>/fbw/target-pitch-rate</property>
+			<property>/systems/fbw/elevator/target-pitch-rate</property>
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
@@ -95,13 +94,13 @@
 		<name>FBW Roll Rate Control</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/control/aileron</property>
+			<property>/systems/fbw/ailerons/PID-roll-rate</property>
 		</enable>
 		<input>
 			<property>/orientation/roll-rate-degps</property>
 		</input>
 		<reference>
-			<property>/fbw/target-roll-rate</property>
+			<property>/systems/fbw/ailerons/target-roll-rate</property>
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
@@ -135,13 +134,13 @@
 		<name>FBW Pitch Hold</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/pitch-hold</property>
+			<property>/systems/fbw/elevator/PID-pitch-hold</property>
 		</enable>
 		<input>
 			<property>/orientation/pitch-deg</property>
 		</input>
 		<reference>
-			<property>/fbw/target-pitch</property>
+			<property>/systems/fbw/elevator/target-pitch-deg</property>
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
@@ -173,13 +172,13 @@
 		<name>FBW Bank Hold</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/bank-hold</property>
+			<property>/systems/fbw/ailerons/PID-bank-hold</property>
 		</enable>
 		<input>
 			<property>/orientation/roll-deg</property>
 		</input>
 		<reference>
-			<property>/fbw/target-bank</property>
+			<property>/systems/fbw/ailerons/target-bank-deg</property>
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
@@ -213,13 +212,13 @@
 		<name>FBW Stabilize Bank</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/stable/aileron</property>
+			<property>/systems/fbw/stable/aileron</property>
 		</enable>
 		<input>
 			<property>/orientation/roll-deg</property>
 		</input>
 		<reference>
-			<property>/fbw/stable/bank-deg</property>
+			<property>/systems/fbw/stable/bank-deg</property>
 		</reference>
 		<output>
 			<property>/controls/flight/aileron-trim</property>
@@ -240,13 +239,13 @@
 		<name>FBW Stabilize Pitch</name>
 		<debug type="bool">false</debug>
 		<enable>
-			<property>/fbw/stable/elevator</property>
+			<property>/systems/fbw/stable/elevator</property>
 		</enable>
 		<input>
 			<property>/orientation/pitch-deg</property>
 		</input>
 		<reference>
-			<property>/fbw/stable/pitch-deg</property>
+			<property>/systems/fbw/stable/pitch-deg</property>
 		</reference>
 		<output>
 			<property>/controls/flight/elevator-trim</property>
@@ -272,11 +271,11 @@
 			<value>0</value>
 		</input>
 		<reference>
-			<prop>/fdm/jsbsim/fcs/elevator-fbw-norm</prop>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-norm</property>
 		</reference>
 		<output>
 			<!--prop>/fdm/jsbsim/fcs/elevator-trim-unrated</prop-->
-			<prop>/controls/flight/elevator-trim</prop>
+			<property>/controls/flight/elevator-trim</property>
 		</output>
 		<config>
 			<Kp>1.000</Kp>

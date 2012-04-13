@@ -25,7 +25,7 @@
 		<output>
 			<!--prop>/controls/flight/elevator-trim</prop-->
 			<!--property>/fdm/jsbsim/fcs/elevator-cmd-norm</property-->
-			<property>/controls/flight/elevator</property>
+			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
 		<!--config>
 			<Kp>-0.01</Kp>
@@ -72,7 +72,7 @@
 			<property>/autopilot/internal/target-roll-deg</property>
 		</reference>
 		<output>
-			<property>/controls/flight/aileron</property>
+			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
 		<!--config>
 			<Kp>-0.01</Kp>
