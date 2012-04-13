@@ -36,12 +36,23 @@
 			<Td>0.00001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
-		</config-->
+		</config>
 		<config>
 			<Kp>-0.025</Kp>
 			<Ti>15</Ti>
 			
 	
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>-000.100</Kp>
+			<alpha>0.1</alpha>
+			<beta>00.0010</beta>
+			<gamma>0.01250</gamma>
+			<Ti>2.51500</Ti>
+			<Td>0.500</Td>
+			<Ts>0.05</Ts>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -72,12 +83,23 @@
 			<Td>0.00001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
-		</config-->
+		</config>
 		<config>
 			<Kp>0.015</Kp>
 			<Ti>15</Ti>
 			<u_min>-1.0</u_min>
 			<u_max>1.0</u_max>
+		</config-->
+		<config>
+			<Kp>0000.2500</Kp>
+			<alpha>0.100</alpha>
+			<beta>00.100</beta>
+			<gamma>0.01250</gamma>
+			<Ti>01.500</Ti>
+			<Td>00.250</Td>
+			<Ts>00.05</Ts>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
 		</config>
 	</pid-controller>
 

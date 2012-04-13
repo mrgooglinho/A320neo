@@ -429,6 +429,10 @@ var fbw = {
 		
 		## Pitch Rate Control
 		
+		#Proper neutral
+		if(math.abs(me.stick_pitch) <= 0.02) me.stick_pitch = 0;
+		if(math.abs(me.stick_roll) <= 0.02) me.stick_roll = 0;
+
 		me.pitch_gforce = (me.stick_pitch * -1.75) + 1;
 		
 		me.pitch_rate = (me.stick_pitch * -1 * getprop(fbw_root~"max-pitch-rate"));
