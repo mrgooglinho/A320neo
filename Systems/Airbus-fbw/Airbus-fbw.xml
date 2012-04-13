@@ -13,8 +13,15 @@
 			<property>/fbw/elevator/load-factor</property>
 		</enable>
 		<input>
-			<property>/accelerations/pilot-gdamped</property>
+			<!--property>/accelerations/pilot-gdamped</property-->
 			<!-- prop>/orientation/pitch-rate-degps</prop -->
+			<expression>
+
+					<div>
+						<property>/accelerations/pilot/z-accel-fps_sec</property>
+						<value type="double">-32.00</value>
+					</div>
+			</expression>  
 		</input>
 		<reference>
 			<property>/fbw/target-pitch-gforce</property>
@@ -23,13 +30,24 @@
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
-		<config>
+		<!--config>
 			<Kp>-1</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>-0.500</Kp>
+			<Ti>1</Ti>
+			<Td>0.001</Td>
+			<Ts>0.050</Ts>
+			<beta>0.75</beta>
+			<alpha>0.1</alpha>
+			<gamma>0.75</gamma>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -50,7 +68,7 @@
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
-		<config>
+		<!--config>
 			<Kp>-0.5</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
@@ -59,6 +77,17 @@
 			<Td>0.00001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>-0.5001000</Kp>
+			<Ti>1</Ti> 
+			<Td>0.001</Td>
+			<Ts>0.050</Ts>
+			<beta>00.500</beta>
+			<alpha>0.1</alpha>
+			<gamma>0.1</gamma>
+			<u_min>-1.0</u_min>
+			<u_max>1.0</u_max>
 		</config>
 	</pid-controller>
 	
@@ -77,13 +106,24 @@
 		<output>
 			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
-		<config>
+		<!--config>
 			<Kp>0.05</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
 			<Ti>10</Ti>
 			<Td>0.000000001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>0.25</Kp>
+			<Ti>1</Ti>
+			<Td>0.001</Td>
+      			<Ts>0.05</Ts>
+  			<beta>0.01</beta>
+			<alpha>0.1</alpha>
+			<gamma>0.25</gamma>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -106,13 +146,24 @@
 		<output>
 			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
 		</output>
-		<config>
+		<!--config>
 			<Kp>-1</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
 			<gamma>0</gamma>
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>-000.100</Kp>
+			<alpha>0.1</alpha>
+			<beta>00.0010</beta>
+			<gamma>0.01250</gamma>
+			<Ti>2.51500</Ti>
+			<Td>0.500</Td>
+			<Ts>0.05</Ts>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -133,7 +184,7 @@
 		<output>
 			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
 		</output>
-		<config>
+		<!--config>
 			<Kp>0.05</Kp>
 			<beta>1</beta>
 			<alpha>0.1</alpha>
@@ -142,12 +193,23 @@
 			<Td>0.000000001</Td>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>0000.2500</Kp>
+			<alpha>0.100</alpha>
+			<beta>00.100</beta>
+			<gamma>0.01250</gamma>
+			<Ti>01.500</Ti>
+			<Td>00.250</Td>
+			<Ts>00.05</Ts>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
 		</config>
 	</pid-controller>
 	
 	<!-- Auto-stabilizer -->
 	
-	<pid-controller>
+	<!--pid-controller>
 		<name>FBW Stabilize Bank</name>
 		<debug type="bool">false</debug>
 		<enable>
@@ -196,6 +258,34 @@
 			<gamma>0</gamma>
 			<Ti>10</Ti>
 			<Td>0.0000001</Td>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config>
+	</pid-controller-->
+
+
+  <!-- PITCH AUTO TRIM -->
+	<pid-controller>
+		<name>Vertical Stab Trim</name>
+		<debug type="bool">false</debug>
+		<input>
+			<value>0</value>
+		</input>
+		<reference>
+			<prop>/fdm/jsbsim/fcs/elevator-fbw-norm</prop>
+		</reference>
+		<output>
+			<!--prop>/fdm/jsbsim/fcs/elevator-trim-unrated</prop-->
+			<prop>/controls/flight/elevator-trim</prop>
+		</output>
+		<config>
+			<Kp>1.000</Kp>
+			<Ti>30</Ti>
+			<Td>0.00001</Td>
+			<Ts>0.050</Ts>
+			<beta>0.0005</beta>
+			<alpha>0.1</alpha>
+			<gamma>0.0005</gamma>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
