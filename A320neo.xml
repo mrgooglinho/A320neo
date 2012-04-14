@@ -601,9 +601,14 @@ YAW MOI_________3950000______23089847_______24848934
 			<rate_limit>4</rate_limit><!-- 1/0.25 = 4 -->
 			<output>fcs/elevator-fbw-norm</output>
 		</actuator>
+		<actuator name="Pitch trim Servo">
+			<input>fcs/pitch-trim-cmd-norm</input>
+			<rate_limit>2</rate_limit><!-- 1/0.25 = 4 -->
+			<output>fcs/pitch-trim-cmd-norm2</output>
+		</actuator>
 		<summer name="Pitch Trim Sum">
 			<input>fcs/elevator-fbw-norm</input>
-			<input>fcs/pitch-trim-cmd-norm</input>
+			<input>fcs/pitch-trim-cmd-norm2</input>
 			<clipto>
 			<min>-1</min>
 			<max>1</max>
