@@ -3,5 +3,29 @@
 <PropertyList>
 
 	<path>res/fd_complete.ac</path>
+	
+	<!-- Overhead Panel -->
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/OHpanel/OHpanel.xml</path>
+		<offsets>
+			<x-m>-0.006166</x-m>
+			<y-m>0</y-m>
+			<z-m>0.752541</z-m>
+			<pitch-deg>62</pitch-deg>
+		</offsets>
+	</model>
+	
+	<!-- Primary Flight Displays
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/OHpanel/OHpanel.xml</path>
+		<offsets>
+			<x-m>-0.006166</x-m>
+			<y-m>0</y-m>
+			<z-m>0.752541</z-m>
+			<pitch-deg>62</pitch-deg>
+		</offsets>
+	</model> -->
 
 </PropertyList>
