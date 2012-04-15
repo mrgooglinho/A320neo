@@ -16,15 +16,15 @@
 		</offsets>
 	</model>
 	
-	<!-- Primary Flight Displays -->
+	<!-- Multi-purpose Control and Display Units -->
 	
 	<model>
-		<path>Aircraft/A320neo/Models/Instruments/PFD/PFD.xml</path>
+		<path>Aircraft/A320neo/Models/Instruments/OHpanel/OHpanel.xml</path>
 		<offsets>
 			<x-m>-0.006166</x-m>
 			<y-m>0</y-m>
 			<z-m>0.752541</z-m>
-			<pitch-deg>62</pitch-deg>
+			<pitch-deg>12</pitch-deg>
 		</offsets>
 	</model>
 
