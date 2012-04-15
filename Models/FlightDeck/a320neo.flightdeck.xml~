@@ -16,7 +16,7 @@
 		</offsets>
 	</model>
 	
-	<!-- Primary Flight Displays
+	<!-- Primary Flight Displays -->
 	
 	<model>
 		<path>Aircraft/A320neo/Models/Instruments/PFD/PFD.xml</path>
@@ -26,6 +26,6 @@
 			<z-m>0.752541</z-m>
 			<pitch-deg>62</pitch-deg>
 		</offsets>
-	</model> -->
+	</model>
 
 </PropertyList>
