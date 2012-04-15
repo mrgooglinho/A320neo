@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+	<path>mCDU.ac</path>
+	
+	<!-- Requires 9V EFIS output power to use mCDU -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>mCDU_init_</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electric/outputs/efis</property>
+				<value>9</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<model>
+		<name>mCDU_init_</name>
+		<path>init/init.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu[1]/page</property>
+				<value>init</value>
+			</equals>
+		</condition>
+	</model>
+
+</PropertyList>

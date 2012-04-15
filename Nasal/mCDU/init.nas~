@@ -197,8 +197,6 @@ var mCDU_init = {
 						setprop(altn_rte~ "route/wp[" ~ wp ~ "]/ias-mach", getprop(route~ "wp[" ~ wp ~ "]/ias-mach"));
 					else
 						setprop(altn_rte~ "route/wp[" ~ wp ~ "]/ias-mach", 0);
-						
-					# While using the FMGS to fly, if altitude or ias-mach is 0, then the FMGS predicts appropriate values between the previous and next values. If none of the values are entered, the FMGS leaves out that specific control to ALT HOLD or IAS/MACH HOLD
 				
 				} # End of WP-Copy For Loop
 			
