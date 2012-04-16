@@ -264,7 +264,7 @@
 
 
   <!-- PITCH AUTO TRIM -->
-	<pid-controller>
+	<!--pid-controller>
 		<name>Vertical Stab Trim</name>
 		<debug type="bool">false</debug>
 		<input>
@@ -274,7 +274,7 @@
 			<property>/fdm/jsbsim/fcs/elevator-fbw-norm</property>
 		</reference>
 		<output>
-			<!--prop>/fdm/jsbsim/fcs/elevator-trim-unrated</prop-->
+
 			<property>/controls/flight/elevator-trim</property>
 		</output>
 		<config>
@@ -288,6 +288,6 @@
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
-	</pid-controller>
+	</pid-controller-->
 
 </PropertyList>
