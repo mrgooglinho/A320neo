@@ -71,7 +71,7 @@ var fmgc_loop = {
     	
     	# SET OFF IF NOT USED
     	
-    	if (me.spd_ctrl == off) {
+    	if (me.spd_ctrl == "off") {
     	
     		setprop(fmgc~ "a-thr/ias", 0);
             setprop(fmgc~ "a-thr/mach", 0);
@@ -81,14 +81,14 @@ var fmgc_loop = {
     	
     	}
     	
-    	if (me.lat_ctrl == off) {
+    	if (me.lat_ctrl == "off") {
     	
     		setprop(servo~ "aileron", 0);
             setprop(servo~ "target-bank", 0);
     	
     	}
     	
-    	if (me.ver_ctrl == off) {
+    	if (me.ver_ctrl == "off") {
     	
     		setprop(servo~ "elevator-vs", 0);
     		setprop(servo~ "elevator-gs", 0);
@@ -135,11 +135,11 @@ var fmgc_loop = {
     			
     			var deflection = defl(bug, 180);
     			
-    			var bank = defl(bug, 20);
+    			var bank = -1 * defl(bug, 20);
     			
     			setprop(servo~  "aileron", 1);
     			
-    			if (math.abs(defl) <= 1)
+    			if (math.abs(deflection) <= 1)
     				setprop(servo~ "target-bank", 0);
     			else
     				setprop(servo~ "target-bank", bank);
@@ -177,7 +177,7 @@ var fmgc_loop = {
     		
     				var target = getprop(fcu~ "alt");
     			
-    				var trgt_vs = limit(target, vs_setting);
+    				var trgt_vs = limit2((target - altitude) * 2, vs_setting);
     				
     				setprop(servo~ "target-vs", trgt_vs / 60);
     				
@@ -191,7 +191,7 @@ var fmgc_loop = {
     			
     				var target_alt = getprop(fcu~ "alt");
     				
-    				var trgt_fpa = limit(target, fpa_setting);
+    				var trgt_fpa = limit2((target_alt - altitude) * 2, fpa_setting);
     				
     				setprop(servo~ "target-pitch", trgt_fpa);
     				

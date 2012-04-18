@@ -65,3 +65,24 @@ var limit = func (defl, limit) {
 		return limit;
 
 }
+
+var limit2 = func (value, limit) {
+
+	if ((value >= 0) and (limit >= 0)) {
+	
+		if (value <= limit)
+			return value;
+		else
+			return limit;
+	
+	} elsif ((value < 0) and (limit < 0)) {
+	
+		if (value >= limit)
+			return value;
+		else
+			return limit;
+	
+	} else
+		return 0;
+
+}
