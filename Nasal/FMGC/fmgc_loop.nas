@@ -27,7 +27,8 @@ var fmgc_loop = {
             
             # AUTOPILOT (VERTICAL)
             
-            setprop(fmgc~ "ver-mode", "alt"); # AVAIL MODES : alt vs ils fpa
+            setprop(fmgc~ "ver-mode", "alt"); # AVAIL MODES : alt (vs/fpa) ils
+            setprop(fmgc~ "ver-sub", "vs"); # AVAIL MODES : vs fpa
             setprop(fmgc~ "ver-ctrl", "off"); # AVAIL MODES : off fmgc man-set
             
             # Rate/Load Factor Configuration
@@ -45,8 +46,8 @@ var fmgc_loop = {
             setprop(fcu~ "mach", 0.78);
             
             setprop(fcu~ "alt", 10000);
-            setprop(fcu~ "ias", 250);
-            setprop(fcu~ "ias", 250);
+            setprop(fcu~ "vs", 1800);
+            setprop(fcu~ "fpa", 5);
             
             setprop(fcu~ "hdg", 0);
             
@@ -58,6 +59,7 @@ var fmgc_loop = {
             setprop(servo~ "aileron", 0);
             setprop(servo~ "target-bank", 0);
             
+            setprop(servo~ "elevator-vs", 0);
             setprop(servo~ "elevator", 0);
             setprop(servo~ "target-pitch", 0);
             
@@ -88,6 +90,8 @@ var fmgc_loop = {
     	
     	if (me.ver_ctrl == off) {
     	
+    		setprop(servo~ "elevator-vs", 0);
+    		setprop(servo~ "elevator-gs", 0);
     		setprop(servo~ "elevator", 0);
             setprop(servo~ "target-pitch", 0);
     	
@@ -103,11 +107,17 @@ var fmgc_loop = {
     		
     			setprop(fmgc~ "a-thr/ias", 1);
     			setprop(fmgc~ "a-thr/mach", 0);
+    			
+    			setprop(fmgc~ "fmgc/ias", 0);
+            	setprop(fmgc~ "fmgc/mach", 0);
     		
     		} else {
     		
     			setprop(fmgc~ "a-thr/ias", 0);
     			setprop(fmgc~ "a-thr/mach", 1);
+    			
+    			setprop(fmgc~ "fmgc/ias", 0);
+        	    setprop(fmgc~ "fmgc/mach", 0);
     		
     		}
     	
@@ -153,11 +163,86 @@ var fmgc_loop = {
     	
     	## VERTICAL CONTROL ----------------------------------------------------
     	
+    	var altitude = getprop("/position/altitude-ft");
     	
+    	var vs_setting = getprop(fcu~ "vs");
+    	
+    	var fpa_setting = getprop(fcu~ "fpa");
+    	
+    	if (me.ver_ctrl == "man-set") {
+    	
+    		if (me.ver_mode == "alt") {
+    		
+    			if (me.ver_sub == "vs") {
+    		
+    				var target = getprop(fcu~ "alt");
+    			
+    				var trgt_vs = limit(target, vs_setting);
+    				
+    				setprop(servo~ "target-vs", trgt_vs / 60);
+    				
+    				setprop(servo~ "elevator-vs", 1);
+    				
+    				setprop(servo~ "elevator", 0);
+    				
+    				setprop(servo~ "elevator-gs", 0);
+    				
+    			} else {
+    			
+    				var target_alt = getprop(fcu~ "alt");
+    				
+    				var trgt_fpa = limit(target, fpa_setting);
+    				
+    				setprop(servo~ "target-pitch", trgt_fpa);
+    				
+    				setprop(servo~ "elevator-vs", 0);
+    				
+    				setprop(servo~ "elevator", 1);
+    				
+    				setprop(servo~ "elevator-gs", 0);
+    			
+    			}
+    		
+    		} elsif (me.ver_mode == "ils") {
+    		
+    			# Main stuff are done on the PIDs
+    			
+    			setprop(servo~ "elevator-gs", 1);
+    				
+    			setprop(servo~ "elevator", 0);
+    			
+    			setprop(servo~ "elevator-vs", 0);
+    		    		
+    		}
+    	
+    	} # End of Manual Setting Check
     	
     	# FMGC CONTROL MODE ====================================================
     	
+    	if (me.ver_ctrl == "fmgc") {
+    	
+    	var cur_wp = getprop("autopilot/route-manager/current-wp");
+    	
     	## AUTO-THROTTLE -------------------------------------------------------
+    	
+    	var spd = getprop("/autopilot/route-manager/route/wp[" ~ cur_wp ~ "]/ias-mach");
+    	
+    	setprop(fmgc_val~ "target-spd", spd);
+    	
+    	setprop(fmgc~ "a-thr/ias", 0);
+        setprop(fmgc~ "a-thr/mach", 0);
+    	
+    	if (spd < 1) {
+    	
+    		setprop(fmgc~ "fmgc/ias", 0);
+            setprop(fmgc~ "fmgc/mach", 0);
+    	
+    	} else {
+    	
+    		setprop(fmgc~ "fmgc/ias", 1);
+            setprop(fmgc~ "fmgc/mach", 0);
+    	
+    	}
     	
     	## LATERAL CONTROL -----------------------------------------------------
     	
@@ -165,6 +250,9 @@ var fmgc_loop = {
     	
     	## VERTICAL CONTROL ----------------------------------------------------
 
+		
+
+		} # End of FMGC Control Check
 		
 
 	},
@@ -178,6 +266,8 @@ var fmgc_loop = {
 		
 		me.ver_mode = getprop(fmgc~ "ver-mode");
 		me.ver_ctrl = getprop(fmgc~ "ver-ctrl");
+		
+		me.ver_sub = getprop(fmgc~ "ver-sub");
 		
 		
 	},

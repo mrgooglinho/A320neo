@@ -78,7 +78,7 @@
 			<prop>/autopilot/internal/lookahead-5-sec-airspeed-kt</prop>
 		</input>
 		<reference>
-			<prop>/flight-management/fmgc-values/ias</prop>
+			<prop>/flight-management/fmgc-values/target-spd</prop>
 		</reference>
 		<output>
 			<prop>/controls/engines/engine[0]/throttle</prop>
@@ -108,7 +108,7 @@
 			<prop>/velocities/mach</prop>
 		</input>
 		<reference>
-			<prop>/flight-management/fmgc-values/mach</prop>
+			<prop>/flight-management/fmgc-values/target-spd</prop>
 		</reference>
 		<output>
 			<prop>/controls/engines/engine[0]/throttle</prop>

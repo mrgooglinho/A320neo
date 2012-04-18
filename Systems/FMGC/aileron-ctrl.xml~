@@ -5,7 +5,7 @@
 <PropertyList>
 
 	<pid-controller>
-		<name>FCU/AP Aileroin Control</name>
+		<name>FCU/AP Aileron Control</name>
 		<debug type="bool">false</debug>
 		<enable>
 			<prop>/servo-control/aileron</prop>
@@ -17,7 +17,7 @@
 			<prop>/servo-control/target-bank</prop>
 		</reference>
 		<output>
-			<prop>/controls/flight/aileron</prop>
+			<prop>/controls/flight/aileron</prop> <!-- This is basically the fbw input prop -->
 		</output>
 		<config>
 			<Kp>0.01</Kp>
@@ -30,5 +30,7 @@
 			<u_max>0.2</u_max>
 		</config>
 	</pid-controller>
+	
+	
 
 </PropertyList>
