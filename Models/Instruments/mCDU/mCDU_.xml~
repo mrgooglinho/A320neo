@@ -19,7 +19,7 @@
 	
 	<model>
 		<name>mCDU_init_</name>
-		<path>init/init.ac</path>
+		<path>init/init.xml</path>
 		<condition>
 			<equals>
 				<property>/instrumentation/mcdu[1]/page</property>

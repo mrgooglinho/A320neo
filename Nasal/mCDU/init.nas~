@@ -2,6 +2,27 @@ var co_tree = "/database/co_routes/";
 var active_rte = "/flight-management/active-rte/";
 var altn_rte = "/flight-management/alternate/route/";
 
+setprop("/instrumentation/mcdu/input", "");
+
+# Initialize with 0 Brightness
+
+setprop("/instrumentation/mcdu/brt", 0);
+
+# Set Default Tropo to 36090 (airbus default)
+
+setprop("/flight-management/tropo", "36090");
+
+# Empty Field Symbols are used when values are "empty" for strings and 0 for numbers, you set values with the functions when programming the FMGC
+
+setprop(active_rte~ "id", "empty");
+setprop(active_rte~ "depicao", "empty");
+setprop(active_rte~ "flight-num", "empty");
+
+setprop("/flight-management/alternate/icao", "empty");
+
+setprop("/flight-management/cost-index", 0);
+setprop("/flight-management/crz_fl", 0);
+
 var mCDU_init = {
 
 	co_rte : func (mcdu, id) {
@@ -14,9 +35,8 @@ var mCDU_init = {
 			
 				var dep = getprop(co_tree~ "route[" ~ index ~ "]/depicao");
 				var arr = getprop(co_tree~ "route[" ~ index ~ "]/arricao");
-				var flt_num = getprop(co_tree~ "route[" ~ index ~ "]/flight-num");
 			
-				me.rte_sel(id, dep, arr, flt_num);
+				me.rte_sel(id, dep, arr);
 			
 			} else
 				setprop("/instrumentation/mcdu[" ~ mcdu ~ "]/msg", "NOT IN DATABASE");
@@ -25,14 +45,13 @@ var mCDU_init = {
 	
 	},
 	
-	rte_sel : func (id, dep, arr, flt_num) {
+	rte_sel : func (id, dep, arr) {
 	
 		# The Route Select function is the get the selected route and put those stuff into the active route
 		
 		setprop(active_rte~ "id", id);
 		setprop(active_rte~ "depicao", dep);
 		setprop(active_rte~ "arricao", arr);
-		setprop(active_rte~ "flight-num", flt_num);
 		
 		me.set_active_rte(id);
 	
@@ -76,29 +95,9 @@ var mCDU_init = {
 	
 		var flt_num_rte = 0;
 		
-		var results = "/instrumentation/mcdu[" mcdu "]/flt-num-results/";
+		var results = "/instrumentation/mcdu[" ~ mcdu ~ "]/flt-num-results/";
 	
-		for (var index = 0; getprop(co_tree~ "route[" ~ index ~ "]/flight-num") != nil; index += 1) {
-		
-			var flight_num_chk = getprop(co_tree~ "route[" ~ index ~ "]/flight-num");
-			
-			if (flight_num_chk == flight_num) {
-			
-				setprop(results~ "result[" ~ flt_num_rte ~ "]/rte_id", getprop(co_tree~ "route[" ~ index ~ "]/rte_id"));
-				
-				var route = co_tree~ "route[" ~ index ~ "]/route/";
-				
-				for (var wp = 0; getprop(route~ "wp[" ~ wp ~ "]/wp-id") != nil; wp += 1) {
-				
-					setprop(results~ "result[" ~ flt_num_rte ~ "]/route/wp[" ~ wp ~ "]/wp-id", getprop(route~ "wp[" ~ wp ~ "]/wp-id"));
-				
-				} # End of Waypoints Copy Loop
-
-			} # End of Flight Number Check
-			
-			flt_num_rte += 1;
-		
-		} # End of Flight Number Loop
+		# Come back later
 		
 		setprop("/instrumentation/mcdu[" ~ mcdu ~ "]/page", "FLT-NUM_RESULTS");
 	
@@ -106,9 +105,9 @@ var mCDU_init = {
 	
 	from_to : func (mcdu, from, to) {
 	
-		var from-to_rte = 0;
+		var from_to_rte = 0;
 		
-		var results = "/instrumentation/mcdu[" mcdu "]/from-to-results/";
+		var results = "/instrumentation/mcdu[" ~mcdu~ "]/from-to-results/";
 	
 		for (var index = 0; getprop(co_tree~ "route[" ~ index ~ "]/depicao") != nil; index += 1) {
 		
@@ -118,19 +117,19 @@ var mCDU_init = {
 			
 			if ((from == dep) and (to == arr)) {
 			
-				setprop(results~ "result[" ~ from-to_rte ~ "]/rte_id", getprop(co_tree~ "route[" ~ index ~ "]/rte_id"));
+				setprop(results~ "result[" ~ from_to_rte ~ "]/rte_id", getprop(co_tree~ "route[" ~ index ~ "]/rte_id"));
 				
 				var route = co_tree~ "route[" ~ index ~ "]/route/";
 				
 				for (var wp = 0; getprop(route~ "wp[" ~ wp ~ "]/wp-id") != nil; wp += 1) {
 				
-					setprop(results~ "result[" ~ from-to_rte ~ "]/route/wp[" ~ wp ~ "]/wp-id", getprop(route~ "wp[" ~ wp ~ "]/wp-id"));
+					setprop(results~ "result[" ~ from_to_rte ~ "]/route/wp[" ~ wp ~ "]/wp-id", getprop(route~ "wp[" ~ wp ~ "]/wp-id"));
 				
 				} # End of Waypoints Copy Loop
 
 			} # End of From-To Check
 			
-			from-to_rte += 1;
+			from_to_rte += 1;
 		
 		} # End of From-To Loop
 		
@@ -148,9 +147,8 @@ var mCDU_init = {
 			
 				var dep = getprop(co_tree~ "route[" ~ index ~ "]/depicao");
 				var arr = getprop(co_tree~ "route[" ~ index ~ "]/arricao");
-				var flt_num = getprop(co_tree~ "route[" ~ index ~ "]/flight-num");
 			
-				me.altn_rte_sel(id, dep, arr, flt_num);
+				me.altn_rte_sel(id, dep, arr);
 			
 			} else
 				setprop("/instrumentation/mcdu[" ~ mcdu ~ "]/msg", "NOT IN DATABASE");
@@ -161,14 +159,13 @@ var mCDU_init = {
 	
 	},
 	
-	altn_rte_sel : func (id, dep, arr, flt_num) {
+	altn_rte_sel : func (id, dep, arr) {
 	
 		# The Route Select function is the get the selected route and put those stuff into the alternate route
 		
 		setprop(altn_rte~ "id", id);
 		setprop(altn_rte~ "depicao", dep);
 		setprop(altn_rte~ "arricao", arr);
-		setprop(altn_rte~ "flight-num", flt_num);
 		
 		me.set_altn_rte(id);
 	

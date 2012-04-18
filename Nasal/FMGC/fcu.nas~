@@ -1,0 +1,5 @@
+Vvar clear_inp = func {
+
+	setprop("/instrumentation/mcdu/input", "");
+
+};
