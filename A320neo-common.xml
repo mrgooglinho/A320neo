@@ -93,15 +93,15 @@
 				<name>Autopilot helpers</name>
 				<path>Aircraft/Generic/generic-autopilot-helper.xml</path>
 			</autopilot>
+			
+			<!-- Fly-by-wire =============================================== -->
+			
 			<autopilot>
-				<name>Autopilot</name>
-				<path>Aircraft/A320neo/Systems/a320-autopilot3.xml</path>
-				<!--path>Aircraft/Generic/generic-autopilot.xml</path-->
-			</autopilot>
-			<!--autopilot>
 				<name>Fly By Wire</name>
-				<path>Aircraft/A320neo/Systems/a320-fbw.xml</path>
-			</autopilot-->
+				<path>Aircraft/A320neo/Systems/Airbus-fbw/Airbus-fbw.xml</path>
+			</autopilot>
+
+			<!-- =========================================================== -->
 
 			<autopilot>
 				<name>Autobrake</name>
@@ -814,6 +814,10 @@
 			<file>Aircraft/A320neo/Nasal/mCDU/loop.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/parse_DB.nas</file>
 		</mcdu>
+	
+		<fbw>
+			<file>Aircraft/A320neo/Systems/Airbus-fbw/Airbus-fbw.nas</file>
+		</fbw>
 	
 		<a320neo>
 			<file>Aircraft/Generic/limits.nas</file>
