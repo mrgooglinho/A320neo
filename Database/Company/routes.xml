@@ -2,9 +2,11 @@
 
 <PropertyList>
 
-	<!-- The default routes.xml includes 4 merlion routes, for 3 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
+	<!-- The default routes.xml includes 6 merlion routes, for 5 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
 	
-	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1 -->
+	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1, MIASINHKG1, MIASINMNL1 -->
+	
+	<!-- NOTE TO MIA PILOTS: Flight Database with ALL merlion routes will be available soon in the website -->
 	
 	<!-- NOTE: SIDs, STARs and IAPs have to be added separately according to ATC instructions and weather conditions -->
 	
@@ -198,6 +200,124 @@
 				<wp-id>TRA</wp-id>
 				<altitude-ft>8000</altitude-ft>
 				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINHKG1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>VHHH</arricao>
+		<route>
+			<wp>
+				<wp-id>VMR</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>RAXIM</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OTLON</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VISAT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DUBSA</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DAMOG</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOLOX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DUDIS</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DADAG</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DAMVO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOXAR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>NITOM</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DAMEL</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DONDA</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOSUT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DULOP</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DUMOL</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+		</route>
+	</route>
+		
+	<route>
+		<rte_id>MIASINMNL1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>RPLL</arricao>
+		<route>
+			<wp>
+				<wp-id>HOSBA</wp-id>
+				<altitude-ft>14000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOMAN</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VERIN</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LUSMO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAGOT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAXOR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LULBU</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LEGED</wp-id>
+				<ias-mach>0.78</ias-mach>
 			</wp>
 		</route>
 	</route>

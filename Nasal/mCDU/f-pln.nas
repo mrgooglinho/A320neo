@@ -258,6 +258,8 @@ var f_pln = {
 			
 			var dep = getprop(rm_route~ "route/wp/id");
 			
+			if (dep != nil) {
+			
 			var time_dep = "0000";
 			
 			var spd_alt = "---/-----";
@@ -267,6 +269,8 @@ var f_pln = {
 			setprop(f_pln_disp~ "l1/time", time_dep);
 			
 			setprop(f_pln_disp~ "l1/spd_alt", spd_alt);
+			
+			}
 			
 			# L2 is empty (- F-PLN DISCONTINUITY -) ----------------------------
 			

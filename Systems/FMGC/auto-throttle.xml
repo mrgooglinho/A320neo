@@ -30,7 +30,7 @@
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
 			<u_min>0</u_min>
-			<u_max>1</u_max>
+			<u_max>0.85</u_max> <!-- A/THR Range 0 to 84% -->
 		</config>
 	</pid-controller>
 
@@ -60,7 +60,7 @@
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
 			<u_min>0</u_min>
-			<u_max>1</u_max>
+			<u_max>0.85</u_max>
 		</config>
 	</pid-controller>
 	
@@ -92,7 +92,7 @@
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
 			<u_min>0</u_min>
-			<u_max>1</u_max>
+			<u_max>0.85</u_max>
 		</config>
 	</pid-controller>
 
@@ -122,7 +122,7 @@
 			<Ti>10</Ti>
 			<Td>0.00001</Td>
 			<u_min>0</u_min>
-			<u_max>1</u_max>
+			<u_max>0.85</u_max>
 		</config>
 	</pid-controller>
 

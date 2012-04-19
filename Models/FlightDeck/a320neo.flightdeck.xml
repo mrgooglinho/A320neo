@@ -37,5 +37,990 @@
 			<pitch-deg>12</pitch-deg>
 		</offsets>
 	</model>
+	
+	<!-- Flight Control Unit Animations -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>spd.ind</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/spd-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/spd-mode</property>
+					<value>ias</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>mach.ind</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/spd-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/spd-mode</property>
+					<value>mach</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>spd.ind</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/spd-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/spd-mode</property>
+					<value>ias</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>spd.fmgc</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/spd-ctrl</property>
+				<value>fmgc</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>lat.fmgc</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/lat-ctrl</property>
+				<value>fmgc</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ver.fmgc</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/ver-ctrl</property>
+				<value>fmgc</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>vs.ind</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/ver-sub</property>
+				<value>vs</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>fpa.ind</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/ver-sub</property>
+				<value>fpa</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>levelch.ind</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/fcu/level_ch</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<!-- Knobs' Pick Animations -->
+	
+	<!-- IMPORTANT - USE SCROLL WHEEL ON MOUSE OF TOUCH PAD EDGE TO SCROLL, AND CLICK TO SELECT -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>spd-sel</object-name>
+		<action>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					var spd_mode = getprop("/flight-management/control/spd-mode");
+					
+					if (spd_mode == "ias") {
+					
+						var ias = getprop("/flight-management/fcu-values/ias");
+						
+						if (350 > ias)
+							setprop("/flight-management/fcu-values/ias", ias + 1);
+					
+					} else {
+					
+						var mach = getprop("/flight-management/fcu-values/mach");
+						
+						if (0.82 > mach)
+							setprop("/flight-management/fcu-values/mach", mach + 0.01);
+					
+					}
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					var spd_mode = getprop("/flight-management/control/spd-mode");
+					
+					if (spd_mode == "ias") {
+					
+						var ias = getprop("/flight-management/fcu-values/ias");
+						
+						if (ias > 0)
+							setprop("/flight-management/fcu-values/ias", ias - 1);
+					
+					} else {
+					
+						var mach = getprop("/flight-management/fcu-values/mach");
+						
+						if (mach > 0)
+							setprop("/flight-management/fcu-values/mach", mach - 0.01);
+					
+					}
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/spd-ctrl</property>
+				<value>man-set</value>
+				<value>fmgc</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>hdg-sel</object-name>
+		<action>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var hdg_prop = "/flight-management/fcu-values/hdg";
+				
+					if (359 > getprop(hdg_prop))
+						setprop(hdg_prop, getprop(hdg_prop) + 1);
+					else
+						setprop(hdg_prop, 0);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var hdg_prop = "/flight-management/fcu-values/hdg";
+				
+					if (getprop(hdg_prop) > 0)
+						setprop(hdg_prop, getprop(hdg_prop) - 1);
+					else
+						setprop(hdg_prop, 359);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/lat-ctrl</property>
+				<value>man-set</value>
+				<value>fmgc</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>alt-sel</object-name>
+		<action>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var step = getprop("/flight-management/control/alt-sel-mode");
+				
+					var alt_prop = "/flight-management/fcu-values/alt";
+				
+					if (41000 > getprop(alt_prop))
+						setprop(alt_prop, getprop(alt_prop) + step);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var step = getprop("/flight-management/control/alt-sel-mode");
+					
+					var alt_prop = "/flight-management/fcu-values/alt";
+				
+					if (getprop(alt_prop) > 0)
+						setprop(alt_prop, getprop(alt_prop) - step);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/ver-ctrl</property>
+				<value>man-set</value>
+				<value>fmgc</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>vs-sel</object-name>
+		<action>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var sub_mode = getprop("/flight-management/control/ver-sub");
+				
+					var vs_prop = "/flight-management/fcu-values/vs";
+					
+					var fpa_prop = "/flight-management/fcu-values/fpa";
+				
+					if (sub_mode == "vs") {
+					
+						if (3000 > getprop(vs_prop))
+							setprop(vs_prop, getprop(vs_prop) + 100);
+					
+					} else {
+					
+						if (15 > getprop(fpa_prop))
+							setprop(fpa_prop, getprop(fpa_prop) + 1);
+					
+					}
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var sub_mode = getprop("/flight-management/control/ver-sub");
+				
+					var vs_prop = "/flight-management/fcu-values/vs";
+					
+					var fpa_prop = "/flight-management/fcu-values/fpa";
+				
+					if (sub_mode == "vs") {
+					
+						if (getprop(vs_prop) > -2500)
+							setprop(vs_prop, getprop(vs_prop) - 100);
+					
+					} else {
+					
+						if (getprop(fpa_prop) > -10)
+							setprop(fpa_prop, getprop(fpa_prop) - 1);
+					
+					}
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					setprop("/flight-management/fcu-values/alt", getprop("/position/altitude-ft"));
+					
+					setprop("/flight-management/fcu-values/vs", 0);
+					
+					setprop("/flight-management/fcu-values/fpa", 0);
+				
+					setprop("/flight-management/control/ver-ctrl", "man-set");
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<!-- Button Pick Animations -->
+	
+	<animation>
+		<type>pick</type>
+		<object-name>loc</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					if (getprop("/flight-management/control/lat-mode") != "nav1") {
+				
+						setprop("/flight-management/control/lat-mode", "nav1");
+	
+						setprop("/flight-management/control/lat-ctrl", "man-set");
+						
+					} else
+					
+						setprop("/flight-management/control/lat-mode", "hdg");
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>gs</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+				if (getprop("/flight-management/control/ver-mode") != "ils") {
+				
+					setprop("/flight-management/control/ver-mode", "ils");
+	
+					setprop("/flight-management/control/ver-ctrl", "man-set");
+				
+				} else
+				
+					setprop("/flight-management/control/ver-mode", "alt");
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>exped</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var vs_fps = getprop("/velocities/vertical-speed-fps");
+				
+					if (vs_fps >= 0) {
+				
+						setprop("/flight-management/fcu-values/vs", 2800);
+					
+						setprop("/flight-management/fcu-values/fpa", 10);
+					
+					} else {
+					
+						etprop("/flight-management/fcu-values/vs", -2500);
+					
+						setprop("/flight-management/fcu-values/fpa", -10);
+					
+					}
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>spd-mach</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/spd-mode</property>
+				<value>mach</value>
+				<value>ias</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>vs-fpa</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/ver-sub</property>
+				<value>fpa</value>
+				<value>vs</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>alt-sel-mode</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/alt-sel-mode</property>
+				<value>1000</value>
+				<value>100</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ap1</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/ap1-master</property>
+				<value>eng</value>
+				<value>off</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>ap2</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/ap2-master</property>
+				<value>eng</value>
+				<value>off</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>a-thr</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>/flight-management/control/a-thrust</property>
+				<value>eng</value>
+				<value>off</value>
+			</binding>
+		</action>
+	</animation>
+	
+	<!-- FCU Screen Power On -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>fcu_screen</object-name>
+		<object-name>spd-text</object-name>
+		<object-name>mach-text</object-name>
+		<object-name>hdg-text</object-name>
+		<object-name>alt-text</object-name>
+		<object-name>vs-text</object-name>
+		<object-name>fpa-text</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>9</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<!-- OSGText -->
+	
+	<!-- Show Text only in MAN-SET modes -->
+	
+	<animation>
+		<type>select</type>
+		<object-name>spd-text</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/spd-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/spd-mode</property>
+					<value>ias</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>mach-text</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/spd-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/spd-mode</property>
+					<value>mach</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>hdg-text</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/lat-ctrl</property>
+				<value>man-set</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>alt-text</object-name>
+		<condition>
+			<equals>
+				<property>/flight-management/control/ver-ctrl</property>
+				<value>man-set</value>
+			</equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>vs-text</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/ver-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/ver-sub</property>
+					<value>vs</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>fpa-text</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/flight-management/control/ver-ctrl</property>
+					<value>man-set</value>
+				</equals>
+				<equals>
+					<property>/flight-management/control/ver-sub</property>
+					<value>fpa</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<!-- Material Animation -->
+	
+	<animation>
+		<type>material</type>
+		<object-name>spd-text</object-name>
+		<object-name>mach-text</object-name>
+		<object-name>hdg-text</object-name>
+		<object-name>alt-text</object-name>
+		<object-name>vs-text</object-name>
+		<object-name>fpa-text</object-name>
+		<diffuse>
+			<red>0.89</red>
+			<green>0.37</green>
+			<blue>0.08</blue>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>0.89</red>
+			<green>0.37</green>
+			<blue>0.08</blue>
+		</emission>
+	</animation>
+	
+	<!-- Actual Text -->
+	
+	<text>
+		<name>spd-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>-0.0877</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%3.0f</format>
+		<property>/flight-management/fcu-values/ias</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>mach-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>-0.0877</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%1.2f</format>
+		<property>/flight-management/fcu-values/mach</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>hdg-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>-0.0469</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">%s</format>
+		<property>/flight-management/fcu-values/hdg-disp</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>alt-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>0.0432</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%5.0f</format>
+		<property>/flight-management/fcu-values/alt</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>vs-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>0.0932</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.0f</format>
+		<property>/flight-management/fcu-values/vs</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>fpa-text</name>
+		<offsets>
+			<x-m>-0.4868</x-m>
+			<y-m>0.0932</y-m>
+			<z-m>0.1756</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%2.0f</format>
+		<property>/flight-management/fcu-values/fpa</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.008</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<!-- Knobs Rotate -->
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>hdg-sel</object-name>
+		<property>/flight-management/fcu-values/hdg</property>
+		<factor>11.25</factor>
+		<axis>
+			<x1-m>-0.4608</x1-m>
+			<y1-m>-0.0472</y1-m>
+			<z1-m>0.1526</z1-m>
+			<x2-m>-0.4807</x2-m>
+			<y2-m>-0.0472</y2-m>
+			<z2-m>0.1478</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>spd-sel</object-name>
+		<property>/flight-management/fcu-values/spd-knob</property>
+		<factor>11.25</factor>
+		<axis>
+			<x1-m>-0.4608</x1-m>
+			<y1-m>-0.0874</y1-m>
+			<z1-m>0.1526</z1-m>
+			<x2-m>-0.4807</x2-m>
+			<y2-m>-0.0874</y2-m>
+			<z2-m>0.1478</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>alt-sel</object-name>
+		<property>/flight-management/fcu-values/alt</property>
+		<factor>11.25</factor>
+		<axis>
+			<x1-m>-0.4738</x1-m>
+			<y1-m>0.0433</y1-m>
+			<z1-m>0.1485</z1-m>
+			<x2-m>-0.4806</x2-m>
+			<y2-m>0.0433</y2-m>
+			<z2-m>0.1468</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>vs-sel</object-name>
+		<property>/flight-management/fcu-values/vs-knob</property>
+		<factor>11.25</factor>
+		<axis>
+			<x1-m>-0.4608</x1-m>
+			<y1-m>0.0924</y1-m>
+			<z1-m>0.1526</z1-m>
+			<x2-m>-0.4807</x2-m>
+			<y2-m>0.0924</y2-m>
+			<z2-m>0.1478</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>alt-sel-mode</object-name>
+		<property>/flight-management/control/alt-sel-mode</property>
+		<interpolation>
+			<entry><ind>100</ind><dep>0</dep></entry>
+			<entry><ind>1000</ind><dep>90</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.4738</x1-m>
+			<y1-m>0.0433</y1-m>
+			<z1-m>0.1485</z1-m>
+			<x2-m>-0.4806</x2-m>
+			<y2-m>0.0433</y2-m>
+			<z2-m>0.1468</z2-m>
+		</axis>
+	</animation>
+	
+	<!-- AP1, AP2, LOC, APPR and A-THR Indicator Textranslate -->
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>ap1</object-name>
+		<property>/flight-management/control/fcu/ap1</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>ap2</object-name>
+		<property>/flight-management/control/fcu/ap2</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>a-thr</object-name>
+		<property>/flight-management/control/fcu/a-thrust</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>loc</object-name>
+		<property>/flight-management/control/fcu/nav1</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>gs</object-name>
+		<property>/flight-management/control/fcu/ils</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 </PropertyList>

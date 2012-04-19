@@ -9,10 +9,14 @@ var fmgc_loop = {
             me.UPDATE_INTERVAL = 0.1;
             me.loopid = 0;
             
+            # ALT SELECT MODE
+            
+            setprop(fmgc~ "alt-sel-mode", "100"); # AVAIL MODES : 100 1000
+            
             # AUTO-THROTTLE
             
             setprop(fmgc~ "spd-mode", "ias"); # AVAIL MODES : ias mach
-            setprop(fmgc~ "spd-ctrl", "off"); # AVAIL MODES : off fmgc man-set
+            setprop(fmgc~ "spd-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
             
             setprop(fmgc~ "a-thr/ias", 0);
             setprop(fmgc~ "a-thr/mach", 0);
@@ -23,13 +27,19 @@ var fmgc_loop = {
             # AUTOPILOT (LATERAL)
             
             setprop(fmgc~ "lat-mode", "hdg"); # AVAIL MODES : hdg nav1
-            setprop(fmgc~ "lat-ctrl", "off"); # AVAIL MODES : off fmgc man-set
+            setprop(fmgc~ "lat-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
             
             # AUTOPILOT (VERTICAL)
             
             setprop(fmgc~ "ver-mode", "alt"); # AVAIL MODES : alt (vs/fpa) ils
             setprop(fmgc~ "ver-sub", "vs"); # AVAIL MODES : vs fpa
-            setprop(fmgc~ "ver-ctrl", "off"); # AVAIL MODES : off fmgc man-set
+            setprop(fmgc~ "ver-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
+            
+            # AUTOPILOT (MASTER)
+            
+            setprop(fmgc~ "ap1-master", "off");
+            setprop(fmgc~ "ap2-master", "off");
+            setprop(fmgc~ "a-thrust", "off");
             
             # Rate/Load Factor Configuration
             
@@ -67,11 +77,21 @@ var fmgc_loop = {
     },
     	update : func {
     	
+    	var altitude = getprop("/position/altitude-ft");
+    	
     	me.get_settings();
+    	
+    	me.lvlch_check();
+    	
+    	me.knob_sum();
+    	
+    	me.hdg_disp();
+    	
+    	me.fcu_lights();
     	
     	# SET OFF IF NOT USED
     	
-    	if (me.spd_ctrl == "off") {
+    	if ((me.spd_ctrl == "off") or (me.a_thr == "off")) {
     	
     		setprop(fmgc~ "a-thr/ias", 0);
             setprop(fmgc~ "a-thr/mach", 0);
@@ -81,14 +101,14 @@ var fmgc_loop = {
     	
     	}
     	
-    	if (me.lat_ctrl == "off") {
+    	if ((me.lat_ctrl == "off") or ((me.ap1 == "off") and (me.ap2 == "off"))) {
     	
     		setprop(servo~ "aileron", 0);
             setprop(servo~ "target-bank", 0);
     	
     	}
     	
-    	if (me.ver_ctrl == "off") {
+    	if ((me.ver_ctrl == "off") or ((me.ap1 == "off") and (me.ap2 == "off"))) {
     	
     		setprop(servo~ "elevator-vs", 0);
     		setprop(servo~ "elevator-gs", 0);
@@ -101,7 +121,7 @@ var fmgc_loop = {
 
 		## AUTO-THROTTLE -------------------------------------------------------
     	
-    	if (me.spd_ctrl == "man-set") {
+    	if ((me.spd_ctrl == "man-set") and (me.a_thr == "eng")) {
     	
     		if (me.spd_mode == "ias") {
     		
@@ -123,6 +143,8 @@ var fmgc_loop = {
     	
     	}
     	
+    	if ((me.ap1 == "eng") or (me.ap2 == "eng")) {
+    	
     	## LATERAL CONTROL -----------------------------------------------------
     	
     	if (me.lat_ctrl == "man-set") {
@@ -133,9 +155,10 @@ var fmgc_loop = {
     			
     			var bug = getprop(fcu~ "hdg");
     			
+    			var bank = -1 * defl(bug, 15);
+    			
     			var deflection = defl(bug, 180);
     			
-    			var bank = -1 * defl(bug, 20);
     			
     			setprop(servo~  "aileron", 1);
     			
@@ -152,7 +175,7 @@ var fmgc_loop = {
     			
     			setprop(servo~ "aileron", 1);
     			
-    			if (math.abs(defl) <= 1)
+    			if (math.abs(nav1_error) <= 1)
     				setprop(servo~ "target-bank", 0);
     			else
     				setprop(servo~ "target-bank", bank);    			
@@ -162,8 +185,6 @@ var fmgc_loop = {
     	}
     	
     	## VERTICAL CONTROL ----------------------------------------------------
-    	
-    	var altitude = getprop("/position/altitude-ft");
     	
     	var vs_setting = getprop(fcu~ "vs");
     	
@@ -217,15 +238,26 @@ var fmgc_loop = {
     	
     	} # End of Manual Setting Check
     	
+    	} # End of AP1 Master Check
+    	
     	# FMGC CONTROL MODE ====================================================
     	
-    	if (me.ver_ctrl == "fmgc") {
+    	if ((me.spd_ctrl == "fmgc") and (me.a_thr == "eng")) {
     	
     	var cur_wp = getprop("autopilot/route-manager/current-wp");
     	
     	## AUTO-THROTTLE -------------------------------------------------------
     	
     	var spd = getprop("/autopilot/route-manager/route/wp[" ~ cur_wp ~ "]/ias-mach");
+    	
+    	if (spd == nil) {
+			
+			if (altitude <= 10000)
+				spd = 250;
+			else
+				spd = 0.78;
+    	
+    	}
     	
     	setprop(fmgc_val~ "target-spd", spd);
     	
@@ -244,16 +276,66 @@ var fmgc_loop = {
     	
     	}
     	
+    	}
+    	
+    	if ((me.ap1 == "eng") or (me.ap2 == "eng")) {
+    	
     	## LATERAL CONTROL -----------------------------------------------------
     	
+    	if (me.lat_ctrl == "fmgc") {
     	
+    		var bug = getprop("/autopilot/internal/true-heading-error-deg");
+			
+			var bank = defl(bug, 15);
+			
+			setprop(servo~  "aileron", 1);
+			
+			if (math.abs(bug) <= 1)
+				setprop(servo~ "target-bank", 0);
+			else
+				setprop(servo~ "target-bank", bank);
+    	
+    	}
     	
     	## VERTICAL CONTROL ----------------------------------------------------
 
+		if (me.ver_ctrl == "fmgc") {
 		
+			var current_wp = getprop("/autopilot/route-manager/current-wp");
+			
+			var target_alt = getprop("/autopilot/route-manager/route/wp[" ~ current_wp ~ "]/altitude-ft");
 
-		} # End of FMGC Control Check
+			if (target_alt == nil)
+				target_alt = altitude;
+			
+			if (target_alt < 0)
+				target_alt = altitude;
+			
+			var alt_diff = target_alt - altitude;
+			
+			var ground_speed_kt = getprop("/velocities/groundspeed-kt");
+			
+			var leg_dist_nm = getprop("/instrumentation/gps/wp/leg-distance-nm");
+			
+			var leg_time_hr = leg_dist_nm / ground_speed_kt;
+			
+			var leg_time_sec = leg_time_hr * 3600;
+			
+			var target_fps = (alt_diff / leg_time_sec) + 15;
+			
+			var final_vs = limit(target_fps, 50);
+			
+			setprop(servo~ "target-vs", final_vs);
+    				
+			setprop(servo~ "elevator-vs", 1);
+			
+			setprop(servo~ "elevator", 0);
+			
+			setprop(servo~ "elevator-gs", 0);
 		
+		}
+		
+		} # End of AP1 MASTER CHECK
 
 	},
 		get_settings : func {
@@ -269,8 +351,85 @@ var fmgc_loop = {
 		
 		me.ver_sub = getprop(fmgc~ "ver-sub");
 		
+		me.ap1 = getprop(fmgc~ "ap1-master");
+		me.ap2 = getprop(fmgc~ "ap2-master");
+		me.a_thr = getprop(fmgc~ "a-thrust");
+	
+	},
+	
+		lvlch_check : func {
+		
+		if ((me.ap1 == "eng") or (me.ap2 == "eng")) {
+		
+			var vs_fps = getprop("/velocities/vertical-speed-fps");
+		
+			if (math.abs(vs_fps) > 8)
+				setprop("/flight-management/fcu/level_ch", 1);
+			else
+				setprop("/flight-management/fcu/level_ch", 0);
+		
+		} else
+			setprop("/flight-management/fcu/level_ch", 0);
 		
 	},
+	
+		knob_sum : func {
+
+		var ias = getprop(fcu~ "ias");
+		
+		var mach = getprop(fcu~ "mach");
+		
+		setprop(fcu~ "spd-knob", ias + (100 * mach));
+		
+		var vs = getprop(fcu~ "vs");
+		
+		var fpa = getprop(fcu~ "fpa");
+		
+		setprop(fcu~ "vs-knob", fpa + (vs/100));
+		
+	},
+		hdg_disp : func {
+		
+		var hdg = getprop(fcu~ "hdg");
+		
+		if (hdg < 10)
+			setprop(fcu~ "hdg-disp", "00" ~ hdg);
+		elsif (hdg < 100)
+			setprop(fcu~ "hdg-disp", "0" ~ hdg);
+		else
+			setprop(fcu~ "hdg-disp", "" ~ hdg);
+		
+	},
+	
+		fcu_lights : func {
+		
+		if (me.lat_mode == "nav1")
+			setprop(fmgc~ "fcu/nav1", 1);
+		else
+			setprop(fmgc~ "fcu/nav1", 0);
+			
+		if (me.ver_mode == "ils")
+			setprop(fmgc~ "fcu/ils", 1);
+		else
+			setprop(fmgc~ "fcu/ils", 0);
+			
+		if (me.a_thr == "eng")
+			setprop(fmgc~ "fcu/a-thrust", 1);
+		else
+			setprop(fmgc~ "fcu/a-thrust", 0);
+			
+		if (me.ap1 == "eng")
+			setprop(fmgc~ "fcu/ap1", 1);
+		else
+			setprop(fmgc~ "fcu/ap1", 0);
+			
+		if (me.ap2 == "eng")
+			setprop(fmgc~ "fcu/ap2", 1);
+		else
+			setprop(fmgc~ "fcu/ap2", 0);
+		
+	},
+	
         reset : func {
             me.loopid += 1;
             me._loop_(me.loopid);

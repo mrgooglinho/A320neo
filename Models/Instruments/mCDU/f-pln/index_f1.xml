@@ -28,7 +28,6 @@
             <binding>
 				<command>nasal</command>
 		 		<script>
-		 			setprop("/autopilot/route-manager/departure/airport", "");
 		 			setprop("/autopilot/route-manager/destination/airport", "");
 		 		
 					setprop("/autopilot/route-manager/input", "@CLEAR");
