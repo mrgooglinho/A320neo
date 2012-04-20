@@ -4,6 +4,8 @@ var fcu = "/flight-management/fcu-values/";
 var fmgc_val = "/flight-management/fmgc-values/";
 var servo = "/servo-control/";
 
+setprop("/flight-management/text/qnh", "QNH");
+
 var fmgc_loop = {
        init : func {
             me.UPDATE_INTERVAL = 0.1;
@@ -67,6 +69,7 @@ var fmgc_loop = {
             # Servo Control Settings
             
             setprop(servo~ "aileron", 0);
+            setprop(servo~ "aileron-nav1", 0);
             setprop(servo~ "target-bank", 0);
             
             setprop(servo~ "elevator-vs", 0);
@@ -77,7 +80,7 @@ var fmgc_loop = {
     },
     	update : func {
     	
-    	var altitude = getprop("/position/altitude-ft");
+    	var altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
     	
     	me.get_settings();
     	
@@ -88,6 +91,8 @@ var fmgc_loop = {
     	me.hdg_disp();
     	
     	me.fcu_lights();
+    	
+    	setprop(fcu~ "alt-100", me.alt_100());
     	
     	# SET OFF IF NOT USED
     	
@@ -104,6 +109,7 @@ var fmgc_loop = {
     	if ((me.lat_ctrl == "off") or ((me.ap1 == "off") and (me.ap2 == "off"))) {
     	
     		setprop(servo~ "aileron", 0);
+    		setprop(servo~ "aileron-nav1", 0);
             setprop(servo~ "target-bank", 0);
     	
     	}
@@ -161,6 +167,7 @@ var fmgc_loop = {
     			
     			
     			setprop(servo~  "aileron", 1);
+    			setprop(servo~ "aileron-nav1", 0);
     			
     			if (math.abs(deflection) <= 1)
     				setprop(servo~ "target-bank", 0);
@@ -171,14 +178,13 @@ var fmgc_loop = {
     		
     			var nav1_error = getprop("/autopilot/internal/nav1-track-error-deg");
     			
-    			var bank = limit(nav1_error, 25);
+    			var bank = limit(nav1_error, 30);
     			
-    			setprop(servo~ "aileron", 1);
+    			setprop(servo~ "aileron", 0);
     			
-    			if (math.abs(nav1_error) <= 1)
-    				setprop(servo~ "target-bank", 0);
-    			else
-    				setprop(servo~ "target-bank", bank);    			
+    			setprop(servo~ "aileron-nav1", 1); 	
+    			
+    			setprop(servo~ "target-bank", bank);
     		
     		} # else, this is handed over from fcu to fmgc
     	
@@ -289,6 +295,8 @@ var fmgc_loop = {
 			var bank = defl(bug, 15);
 			
 			setprop(servo~  "aileron", 1);
+			
+			setprop(servo~ "aileron-nav1", 0);
 			
 			if (math.abs(bug) <= 1)
 				setprop(servo~ "target-bank", 0);
@@ -427,6 +435,14 @@ var fmgc_loop = {
 			setprop(fmgc~ "fcu/ap2", 1);
 		else
 			setprop(fmgc~ "fcu/ap2", 0);
+		
+	},
+	
+		alt_100 : func {
+		
+		var alt = getprop("/instrumentation/altimeter/indicated-altitude-ft");
+		
+		return int(alt/100);
 		
 	},
 	

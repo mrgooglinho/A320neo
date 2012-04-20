@@ -38,6 +38,40 @@
 		</offsets>
 	</model>
 	
+	<!-- Primary Flight Displays -->
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/PFD/PFD.xml</path>
+		<offsets>
+			<x-m>-0.5807</x-m>
+			<y-m>-0.51115</y-m>
+			<z-m>-0.0442</z-m>
+			<pitch-deg>-15</pitch-deg>
+		</offsets>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>12</value>
+			</greater-than-equals>
+		</condition>
+	</model>
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/PFD/PFD.xml</path>
+		<offsets>
+			<x-m>-0.5807</x-m>
+			<y-m>0.51115</y-m>
+			<z-m>-0.0442</z-m>
+			<pitch-deg>-15</pitch-deg>
+		</offsets>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>12</value>
+			</greater-than-equals>
+		</condition>
+	</model>
+	
 	<!-- Flight Control Unit Animations -->
 	
 	<animation>
@@ -148,7 +182,7 @@
 	
 	<animation>
 		<type>select</type>
-		<object-name>levelch.ind</object-name>
+		<object-name>lvlch.ind</object-name>
 		<condition>
 			<equals>
 				<property>/flight-management/fcu/level_ch</property>
@@ -392,7 +426,7 @@
 				<command>nasal</command>
 				<script>
 				
-					setprop("/flight-management/fcu-values/alt", getprop("/position/altitude-ft"));
+					setprop("/flight-management/fcu-values/alt", getprop("/instrumentation/altimeter/indicated-altitude-ft"));
 					
 					setprop("/flight-management/fcu-values/vs", 0);
 					
@@ -477,7 +511,7 @@
 					
 					} else {
 					
-						etprop("/flight-management/fcu-values/vs", -2500);
+						setprop("/flight-management/fcu-values/vs", -2500);
 					
 						setprop("/flight-management/fcu-values/fpa", -10);
 					
