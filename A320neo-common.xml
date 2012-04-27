@@ -161,6 +161,18 @@
 						</binding>
 					</item>
 				</menu>
+				<menu n="5">
+                    <item n="1">
+                    <label>Airbus Radio Stack</label>
+                        <binding>
+                            <command>nasal</command>
+                            <script>
+							 var airbus_rms = gui.Dialog.new("sim/gui/dialogs/airbus-rms/dialog", "Aircraft/A320neo/Systems/radio-dlg.xml");
+							 airbus_rms.open();
+							</script>
+                        </binding>
+                    </item>
+                </menu>
 				<menu n="100">
 					
 					<enabled type="bool">true</enabled>
@@ -695,119 +707,6 @@
 				</binding>
 			</key>
 
-			<!-- Custom autopilot hotkeys -->
-<!--			<key n="15">
-				<name>Ctrl-O</name>
-				<desc>Toggle TO/GA lock</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					 var node = props.globals.getNode("/autopilot/settings/speed", 1);
-					 if (node.getValue() == "speed-to-ga")
-					  {
-					  node.setValue("");
-					  }
-					 else
-					  {
-					  node.setValue("speed-to-ga");
-					  }
-					</script>
-				</binding>
-			</key>-->
-			<key n="26">
-				<name>Ctrl-Z</name>
-				<desc>Toggle master autopilot switch</desc>
-				<binding>
-					<command>property-toggle</command>
-					<property>autopilot/settings/engaged</property>
-				</binding>
-			</key>
-			<key n="25">
-				<name>Ctrl-Y</name>
-				<desc>Toggle autothrottle switch</desc>
-				<binding>
-					<command>property-toggle</command>
-					<property>autopilot/settings/autothrottle</property>
-				</binding>
-			</key>
-
-			<!-- Default autopilot hotkeys -->
-			<key n="1">
-				<name>Ctrl-A</name>
-				<desc>toggle autopilot altitude lock</desc>
-				<binding>
-					<command>property-assign</command>
-					<property>autopilot/settings/altitude</property>
-					<value>altitude-hold</value>
-				</binding>
-			</key>
-			<key n="7">
-				<name>Ctrl-G</name>
-				<desc>Toggle autopilot glide slope lock</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					 var hdgNode = props.globals.getNode("/autopilot/settings/heading", 1);
-					 var altNode = props.globals.getNode("/autopilot/settings/altitude", 1);
-
-					 if (altNode.getValue() == "gs1-hold")
-					  {
-					  hdgNode.setValue("dg-heading-hold");
-					  altNode.setValue("altitude-hold");
-					  }
-					 else
-					  {
-					  hdgNode.setValue("nav1-hold");
-					  altNode.setValue("gs1-hold");
-					  }
-					</script>
-				</binding>
-			</key>
-			<key n="8">
-				<name>Ctrl-H</name>
-				<desc>Toggle autopilot heading lock</desc>
-				<binding>
-					<command>property-assign</command>
-					<property>autopilot/settings/heading</property>
-					<value>dg-heading-hold</value>
-				</binding>
-			</key>
-			<key n="14">
-				<name>Ctrl-N</name>
-				<desc>Toggle autopilot nav1 lock</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					 var node = props.globals.getNode("/autopilot/settings/heading", 1);
-					 if (node.getValue() == "nav1-hold")
-					  {
-					  node.setValue("dg-heading-hold");
-					  }
-					 else
-					  {
-					  node.setValue("nav1-hold");
-					  }
-					</script>
-				</binding>
-			</key>
-			<key n="262">
-				<name>F6</name>
-				<desc>Toggle Autopilot Heading Mode</desc>
-				<binding>
-					<command>nasal</command>
-					<script>
-					 var node = props.globals.getNode("/autopilot/settings/heading", 1);
-					 if (node.getValue() == "true-heading-hold")
-					  {
-					  node.setValue("dg-heading-hold");
-					  }
-					 else
-					  {
-					  node.setValue("true-heading-hold");
-					  }
-					</script>
-				</binding>
-			</key>
 			<key n="267">
 				<name>F11</name>
 				<desc>Open autopilot dialog</desc>
@@ -825,6 +724,8 @@
 	<nasal>
 		<mcdu>
 			<file>Aircraft/A320neo/Nasal/mCDU/init_A.nas</file>
+			<file>Aircraft/A320neo/Nasal/mCDU/init_B.nas</file>
+			<file>Aircraft/A320neo/Nasal/mCDU/radios.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/f-pln.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/lat_rev.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/common.nas</file>
@@ -836,6 +737,7 @@
 			<file>Aircraft/A320neo/Nasal/FMGC/deflection.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/fmgc_loop.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/tp.nas</file>
+			<file>Aircraft/A320neo/Nasal/FMGC/wp_transit.nas</file>
 		</fmgc>
 	
 		<fbw>

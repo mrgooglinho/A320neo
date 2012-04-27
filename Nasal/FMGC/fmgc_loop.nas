@@ -6,10 +6,18 @@ var servo = "/servo-control/";
 
 setprop("/flight-management/text/qnh", "QNH");
 
+setprop(settings~ "gps-accur", "LOW");
+
+setprop("/flight-management/end-flight", 0);
+
 var fmgc_loop = {
        init : func {
             me.UPDATE_INTERVAL = 0.1;
             me.loopid = 0;
+            
+            me.current_wp = 0;
+            
+            setprop("/flight-management/current-wp", me.current_wp);
             
             # ALT SELECT MODE
             
@@ -161,7 +169,7 @@ var fmgc_loop = {
     			
     			var bug = getprop(fcu~ "hdg");
     			
-    			var bank = -1 * defl(bug, 15);
+    			var bank = -1 * defl(bug, 20);
     			
     			var deflection = defl(bug, 180);
     			
@@ -292,16 +300,20 @@ var fmgc_loop = {
     	
     		var bug = getprop("/autopilot/internal/true-heading-error-deg");
 			
-			var bank = defl(bug, 15);
+			var accuracy = getprop(settings~ "gps-accur");
+
+			var bank = 0; 
+			
+			if (accuracy == "HIGH")
+				bank = limit(bug, 25);
+			else
+				bank = limit(bug, 15);
 			
 			setprop(servo~  "aileron", 1);
 			
 			setprop(servo~ "aileron-nav1", 0);
 			
-			if (math.abs(bug) <= 1)
-				setprop(servo~ "target-bank", 0);
-			else
-				setprop(servo~ "target-bank", bank);
+			setprop(servo~ "target-bank", bank);
     	
     	}
     	
@@ -321,17 +333,23 @@ var fmgc_loop = {
 			
 			var alt_diff = target_alt - altitude;
 			
-			var ground_speed_kt = getprop("/velocities/groundspeed-kt");
+			var final_vs = 0;
 			
-			var leg_dist_nm = getprop("/instrumentation/gps/wp/leg-distance-nm");
+			if (math.abs(alt_diff) >= 100) {
+				
+				var ground_speed_kt = getprop("/velocities/groundspeed-kt");
 			
-			var leg_time_hr = leg_dist_nm / ground_speed_kt;
+				var leg_dist_nm = getprop("/instrumentation/gps/wp/leg-distance-nm");
 			
-			var leg_time_sec = leg_time_hr * 3600;
+				var leg_time_hr = leg_dist_nm / ground_speed_kt;
 			
-			var target_fps = (alt_diff / leg_time_sec) + 15;
+				var leg_time_sec = leg_time_hr * 3600;
 			
-			var final_vs = limit(target_fps, 50);
+				var target_fps = (alt_diff / leg_time_sec) + 5;
+			
+				final_vs = limit(target_fps, 50);
+			
+			}
 			
 			setprop(servo~ "target-vs", final_vs);
     				
@@ -445,7 +463,7 @@ var fmgc_loop = {
 		return int(alt/100);
 		
 	},
-	
+
         reset : func {
             me.loopid += 1;
             me._loop_(me.loopid);

@@ -167,7 +167,7 @@ var fbw_loop = {
 				setprop("/fbw/control/elevator", 1);
 				setprop("/fbw/control/aileron", 1);
 			
-				if (math.abs(me.stick_pitch) >= 0.02) {
+				if ((math.abs(me.stick_pitch) >= 0.02) or (me.mode == "Ground Mode") or (me.law != "NORMAL LAW") or (getprop("/flight-management/control/ap1-master") == "eng") or (getprop("/flight-management/control/ap2-master") == "eng")) {
 				
 					# setprop("/fbw/control/elevator", 1);
 					setprop("/fbw/stable/elevator", 0);
@@ -185,7 +185,7 @@ var fbw_loop = {
 					
 				}
 				
-				if (math.abs(me.stick_roll) >= 0.02) {
+				if ((math.abs(me.stick_roll) >= 0.02) or (getprop("/flight-management/control/ap1-master") == "eng") or (getprop("/flight-management/control/ap2-master") == "eng")) {
 				
 					# setprop("/fbw/control/aileron", 1);
 					setprop("/fbw/stable/aileron", 0);
@@ -310,43 +310,36 @@ var fbw_loop = {
 
 		# Bring Stabilizers to 0 gradually when stabilizer mode is turned off
 		
-		if (getprop("/fbw/stable/elevator") != 1)
+		if ((getprop("/fbw/stable/elevator") != 1) and (me.mode == "Flight Mode") and (me.law == "NORMAL LAW"))
 			me.neutralize_trim("elevator");
 			
 		if (getprop("/fbw/stable/aileron") != 1)
 			me.neutralize_trim("aileron");
 
-########################### PRECAUTIONS #############################
+		########################### PRECAUTIONS #############################
 
 		# Reset Stabilizers when out of NORMAL LAW Flight Mode
 		
 		if ((me.law != "NORMAL LAW") or (me.mode != "Flight Mode")) {
 		
 			setprop("/controls/flight/aileron-trim", 0);
-			setprop("/controls/flight/elevator-trim", 0);
 		
 		}
 		
-#####################################################################
-
-
-		# Dis-engage Fly-by-wire input modification if autopilot is engaged
-
-		if (getprop("/autopilot/settings/engaged")) {
+		#if ((me.law != "NORMAL LAW") or (me.mode != "Flight Mode")) {
 		
-			setprop("/fbw/control/aileron", 0);
-			setprop("/fbw/control/elevator", 0);
-			
-			setprop("/fbw/protect-mode", 0);
+		#	setprop("/controls/flight/elevator-trim", 0);
 		
-		} else {
-			if (me.law == "NORMAL LAW") me.law_normal();
-			elsif (me.law == "ALTERNATE LAW") me.law_alternate();
-			elsif (me.law == "ABNORMAL ALTERNATE LAW") me.law_abnormal_alternate();
-			elsif (me.law == "DIRECT LAW") law_direct();
-			elsif (me.law == "MECHANICAL BACKUP") law_mechanical_backup();
-		} # End of Autopilot Check
+		#}
 		
+		#####################################################################
+
+		if (me.law == "NORMAL LAW") me.law_normal();
+		elsif (me.law == "ALTERNATE LAW") me.law_alternate();
+		elsif (me.law == "ABNORMAL ALTERNATE LAW") me.law_abnormal_alternate();
+		elsif (me.law == "DIRECT LAW") law_direct();
+		elsif (me.law == "MECHANICAL BACKUP") law_mechanical_backup();
+				
 
 
 		# Load Limit and Flight Envelope Protection
@@ -433,18 +426,20 @@ var fbw_loop = {
 		if (getprop("/fbw/control/elevator")) {
 		
 			# Load Factor over 210 kts
-			
-			if (getprop("/velocities/airspeed-kt") > 210) {
-				
-				setprop("/fbw/elevator/pitch-rate", 0);
-				setprop("/fbw/elevator/load-factor", 1);
-				
-			} else {
-			
+		
+		# LOAD FACTOR COMMENTED OUT FOR TESTING
+		#	
+		#	if (getprop("/velocities/airspeed-kt") > 210) {
+		#		
+		#		setprop("/fbw/elevator/pitch-rate", 0);
+		#		setprop("/fbw/elevator/load-factor", 1);
+		#		
+		#	} else {
+		#	
 				setprop("/fbw/elevator/pitch-rate", 1);
 				setprop("/fbw/elevator/load-factor", 0);
 			
-			}
+		#	}
 		
 		}
 

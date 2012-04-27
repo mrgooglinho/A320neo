@@ -253,9 +253,11 @@
             <binding>
 				<command>nasal</command>
 		 		<script>
+		 			mcdu.f_pln.cpy_to_active();
+		 		
 					setprop("/instrumentation/mcdu/page", "f-pln2");
 					
-					mcdu.f_pln.init_f_pln();
+					mcdu.f_pln.init_f_pln2();
 				</script>
             </binding>
         </action>

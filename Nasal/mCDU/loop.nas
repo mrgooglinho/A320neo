@@ -2,7 +2,7 @@
 
 var mCDU_loop_10 = {
        init : func {
-            me.UPDATE_INTERVAL = 10;
+            me.UPDATE_INTERVAL = 5;
             me.loopid = 0;
             
             setprop("/instrumentation/mcdu/f-pln/disp/first", 0);
@@ -28,6 +28,50 @@ var mCDU_loop_10 = {
 			setprop(f_pln_disp~ "dist", int(rte_dist));
 		else
 			setprop(f_pln_disp~ "dist", "----");
+			
+		# Radio NAV ID Loop
+		
+		var ils = getprop("/flight-management/freq/ils-mode");
+		
+		var mls = getprop("/flight-management/freq/mls-mode");
+		
+		var nav1_id = getprop("/instrumentation/nav/nav-id");
+		
+		var nav2_id = getprop("/instrumentation/nav[1]/nav-id");
+		
+		if (nav1_id == nil)
+			nav1_id = "---";
+			
+		if (nav2_id == nil)
+			nav2_id = "---";
+		
+		if (ils) {
+		
+			setprop("/flight-management/freq/vor1-id", "---");
+			
+			setprop("/flight-management/freq/ils-id", nav1_id);
+		
+		} else {
+		
+			setprop("/flight-management/freq/ils-id", "---");
+			
+			setprop("/flight-management/freq/vor1-id", nav1_id);
+		
+		}
+		
+		if (mls) {
+		
+			setprop("/flight-management/freq/vor2-id", "---");
+			
+			setprop("/flight-management/freq/mls-id", nav2_id);
+		
+		} else {
+		
+			setprop("/flight-management/freq/mls-id", "---");
+			
+			setprop("/flight-management/freq/vor2-id", nav2_id);
+		
+		}
 
 	},
         reset : func {

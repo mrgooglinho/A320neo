@@ -79,9 +79,11 @@
             <binding>
 				<command>nasal</command>
 		 		<script>
-					setprop("/autopilot/route-manager/active", 1);
+					setprop("/autopilot/route-manager/input", "@ACTIVATE");
 					
-					setprop("/autopilot/route-manager/input", "@JUMP0");
+					setprop("/autopilot/route-manager/input", "@JUMP1");
+					
+					setprop("/flight-management/current-wp", 1); # Backup
 				</script>
             </binding>
         </action>

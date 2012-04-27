@@ -2,9 +2,9 @@
 
 <PropertyList>
 
-	<!-- The default routes.xml includes 6 merlion routes, for 5 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
+	<!-- The default routes.xml includes 7 merlion routes, for 6 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
 	
-	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1, MIASINHKG1, MIASINMNL1 -->
+	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1, MIASINHKG1, MIASINMNL1, MIADUBLGW1, MIAHKGSIN1 -->
 	
 	<!-- NOTE TO MIA PILOTS: Flight Database with ALL merlion routes will be available soon in the website -->
 	
@@ -318,6 +318,153 @@
 			<wp>
 				<wp-id>LEGED</wp-id>
 				<ias-mach>0.78</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIALGWDUB1</rte_id>
+		<depicao>EGKK</depicao>
+		<arricao>EIDW</arricao>
+		<route>
+			<wp>
+				<wp-id>KENET</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.72</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BEKSA</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOBEM</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOPRO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>MEDOG</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BADSI</wp-id>
+				<altitude-ft>22000</altitude-ft>
+				<ias-mach>0.68</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LIPGO</wp-id>
+				<altitude-ft>14000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIADUBLGW1</rte_id>
+		<depicao>EIDW</depicao>
+		<arricao>EGKK</arricao>
+		<route>
+			<wp>
+				<wp-id>LIFFY</wp-id>
+				<altitude-ft>8000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>GINIS</wp-id>
+				<altitude-ft>14000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LYNAS</wp-id>
+				<altitude-ft>17000</altitude-ft>
+				<ias-mach>0.65</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>MALUD</wp-id>
+				<altitude-ft>22000</altitude-ft>
+				<ias-mach>0.68</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOGIT</wp-id>
+				<ias-mach>0.72</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TELBA</wp-id>
+				<ias-mach>0.72</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DISIT</wp-id>
+				<ias-mach>0.72</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>KIDLI</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.65</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAHKGSIN1</rte_id>
+		<depicao>VHHH</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>CH</wp-id>
+				<altitude-ft>8000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>EPDOS</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>EPKAL</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>EGEMU</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>EXOTO</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VEPAM</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>KARAN</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ESPOB</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ENREP</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>UGPEK</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>URIGO</wp-id>
+				<ias-mach>0.79</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OBDAB</wp-id>
+				<altitude-ft>30000</altitude-ft>
+				<ias-mach>0.65</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VPT</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.62</ias-mach>
 			</wp>
 		</route>
 	</route>

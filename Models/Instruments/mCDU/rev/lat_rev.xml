@@ -99,11 +99,13 @@
 		 		<script>
 		 			# Direct To
 		 			
-		 				setprop("/autopilot/route-manager/active", 1);
+		 				setprop("/autopilot/route-manager/input", "@ACTIVATE");
 		 			
 		 				var id = getprop("/instrumentation/mcdu/lat_rev/id");
 		 			
 		 				setprop("/autopilot/route-manager/input", "@JUMP" ~ id);
+		 				
+		 				setprop("/flight-management/current-wp", id);
 		 			
 				</script>
             </binding>

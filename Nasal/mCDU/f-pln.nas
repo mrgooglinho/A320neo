@@ -35,6 +35,9 @@ var f_pln = {
 			
 			var wp_alt = getprop(active_rte~ "route/wp[" ~ index ~ "]/altitude-ft");
 		
+			if (wp_alt == nil)
+				wp_alt = 10000;
+		
 			setprop(rm_route~ "input", "@INSERT99:" ~ wp_id ~ "@" ~ wp_alt);
 		
 		}
@@ -47,7 +50,8 @@ var f_pln = {
 		
 			var wp_spd = getprop(active_rte~ "route/wp[" ~ wp ~ "]/ias-mach");
 			
-			setprop(rm_route~ "route/wp[" ~ wp ~ "]/ias-mach", wp_spd);
+			if (wp_spd != nil)
+				setprop(rm_route~ "route/wp[" ~ wp ~ "]/ias-mach", wp_spd);
 		
 		}
 		
@@ -121,6 +125,29 @@ var f_pln = {
 		}
 		
 		me.update_disp();
+	
+	},
+	
+	cpy_to_active : func {
+	
+		for (var wp = 0; getprop(rm_route~ "route/wp[" ~ wp ~ "]/id") != nil; wp += 1) {
+		
+			setprop(active_rte~ "route/wp[" ~ wp ~ "]/wp-id", getprop(rm_route~ "route/wp[" ~ wp ~ "]/id"));
+			
+			var alt = getprop(rm_route~ "route/wp[" ~ wp ~ "]/altitude-ft");
+			
+			var spd = getprop(rm_route~ "route/wp[" ~ wp ~ "]/ias-mach");
+			
+			if (alt != nil)
+				setprop(active_rte~ "route/wp[" ~ wp ~ "]/altitude-ft", alt);
+				
+			if (spd != nil)
+				setprop(active_rte~ "route/wp[" ~ wp ~ "]/ias-mach", spd);
+				
+		
+		}
+		
+		setprop("/instrumentation/mcdu/input", "MSG: F-PLN SAVED TO ACTIVE RTE");
 	
 	},
 	
@@ -313,6 +340,9 @@ var f_pln = {
 					
 					# Check if speed is IAS or mach, if Mach, display M.xx
 					
+					if (spd == nil)
+						spd = 0;
+					
 					if (spd == 0)
 						spd_str = "---";
 					elsif (spd < 1)
@@ -321,6 +351,9 @@ var f_pln = {
 						spd_str = spd;
 						
 					# Check if Alt is in 1000s or FL
+					
+					if (alt == nil)
+						alt = 0;
 					
 					if (alt == 0)
 						alt_str = "----";

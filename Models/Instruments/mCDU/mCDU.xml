@@ -10,6 +10,7 @@
 		<type>select</type>
 		<object-name>mCDU_init</object-name>
 		<object-name>mCDU_data</object-name>
+		<object-name>mCDU_radio</object-name>
 		<object-name>mCDU_f-pln</object-name>
 		<object-name>input</object-name>
 		<object-name>msg</object-name>
@@ -63,6 +64,28 @@
 			<equals>
 				<property>/instrumentation/mcdu/page</property>
 				<value>init</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_init</name>
+		<path>init/deparr-src.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>FROM-TO_RESULTS</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_init</name>
+		<path>init/init2.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>fuel-pred</value>
 			</equals>
 		</condition>
 	</model>
@@ -162,6 +185,17 @@
 			<equals>
 				<property>/instrumentation/mcdu/page</property>
 				<value>lat_rev</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_radio</name>
+		<path>rad-nav/radios.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>radio</value>
 			</equals>
 		</condition>
 	</model>

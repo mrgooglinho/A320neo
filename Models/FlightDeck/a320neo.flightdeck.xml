@@ -623,6 +623,7 @@
 		<object-name>alt-text</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>fpa-text</object-name>
+		<object-name>qnh-inhg</object-name>
 		<condition>
 			<greater-than-equals>
 				<property>/systems/electrical/outputs/efis</property>
@@ -735,6 +736,7 @@
 		<object-name>alt-text</object-name>
 		<object-name>vs-text</object-name>
 		<object-name>fpa-text</object-name>
+		<object-name>qnh-inhg</object-name>
 		<diffuse>
 			<red>0.89</red>
 			<green>0.37</green>
@@ -1049,6 +1051,527 @@
 		<type>textranslate</type>
 		<object-name>gs</object-name>
 		<property>/flight-management/control/fcu/ils</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- QNH -->
+	
+	<!-- OSGText -->
+	
+	<text>
+		<name>qnh-inhg</name>
+		<offsets>
+			<x-m>-0.4856</x-m>
+			<y-m>-0.2589</y-m>
+			<z-m>0.1666</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%2.2f</format>
+		<property>/instrumentation/altimeter/setting-inhg</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.009</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>qnh-inhg</name>
+		<offsets>
+			<x-m>-0.4856</x-m>
+			<y-m>0.2589</y-m>
+			<z-m>0.1666</z-m>
+			<heading-deg>90</heading-deg>
+			<roll-deg>76</roll-deg>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>xy-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%2.2f</format>
+		<property>/instrumentation/altimeter/setting-inhg</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.009</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>qnh-0.01</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var qnh = getprop("/instrumentation/altimeter/setting-inhg");
+					
+					setprop("/instrumentation/altimeter/setting-inhg", qnh + 0.01);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var qnh = getprop("/instrumentation/altimeter/setting-inhg");
+					
+					setprop("/instrumentation/altimeter/setting-inhg", qnh - 0.01);
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>qnh</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var qnh = getprop("/instrumentation/altimeter/setting-inhg");
+					
+					setprop("/instrumentation/altimeter/setting-inhg", qnh + 0.1);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var qnh = getprop("/instrumentation/altimeter/setting-inhg");
+					
+					setprop("/instrumentation/altimeter/setting-inhg", qnh - 0.1);
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>gear_lever</object-name>
+		<property>/controls/gear/gear-down</property>
+		<factor>40</factor>
+		<center>
+			<x-m>-0.5810</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.1765</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>pick</type>
+		<object-name>gear_lever</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/gear/gear-down</property>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>trim_wheel</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var trim = getprop("/controls/flight/elevator-trim");
+					
+					setprop("/controls/flight/elevator-trim", trim + 0.01);
+					
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					
+					var trim = getprop("/controls/flight/elevator-trim");
+					
+					setprop("/controls/flight/elevator-trim", trim - 0.01);
+					
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>trim_wheel</object-name>
+		<property>/controls/flight/elevator-trim</property>
+		<factor>-70</factor>
+		<center>
+			<x-m>-0.2373</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3811</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- Throttle quadrant -->
+	<animation>
+		<name>Engine 1 throttle lever pick</name>
+		<type>pick</type>
+		<object-name>thr_l</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[0]/throttle</property>
+				<step type="double">0.01</step>
+				<max>1</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[0]/throttle</property>
+				<step type="double">-0.01</step>
+				<min>0</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 1 throttle lever</name>
+		<type>rotate</type>
+		<object-name>thr_l</object-name>
+		<property>controls/engines/engine[0]/throttle</property>
+		<factor>40</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.2373</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3811</z-m>
+		</center>
+	</animation>
+	<animation>
+		<name>Engine 2 throttle lever pick</name>
+		<type>pick</type>
+		<object-name>thr_r</object-name>
+		<action>
+			<button>0</button>
+			<button>3</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[1]/throttle</property>
+				<step type="double">0.01</step>
+				<max>1</max>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<button>4</button>
+			<repeatable type="bool">true</repeatable>
+			<binding>
+				<command>property-adjust</command>
+				<property>controls/engines/engine[1]/throttle</property>
+				<step type="double">-0.01</step>
+				<min>0</min>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Engine 2 throttle lever</name>
+		<type>rotate</type>
+		<object-name>thr_r</object-name>
+		<property>controls/engines/engine[1]/throttle</property>
+		<factor>40</factor>
+		<axis>
+			<x>0</x>
+			<y>-1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.2373</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3811</z-m>
+		</center>
+	</animation>
+
+	<!-- Engine Cut-off Switches -->
+
+    <animation>
+        <type>rotate</type>
+        <object-name>Lcutoff</object-name>
+        <property>controls/engines/engine[0]/cutoff</property>
+        <factor>40</factor>
+        <center>
+            <x-m>-0.1064</x-m>
+            <y-m>0</y-m>
+            <z-m>-0.3795</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+    <animation>
+        <type>rotate</type>
+        <object-name>Rcutoff</object-name>
+        <property>controls/engines/engine[1]/cutoff</property>
+        <factor>40</factor>
+        <center>
+            <x-m>-0.1064</x-m>
+            <y-m>0</y-m>
+            <z-m>-0.3795</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+
+    <animation>
+        <type>pick</type>
+        <object-name>Lcutoff</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>controls/engines/engine[0]/cutoff</property>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>Rcutoff</object-name>
+        <action>
+            <button>0</button>
+            <binding>
+                <command>property-toggle</command>
+                <property>controls/engines/engine[1]/cutoff</property>
+            </binding>
+        </action>
+    </animation>
+    
+    <!-- Side Stick Animations -->
+    
+    <animation>
+        <type>rotate</type>
+        <object-name>Rsidestick</object-name>
+        <property>controls/flight/aileron</property>
+        <factor>10</factor>
+        <center>
+            <x-m>0</x-m>
+            <y-m>0.9133</y-m>
+            <z-m>-0.2247</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <animation>
+        <type>rotate</type>
+        <object-name>Rsidestick</object-name>
+        <property>controls/flight/elevator</property>
+        <factor>-10</factor>
+        <center>
+            <x-m>-0.1424</x-m>
+            <y-m>0</y-m>
+            <z-m>-0.2247</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <animation>
+        <type>rotate</type>
+        <object-name>Lsidestick</object-name>
+        <property>controls/flight/aileron</property>
+        <factor>10</factor>
+        <center>
+            <x-m>0</x-m>
+            <y-m>-0.9146</y-m>
+            <z-m>-0.2243</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <animation>
+        <type>rotate</type>
+        <object-name>Lsidestick</object-name>
+        <property>controls/flight/elevator</property>
+        <factor>-10</factor>
+        <center>
+            <x-m>-0.1469</x-m>
+            <y-m>0</y-m>
+            <z-m>-0.2232</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <!-- ILS and MLS Toggle Buttons -->
+    
+    <animation>
+		<type>pick</type>
+		<object-name>ils</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var radio = "/flight-management/freq/";
+				
+					var ils_mode = getprop(radio~ "ils-mode");
+					
+					if (ils_mode) {
+					
+						setprop(radio~ "ils-mode", 0);
+						
+						mcdu.rad_nav.switch_nav1(0);
+					
+					} else {
+					
+						setprop(radio~ "ils-mode", 1);
+						
+						mcdu.rad_nav.switch_nav1(1);
+					
+					}
+
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>mls</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				
+					var radio = "/flight-management/freq/";
+				
+					var mls_mode = getprop(radio~ "mls-mode");
+					
+					if (mls_mode) {
+					
+						setprop(radio~ "mls-mode", 0);
+						
+						mcdu.rad_nav.switch_nav2(0);
+					
+					} else {
+					
+						setprop(radio~ "mls-mode", 1);
+						
+						mcdu.rad_nav.switch_nav2(1);
+					
+					}
+
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>ils</object-name>
+		<property>/flight-management/freq/ils-mode</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>mls</object-name>
+		<property>/flight-management/freq/mls-mode</property>
 		<factor>0.0625</factor>
 		<axis>
 			<x>0</x>

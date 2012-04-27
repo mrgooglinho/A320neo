@@ -2,6 +2,7 @@ var co_tree = "/database/co_routes/";
 var active_rte = "/flight-management/active-rte/";
 var altn_rte = "/flight-management/alternate/route/";
 
+setprop("/instrumentation/mcdu/from-to-results/line-length", 40);
 setprop("/instrumentation/mcdu/input", "");
 
 # Initialize with 0 Brightness
@@ -45,6 +46,8 @@ var mCDU_init = {
 				setprop("/instrumentation/mcdu[" ~ mcdu ~ "]/input", "ERROR: NOT IN DATABASE");
 		
 		}
+		
+		setprop("/flight-management/end-flight", 0);
 		
 		f_pln.init_f_pln();
 	
@@ -121,7 +124,9 @@ var mCDU_init = {
 	
 ################################################################################	
 	
-		# Come back later
+		# Come back later (Requires separate Database but it's basically just
+		# search for flight number, get dep and arr and then go to dep-arr 
+		# results page.)
 		
 ################################################################################
 		
@@ -134,6 +139,8 @@ var mCDU_init = {
 		var from_to_rte = 0;
 		
 		var results = "/instrumentation/mcdu[" ~mcdu~ "]/from-to-results/";
+		
+		setprop(results~ "selected", 0);		
 	
 		for (var index = 0; getprop(co_tree~ "route[" ~ index ~ "]/depicao") != nil; index += 1) {
 		
@@ -153,13 +160,83 @@ var mCDU_init = {
 				
 				} # End of Waypoints Copy Loop
 
+				from_to_rte += 1; # From To value increments as index
+
 			} # End of From-To Check
-			
-			from_to_rte += 1;
 		
 		} # End of From-To Loop
 		
+		############ IF CO RTE DOES NOT EXIST ##################################
+		
+		if (from_to_rte == 0) {
+		
+			setprop(results~ "result/rte_id", from ~ "/" ~ to);
+			
+			setprop(results~ "result/route/wp/wp-id", "CO-RTE NOT AVAILABLE, INIT EMPTY F-PLN?");
+			
+			setprop(results~ "empty-dep", from);
+			
+			setprop(results~ "empty-arr", to);
+			
+			setprop(results~ "empty", 1);
+			
+			from_to_rte == 1;
+		
+		} else {
+		
+			setprop(results~ "empty", 0);
+		
+		}
+		
+		setprop(results~ "num", from_to_rte);
+		
+		########################################################################
+		
 		setprop("/instrumentation/mcdu[" ~ mcdu ~ "]/page", "FROM-TO_RESULTS");
+		
+		me.line_disp();
+	
+	},
+	
+	line_disp : func () {
+	
+		var results = "/instrumentation/mcdu/from-to-results/";	
+	
+		var select = getprop(results~ "selected");
+		
+		var select_rte = getprop(results~ "result[" ~ select ~ "]/rte_id");
+		
+		setprop(results~ "select-id", select_rte);
+		
+		var line_length = getprop(results~ "line-length");
+		
+		var num = getprop(results~ "num");
+		
+		setprop(results~ "page", (select + 1) ~ "/" ~ num);
+		
+		# Created 1 string out of all waypoints
+		
+		var rte_string = "";
+		
+		for (var wp = 0; getprop(results~ "result[" ~ select ~ "]/route/wp[" ~ wp ~ "]/wp-id") != nil; wp += 1) {
+				
+			rte_string = rte_string ~ " " ~ getprop(results~ "result[" ~ select ~ "]/route/wp[" ~ wp ~ "]/wp-id");
+				
+		}
+		
+		var line1 = substr(rte_string, 0, line_length);
+		var line2 = substr(rte_string, line_length, line_length);
+		var line3 = substr(rte_string, 2 * line_length, line_length);
+		var line4 = substr(rte_string, 3 * line_length, line_length);
+		var line5 = substr(rte_string, 4 * line_length, line_length);
+		
+		# Set lines to property for OSGText XML to read
+		
+		setprop(results~ "lines/line[0]/str", line1);
+		setprop(results~ "lines/line[1]/str", line2);
+		setprop(results~ "lines/line[2]/str", line3);
+		setprop(results~ "lines/line[3]/str", line4);
+		setprop(results~ "lines/line[4]/str", line5);
 	
 	},
 	
