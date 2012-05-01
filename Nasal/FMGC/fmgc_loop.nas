@@ -58,7 +58,7 @@ var fmgc_loop = {
             
             # Terminal Procedure
             
-            setprop(fmgc~ "procedure/active", "off"); # AVAIL MODES : off sid star iap
+            setprop("/flight-management/procedures/active", "off"); # AVAIL MODES : off sid star iap
             
             # Set Flight Control Unit Initial Values
             
@@ -99,6 +99,8 @@ var fmgc_loop = {
     	me.hdg_disp();
     	
     	me.fcu_lights();
+    	
+    	setprop("flight-management/procedures/active", procedure.check());
     	
     	setprop(fcu~ "alt-100", me.alt_100());
     	
@@ -298,6 +300,10 @@ var fmgc_loop = {
     	
     	if (me.lat_ctrl == "fmgc") {
     	
+    		# If A procedure's NOT being flown, we'll fly the active F-PLN
+    	
+    		if (getprop("/flight-management/procedures/active") == "off") {
+    	
     		var bug = getprop("/autopilot/internal/true-heading-error-deg");
 			
 			var accuracy = getprop(settings~ "gps-accur");
@@ -314,6 +320,26 @@ var fmgc_loop = {
 			setprop(servo~ "aileron-nav1", 0);
 			
 			setprop(servo~ "target-bank", bank);
+			
+			} else {
+			
+				if (getprop("/flight-management/procedures/active") == "sid") {
+				
+					procedure.fly_sid();
+					
+					var bug = getprop("/flight-management/procedures/sid/course");
+					
+					var bank = -1 * defl(bug, 25);					
+					
+					setprop(servo~  "aileron", 1);
+					
+					setprop(servo~ "aileron-nav1", 0);
+					
+					setprop(servo~ "target-bank", bank);
+				
+				} # Get back to STAR and IAP Later
+			
+			}
     	
     	}
     	

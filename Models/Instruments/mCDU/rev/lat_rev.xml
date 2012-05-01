@@ -57,12 +57,12 @@
 		 			# DEPARTURE
 		 			
 		 			elsif (dep == 1)
-		 				mcdu.tp.depart_rwys();
+		 				mcdu.sid.select_arpt(getprop("autopilot/route-manager/departure/airport"));
 		 			
 		 			# ARRIVAL
 		 			
 		 			else
-		 				mcdu.tp.arrive_rwys();
+		 				mcdu.star.select_arpt(getprop("autopilot/route-manager/destination/airport"));
 		 			
 				</script>
             </binding>
@@ -81,7 +81,7 @@
 		 			# APPROACH
 		 			
 		 			else
-		 				mcdu.tp.appr_rwys();
+		 				mcdu.iap.select_arpt(getprop("autopilot/route-manager/destination/airport"));
 		 			
 				</script>
             </binding>

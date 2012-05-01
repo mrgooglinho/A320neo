@@ -2,15 +2,13 @@
 
 <PropertyList>
 
-	<!-- The default routes.xml includes 7 merlion routes, for 6 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
+	<!-- The default routes.xml includes 16 merlion routes, for 13 different merlion flights. Merlion pilots can download a complete flight database from http://www.merlionvirtual.co.nr soon, these company routes may be used by anyone for testing/experimental/educational purposes. -->
 	
-	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1, MIASINHKG1, MIASINMNL1, MIADUBLGW1, MIAHKGSIN1 -->
+	<!-- Routes available by default : MIALGWFRA1, MIALGAFRA2, MIALGABCN1, MIALGWZRH1, MIASINHKG1, MIASINMNL1, MIADUBLGW1, MIAHKGSIN1, MIACGKSIN1, MIASINCGK1, MIASINHKT1, MIAHKTSIN1, MIASINKUL1, MIASINKUL2, MIAKULSIN1, MIAKULSIN2  -->
 	
 	<!-- NOTE TO MIA PILOTS: Flight Database with ALL merlion routes will be available soon in the website -->
 	
-	<!-- NOTE: SIDs, STARs and IAPs have to be added separately according to ATC instructions and weather conditions -->
-	
-	<!-- MIALGWFRA1 -->
+	<!-- NOTE: SIDs, STARs and IAPs have to be added separately according to ATC instructions and weather conditions in LAT_REV from F-PLN/SEC F-PLN -->
 	
 	<database>15APR-14JUN   MIA_Data_v3.1</database>
 	<database_>15FEB-14APR</database_>
@@ -465,6 +463,276 @@
 				<wp-id>VPT</wp-id>
 				<altitude-ft>18000</altitude-ft>
 				<ias-mach>0.62</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIACGKSIN1</rte_id>
+		<depicao>WIII</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>PKP</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>KIRDA</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BTM</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.62</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINCGK1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>WIII</arricao>
+		<route>
+			<wp>
+				<wp-id>REMES</wp-id>
+				<altitude-ft>12000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>REPOV</wp-id>
+				<altitude-ft>24000</altitude-ft>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PLB</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>AK</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINHKT1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>VTSP</arricao>
+		<route>
+			<wp>
+				<wp-id>BONSU</wp-id>
+				<altitude-ft>12000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BP</wp-id>
+				<altitude-ft>26000</altitude-ft>
+				<ias-mach>0.74</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VMK</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VKL</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VBA</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TA</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PR</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VBT</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VPL</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>UTHAI</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BORNA</wp-id>
+				<altitude-ft>16000</altitude-ft>
+				<ias-mach>260</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BORNA</wp-id>
+				<altitude-ft>16000</altitude-ft>
+				<ias-mach>260</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAHKTSIN1</rte_id>
+		<depicao>VTSP</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>KBI</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TRN</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>HTY</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>NTW</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VGK</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VKE</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PADLI</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VMR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINKUL1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>WMKK</arricao>
+		<route>
+			<wp>
+				<wp-id>VJR</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TERUS</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>GUPTA</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VMK</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAPIR</wp-id>
+				<altitude-ft>4000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINKUL2</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>WMKK</arricao>
+		<route>
+			<wp>
+				<wp-id>SJ</wp-id>
+				<altitude-ft>5000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BONSU</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PIMOK</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOPOR</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OGAKO</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BATAR</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAPIR</wp-id>
+				<altitude-ft>5000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAKULSIN1</rte_id>
+		<depicao>WMKK</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>SADIB</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OGAKO</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>REKOP</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ANBUS</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BOBAG</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAKULSIN2</rte_id>
+		<depicao>WMKK</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>MUMOD</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DAMAL</wp-id>
+				<ias-mach>280</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>AKOMA</wp-id>
+				<altitude-ft>8000</altitude-ft>
+				<ias-mach>250</ias-mach>
 			</wp>
 		</route>
 	</route>

@@ -726,6 +726,7 @@
 			<file>Aircraft/A320neo/Nasal/mCDU/init_A.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/init_B.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/radios.nas</file>
+			<file>Aircraft/A320neo/Nasal/mCDU/select_SID.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/f-pln.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/lat_rev.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/common.nas</file>
@@ -733,10 +734,17 @@
 			<file>Aircraft/A320neo/Nasal/mCDU/parse_DB.nas</file>
 		</mcdu>
 		
+		<procedures>
+			<file>Aircraft/A320neo/Nasal/procedures/fmsDB.nas</file>
+			<file>Aircraft/A320neo/Nasal/procedures/fmsWP.nas</file>
+			<file>Aircraft/A320neo/Nasal/procedures/fmsTP.nas</file>
+			<file>Aircraft/A320neo/Nasal/procedures/fmsTransition.nas</file>
+		</procedures>
+		
 		<fmgc>
 			<file>Aircraft/A320neo/Nasal/FMGC/deflection.nas</file>
+			<file>Aircraft/A320neo/Nasal/FMGC/procedure.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/fmgc_loop.nas</file>
-			<file>Aircraft/A320neo/Nasal/FMGC/tp.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/wp_transit.nas</file>
 		</fmgc>
 	

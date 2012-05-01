@@ -12,6 +12,10 @@ var f_pln = {
 		
 		# NOTE: Flightplans are only (re-)initialized when switched between active and secondary, and re-initialized after SID (- F-PLN DISCONTINUITY -)
 		
+		## RESET Terminal Procedure Manager
+		
+		fmgc.procedure.reset_tp();
+		
 		## Deactivate Route Manager
 		
 		setprop(rm_route~ "active", 0);

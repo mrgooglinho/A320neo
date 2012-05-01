@@ -12,6 +12,7 @@
 		<object-name>mCDU_data</object-name>
 		<object-name>mCDU_radio</object-name>
 		<object-name>mCDU_f-pln</object-name>
+		<object-name>mCDU_tp</object-name>
 		<object-name>input</object-name>
 		<object-name>msg</object-name>
 		<object-name>start</object-name>
@@ -196,6 +197,39 @@
 			<equals>
 				<property>/instrumentation/mcdu/page</property>
 				<value>radio</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-dep/rwys.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>RWY_SEL</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-dep/sids.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>SID_SEL</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-dep/confirm.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>SID_CONFIRM</value>
 			</equals>
 		</condition>
 	</model>

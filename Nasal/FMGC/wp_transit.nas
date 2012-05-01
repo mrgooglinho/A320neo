@@ -17,12 +17,12 @@ var wp_transit = {
 		
 		var gps_accur = getprop(settings~ "gps-accur");
 		
-		var accuracy = 0; # In Degrees, smaller is better but sometimes for cruise, lower accuracy ensures a smoother WP transition | HIGH GPS ACCUR = 0.001 and LOW GPS ACCUR = 0.005
+		var accuracy = 0; # In Degrees, smaller is better for cruise, lower accuracy ensures a smoother WP transition
 		
 		if (gps_accur == "HIGH")
-			accuracy = 0.001;
-		else
 			accuracy = 0.005;
+		else
+			accuracy = 0.02;
 			
 		var pos_lat = getprop("/position/latitude-deg");
 		var pos_lon = getprop("/position/longitude-deg");
