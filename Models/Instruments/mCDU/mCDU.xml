@@ -234,6 +234,39 @@
 		</condition>
 	</model>
 	
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-arr/rwys.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>ARR_RWY_SEL</value>
+			</equals>
+		</condition>
+	</model>
+	
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-arr/stars.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>STAR_SEL</value>
+			</equals>
+		</condition>
+	</model>
+		
+	<model>
+		<name>mCDU_tp</name>
+		<path>tp-arr/confirm.xml</path>
+		<condition>
+			<equals>
+				<property>/instrumentation/mcdu/page</property>
+				<value>STAR_CONFIRM</value>
+			</equals>
+		</condition>
+	</model>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>brt</object-name>

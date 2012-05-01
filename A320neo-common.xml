@@ -727,6 +727,7 @@
 			<file>Aircraft/A320neo/Nasal/mCDU/init_B.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/radios.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/select_SID.nas</file>
+			<file>Aircraft/A320neo/Nasal/mCDU/select_STAR.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/f-pln.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/lat_rev.nas</file>
 			<file>Aircraft/A320neo/Nasal/mCDU/common.nas</file>

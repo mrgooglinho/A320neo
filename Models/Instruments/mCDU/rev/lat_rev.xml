@@ -69,7 +69,9 @@
         </action>
 	</animation>
 	
-	<animation>
+	<!-- ILS Approach is automatically set when arrival is selected -->
+	
+	<!-- animation>
 		<type>pick</type>
 		<object-name>l3</object-name>
 		<action>
@@ -86,7 +88,7 @@
 				</script>
             </binding>
         </action>
-	</animation>
+	</animation -->
 	
 	<animation>
 		<type>pick</type>

@@ -194,11 +194,6 @@
 				<altitude-ft>14000</altitude-ft>
 				<ias-mach>270</ias-mach>
 			</wp>
-			<wp>
-				<wp-id>TRA</wp-id>
-				<altitude-ft>8000</altitude-ft>
-				<ias-mach>250</ias-mach>
-			</wp>
 		</route>
 	</route>
 	
@@ -473,17 +468,20 @@
 		<arricao>WSSS</arricao>
 		<route>
 			<wp>
+				<wp-id>BIKAL</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BOSLO</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
 				<wp-id>PKP</wp-id>
 				<ias-mach>0.8</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>KIRDA</wp-id>
+				<wp-id>NE</wp-id>
 				<ias-mach>0.8</ias-mach>
-			</wp>
-			<wp>
-				<wp-id>BTM</wp-id>
-				<altitude-ft>18000</altitude-ft>
-				<ias-mach>0.62</ias-mach>
 			</wp>
 		</route>
 	</route>
@@ -504,12 +502,21 @@
 				<ias-mach>0.8</ias-mach>
 			</wp>
 			<wp>
+				<wp-id>PARDI</wp-id>
+				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
 				<wp-id>PLB</wp-id>
 				<ias-mach>0.8</ias-mach>
 			</wp>
 			<wp>
 				<wp-id>AK</wp-id>
 				<ias-mach>0.8</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>SIKAD</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.6</ias-mach>
 			</wp>
 		</route>
 	</route>
@@ -637,11 +644,11 @@
 				<wp-id>VMK</wp-id>
 				<ias-mach>280</ias-mach>
 			</wp>
-			<wp>
+			<!-- wp>
 				<wp-id>LAPIR</wp-id>
 				<altitude-ft>4000</altitude-ft>
 				<ias-mach>250</ias-mach>
-			</wp>
+			</wp -->
 		</route>
 	</route>
 	
@@ -677,11 +684,11 @@
 				<altitude-ft>10000</altitude-ft>
 				<ias-mach>250</ias-mach>
 			</wp>
-			<wp>
+			<!-- wp>
 				<wp-id>LAPIR</wp-id>
 				<altitude-ft>5000</altitude-ft>
 				<ias-mach>250</ias-mach>
-			</wp>
+			</wp -->
 		</route>
 	</route>
 	
@@ -730,9 +737,98 @@
 				<ias-mach>280</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>AKOMA</wp-id>
+				<wp-id>VJR</wp-id>
 				<altitude-ft>8000</altitude-ft>
 				<ias-mach>250</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAPENSIN1</rte_id>
+		<depicao>WMKP</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>VPS</wp-id>
+				<altitude-ft>16000</altitude-ft>
+				<ias-mach>250</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VBA</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VKL</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VMK</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>BP</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VJR</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>280</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINLGK1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>WMKL</arricao>
+		<route>
+			<wp>
+				<wp-id>ANBUS</wp-id>
+				<altitude-ft>22000</altitude-ft>
+				<ias-mach>0.65</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOPOR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OGAKO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DUMOK</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>MANIS</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOPAX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>SUKAT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TEPUS</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VBT</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.62</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VILAT</wp-id>
+				<altitude-ft>10000</altitude-ft>
+				<ias-mach>240</ias-mach>
 			</wp>
 		</route>
 	</route>

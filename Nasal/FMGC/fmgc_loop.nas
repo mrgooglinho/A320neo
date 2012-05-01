@@ -321,6 +321,8 @@ var fmgc_loop = {
 			
 			setprop(servo~ "target-bank", bank);
 			
+			# Else, fly the respective procedures
+			
 			} else {
 			
 				if (getprop("/flight-management/procedures/active") == "sid") {
@@ -337,7 +339,35 @@ var fmgc_loop = {
 					
 					setprop(servo~ "target-bank", bank);
 				
-				} # Get back to STAR and IAP Later
+				} elsif (getprop("/flight-management/procedures/active") == "star") {
+				
+					procedure.fly_star();
+					
+					var bug = getprop("/flight-management/procedures/star/course");
+					
+					var bank = -1 * defl(bug, 25);					
+					
+					setprop(servo~  "aileron", 1);
+					
+					setprop(servo~ "aileron-nav1", 0);
+					
+					setprop(servo~ "target-bank", bank);
+				
+				} else {
+				
+					procedure.fly_iap();
+					
+					var bug = getprop("/flight-management/procedures/iap/course");
+					
+					var bank = -1 * defl(bug, 28);					
+					
+					setprop(servo~  "aileron", 1);
+					
+					setprop(servo~ "aileron-nav1", 0);
+					
+					setprop(servo~ "target-bank", bank);
+				
+				}
 			
 			}
     	

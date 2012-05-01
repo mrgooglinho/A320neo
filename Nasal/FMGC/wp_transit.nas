@@ -49,12 +49,30 @@ var wp_transit = {
 		if ((math.abs(pos_lat - target_lat) <= accuracy) and (math.abs(pos_lon - target_lon) <= accuracy)) {
 		
 			me.current_wp += 1;
+			
+			var last_wp = getprop("/autopilot/route-manager/route/num") - 1;
 		
 			if (getprop("/autopilot/route-manager/route/wp[" ~ me.current_wp ~ "]/id") != nil) {
 		
-				print("--------------------------");
-				print("[FMGC] WP" ~ (me.current_wp - 1) ~ " Reached...");
-				print("[FMGC] TARGET SET: " ~ getprop("/autopilot/route-manager/route/wp[" ~ me.current_wp ~ "]/id"));
+				if (me.current_wp == 1) {
+				
+					print("--------------------------");
+					print("[FMGC] STANDARD DEPARTURE: " ~ getprop("/flight-management/procedures/sid/active-sid/name"));
+					print("[FMGC] SID: " ~ getprop("/flight-management/procedures/sid/active-sid/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/sid/active-sid/wp/name"));
+				
+				} elsif (me.current_wp == last_wp) {
+				
+					print("--------------------------");
+					print("[FMGC] TRANSITION TO ARRIVAL: " ~ getprop("/flight-management/procedures/star/active-star/name"));
+					print("[FMGC] STAR: " ~ getprop("/flight-management/procedures/star/active-star/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/star/active-star/wp/name"));
+				
+				} else {
+		
+					print("--------------------------");
+					print("[FMGC] WP" ~ (me.current_wp - 1) ~ " Reached...");
+					print("[FMGC] TARGET SET: " ~ getprop("/autopilot/route-manager/route/wp[" ~ me.current_wp ~ "]/id"));
+					
+				}
 			
 			} else {
 			
