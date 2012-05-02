@@ -393,7 +393,8 @@ var fbw = {
 		
 		
 
-		me.pitch_gforce = (me.stick_pitch * -1.75) + 1 + me.fix_pitch_gforce;
+		me.pitch_gforce = (me.stick_pitch * -1.50) + 1 + me.fix_pitch_gforce;
+		#me.pitch_gforce_rate = (me.pitch_gforce * G_force) / (getprop("velocities/airspeed-kt") * KT2MS);
 		
 		me.pitch_rate = (me.stick_pitch * -1 * me.max_pitch_rate) + me.fix_pitch_rate;
 		
@@ -401,6 +402,7 @@ var fbw = {
 		## Set G-forces to properties for xml to read
 		
 		setprop(fbw_root~"elevator/target-pitch-gforce", me.pitch_gforce);
+		#setprop(fbw_root~"elevator/target-pitch-gforce-rate", me.pitch_gforce_rate);
 		setprop(fbw_root~"elevator/target-pitch-rate", me.pitch_rate);
 		setprop(fbw_root~"elevator/fix-pitch-gforce", me.fix_pitch_gforce);
 		setprop(fbw_root~"elevator/fix-pitch-rate", me.fix_pitch_rate);
@@ -427,7 +429,7 @@ var fbw = {
 		## Activate PIDs
 		# PITCH
 		if (me.active_pitch) {
-		
+		#setprop(fbw_root~"elevator/PID-pitch-rate", 1);
 			# Load Factor over 210 kts
 			
 			if (getprop("/velocities/airspeed-kt") > 210) {
@@ -471,29 +473,6 @@ var fbw = {
 		me.flight_mode();
 
 
-
-		# Bring Stabilizers to 0 gradually when stabilizer mode is turned off
-		
-		#if (getprop("/fbw/stable/elevator") != 1)
-		#	me.neutralize_trim("elevator");
-		#	
-		#if (getprop("/fbw/stable/aileron") != 1)
-		#	me.neutralize_trim("aileron");
-
-########################### PRECAUTIONS #############################
-
-		# Reset Stabilizers when out of NORMAL LAW Flight Mode
-		
-		#if ((me.law != "NORMAL LAW") or (me.mode != "Flight Mode")) {
-		#
-		#	setprop("/controls/flight/aileron-trim", 0);
-		#	setprop("/controls/flight/elevator-trim", 0);
-		#
-		#}
-		
-#####################################################################
-
-
 		# Dis-engage Fly-by-wire input modification if autopilot is engaged
 
 
@@ -508,7 +487,7 @@ var fbw = {
 		
 
 
-		# Load Limit and Flight Envelope Protection
+		# Flight Envelope Protection
 		if (me.protect_mode) me.flight_envelope();
 		else {
 			me.fix_pitch_gforce = 0;

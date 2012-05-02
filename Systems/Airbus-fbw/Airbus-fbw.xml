@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
-<!-- Airbus Fly-by-Wire -->
+<!-- =============================================================== -->
+<!--   FG Airbus Fly By Wire                                         -->
+<!--     Author:    Jon A. Ortuondo (Bicyus)                         -->
+<!--     Author:    Polly                                            -->
+<!--     for:       Airbus     A320neo                               -->
+<!-- =============================================================== -->
 
 <PropertyList>
 
@@ -13,15 +17,16 @@
 			<property>/systems/fbw/elevator/PID-load-factor</property>
 		</enable>
 		<input>
+			<property>/fdm/jsbsim/accelerations/Nz</property>
 			<!--property>/accelerations/pilot-gdamped</property-->
 			<!-- prop>/orientation/pitch-rate-degps</prop -->
-			<expression>
+			<!--expression>
 
 					<div>
 						<property>/accelerations/pilot/z-accel-fps_sec</property>
 						<value type="double">-32.00</value>
 					</div>
-			</expression>  
+			</expression-->  
 		</input>
 		<reference>
 			<property>/systems/fbw/elevator/target-pitch-gforce</property>
@@ -39,7 +44,7 @@
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config-->
-		<config>
+		<!--config>
 			<Kp>-0.500</Kp>
 			<Ti>1</Ti>
 			<Td>0.001</Td>
@@ -47,6 +52,17 @@
 			<beta>0.75</beta>
 			<alpha>0.1</alpha>
 			<gamma>0.75</gamma>
+			<u_min>-1</u_min>
+			<u_max>1</u_max>
+		</config-->
+		<config>
+			<Kp>-0.10</Kp>
+			<Ti>2.000</Ti>
+			<Td>0.100</Td>
+			<Ts>0.050</Ts>
+			<beta>0.75</beta>
+			<alpha>0.1</alpha>
+			<gamma>0.7500</gamma>
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
@@ -264,7 +280,7 @@
 
 
   <!-- PITCH AUTO TRIM -->
-	<!--pid-controller>
+	<pid-controller>
 		<name>Vertical Stab Trim</name>
 		<debug type="bool">false</debug>
 		<input>
@@ -288,6 +304,6 @@
 			<u_min>-1</u_min>
 			<u_max>1</u_max>
 		</config>
-	</pid-controller-->
+	</pid-controller>
 
 </PropertyList>
