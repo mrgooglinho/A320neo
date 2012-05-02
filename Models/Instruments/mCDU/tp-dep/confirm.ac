@@ -7,7 +7,7 @@ kids 15
 OBJECT poly
 name "d_arrow"
 loc 0.0373978 0.00239773 0.030104
-texture "/home/narendran/Documents/GIT Projects/A320neo/Models/Instruments/mCDU/f-pln/f-pln.png"
+texture "../f-pln/f-pln.png"
 crease 45.000000
 numvert 16
 -0.000528842 0.00110412 -4.53293e-05
@@ -50,7 +50,7 @@ kids 0
 OBJECT poly
 name "u_arrow"
 loc 0.0269783 0.00239773 0.0302173
-texture "/home/narendran/Documents/GIT Projects/A320neo/Models/Instruments/mCDU/f-pln/f-pln.png"
+texture "../f-pln/f-pln.png"
 crease 45.000000
 numvert 16
 -0.000451058 0.00110364 0.000307932
