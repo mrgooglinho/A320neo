@@ -91,9 +91,9 @@ var procedure = {
 		var target_lon = getprop("/flight-management/procedures/star/active-star/wp[" ~ current_wp ~ "]/longitude-deg");
 		
 		if ((target_lat == 0) or (target_lon == 0))
-			setprop("/flight-management/procedures/sid-current", current_wp + 1);
+			setprop("/flight-management/procedures/star-current", current_wp + 1);
 			
-		var current_wp = getprop("/flight-management/procedures/sid-current");
+		var current_wp = getprop("/flight-management/procedures/star-current");
 		
 		setprop("/flight-management/procedures/star/course", me.course_to(target_lat, target_lon));
 		
@@ -137,9 +137,9 @@ var procedure = {
 		var target_lon = getprop("/flight-management/procedures/iap/active-iap/wp[" ~ current_wp ~ "]/longitude-deg");
 		
 		if ((target_lat == 0) or (target_lon == 0))
-			setprop("/flight-management/procedures/sid-current", current_wp + 1);
+			setprop("/flight-management/procedures/iap-current", current_wp + 1);
 			
-		var current_wp = getprop("/flight-management/procedures/sid-current");
+		var current_wp = getprop("/flight-management/procedures/iap-current");
 		
 		setprop("/flight-management/procedures/iap/course", me.course_to(target_lat, target_lon));
 		
