@@ -744,6 +744,8 @@
 		</route>
 	</route>
 	
+	<!-- These routes have been copied from merlion's full MIAData_v3.1 Database for further test flights -->
+	
 	<route>
 		<rte_id>MIAPENSIN1</rte_id>
 		<depicao>WMKP</depicao>
@@ -829,6 +831,101 @@
 				<wp-id>VILAT</wp-id>
 				<altitude-ft>10000</altitude-ft>
 				<ias-mach>240</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINBKI1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>WBKK</arricao>
+		<route>
+			<wp>
+				<wp-id>VMR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LENDA</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LIPRO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LEBIN</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LUSMO</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>RN</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TERIX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OLKIT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ANIRU</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOGOG</wp-id>
+				<altitude-ft>18000</altitude-ft>
+				<ias-mach>0.62</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIABKISIN1</rte_id>
+		<depicao>WBKK</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>VLB</wp-id>
+				<altitude-ft>14000</altitude-ft>
+				<ias-mach>0.60</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VMI</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VBU</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>GONAD</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>PILAX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VKG</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ATETI</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>OBGET</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>TOMAN</wp-id>
+				<altitude-ft>22000</altitude-ft>
+				<ias-mach>0.62</ias-mach>
 			</wp>
 		</route>
 	</route>

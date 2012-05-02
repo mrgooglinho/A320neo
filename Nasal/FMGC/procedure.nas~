@@ -65,7 +65,7 @@ var procedure = {
 			
 			var transit_wp = getprop("/flight-management/procedures/sid-transit");
 		
-			if (current_wp < transit_wp) {
+			if (current_wp != transit_wp) {
 		
 				print("--------------------------");
 				print("[FMGC] SID: " ~ getprop("/flight-management/procedures/sid/active-sid/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
