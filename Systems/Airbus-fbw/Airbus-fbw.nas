@@ -387,32 +387,31 @@ var fbw = {
 		#Proper neutral
 		if(math.abs(me.stick_pitch) <= 0.02) {
 			me.stick_pitch = 0;
-			#me.fix_pitch_rate = -1 * getprop("orientation/pitch-rate-degps") * math.abs(me.stable_pitch - me.pitch/0.5);
-			me.fix_pitch_rate = me.stable_pitch - me.pitch;
-			#me.fix_pitch_gforce = (me.fix_pitch_rate*DEG2RAD) * (getprop("velocities/airspeed-kt") * KT2MS) / G_force;
-			me.fix_pitch_gforce = (me.stable_pitch - me.pitch) * 0.05;
-			if (me.fix_pitch_gforce >= 0.15) me.fix_pitch_gforce = 0.15;
-			else if (me.fix_pitch_gforce <= -0.15) me.fix_pitch_gforce = -0.15;
-			#me.actual_pitch_rate = (me.actual_G * G_force) / (me.groundspeedkt * KT2MS);
+
+			# add pitch rate to maintain stable pitch
+			#me.fix_pitch_rate = me.stable_pitch - me.pitch;
+				
+		
 		} else {
 			me.stable_pitch = me.pitch;
 		}
-		
-		
 
-		me.pitch_gforce = (me.stick_pitch * -1.50) + 1 + me.fix_pitch_gforce;
-		#me.pitch_gforce_rate = (me.pitch_gforce * G_force) / (getprop("velocities/airspeed-kt") * KT2MS);
+
+		me.pitch_gforce_vertical = (me.stick_pitch * -1.50) + 1 + me.fix_pitch_gforce;
+
 		
+		me.pitch_gforce = me.pitch_gforce_vertical / math.cos(DEG2RAD * me.bank);
+
 		me.pitch_rate = (me.stick_pitch * -1 * me.max_pitch_rate) + me.fix_pitch_rate;
 		
 		
 		## Set G-forces to properties for xml to read
 		
 		setprop(fbw_root~"elevator/target-pitch-gforce", me.pitch_gforce);
-		#setprop(fbw_root~"elevator/target-pitch-gforce-rate", me.pitch_gforce_rate);
+
 		setprop(fbw_root~"elevator/target-pitch-rate", me.pitch_rate);
-		setprop(fbw_root~"elevator/fix-pitch-gforce", me.fix_pitch_gforce);
-		setprop(fbw_root~"elevator/fix-pitch-rate", me.fix_pitch_rate);
+		#setprop(fbw_root~"elevator/fix-pitch-gforce", me.fix_pitch_gforce);
+		#setprop(fbw_root~"elevator/fix-pitch-rate", me.fix_pitch_rate);
 
 	},
 	set_active_ailerons : func {
@@ -529,3 +528,4 @@ var fbw = {
 
 fbw.init();
 print("Airbus Fly-by-wire Initialized");
+
