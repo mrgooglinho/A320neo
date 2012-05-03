@@ -54,6 +54,7 @@ var fbw = {
 		
 		## Flight envelope
 
+
 		setprop(fbw_root~"limits/max-bank-soft", '33' );
 		setprop(fbw_root~"limits/max-bank-hard", '67' );
 	
@@ -82,6 +83,11 @@ var fbw = {
 		
 		props.globals.initNode(fbw_root~"stable/elevator", 0);
 		props.globals.initNode(fbw_root~"stable/aileron", 0);
+
+		#needed for blend
+		setprop(fbw_root~"elevator/fbw-output-rate", 0);
+		setprop(fbw_root~"ailerons/fbw-output-rate", 0);
+
 		
 		# The Stabilizer (Trimmers) are used to maintain pitch and/or bank angle when the control stick is brought to the center. The active fbw controls "try" to maintain 0 pitch-rate/roll-rate/1g but if by any chance (for example during turbulence) the attitude's changed, the stabilizer can get it back to the original attitude
 		
@@ -174,7 +180,7 @@ var fbw = {
 		else if ((me.modein == "Flight") and (me.agl <= 250) ) me.mode = "Landing";
 		else if (((me.modein == "Landing") or (me.modein == "Go-Around")) and (me.agl <= 50)) me.mode = "Flare";
 		else if (getprop("/gear/gear/wow")) me.mode = "Ground";
-		else if (me.modein == "Ground" and !getprop("/gear/gear/wow")) me.mode = "Takeoff";
+		else if (me.modein == "Ground" and !getprop("/gear/gear/wow")) { me.mode = "Take-Off"; me.blend_cicle = 0;}
 
 
 
@@ -210,22 +216,20 @@ var fbw = {
 		
 			me.protect_mode = 0;
 	
-			# Ground Mode
-	
-			if (me.mode == "Ground") {
+				
+			if (me.mode == "Flight") {
 		
-				me.set_direct_ailerons();
-				me.set_direct_elevator();
-		
-			# Flight Mode
-		
-			} else if (me.mode == "Flight") {
-			
 				me.set_active_ailerons();
 				me.set_active_elevator();
-			
-			# Flare Mode
-			
+				
+			} else if (me.mode == "Ground") {
+				me.set_direct_ailerons();
+				me.set_direct_elevator();
+
+			} else if (me.mode == "Take-Off") {
+				me.set_blend_ailerons();
+				me.set_blend_elevator();
+
 			} else {
 			
 				# STILL HAVE SOME WORK HERE. Atm, we'll just shift to direct control.
@@ -361,6 +365,8 @@ var fbw = {
 	#
 	#},
 
+
+	
 	set_direct_elevator : func {
 		me.active_pitch = 0;
 		setprop(fcs~"elevator-fbw-output", getprop("/controls/flight/elevator"));
@@ -376,60 +382,61 @@ var fbw = {
 
 	set_active_elevator : func {
 		me.active_pitch = 1;
+		me.set_pid_elevator();
 
-		# FLY-BY-WIRE Servo Control
-
-		# Convert Stick Position into target G-Force
-		
-		## Pitch Rate Control
-		
-		
-		#Proper neutral
-		if(math.abs(me.stick_pitch) <= 0.02) {
-			me.stick_pitch = 0;
-
-			# add pitch rate to maintain stable pitch
-			#me.fix_pitch_rate = me.stable_pitch - me.pitch;
-				
-		
+		# copy output
+		if (getprop("/velocities/airspeed-kt") < 210) {
+			setprop(fcs~"elevator-fbw-output", getprop(fbw_root~"elevator/fbw-output-rate"));
 		} else {
-			me.stable_pitch = me.pitch;
+			setprop(fcs~"elevator-fbw-output", getprop(fbw_root~"elevator/fbw-output-gforce"));
 		}
-
-
-		me.pitch_gforce_vertical = (me.stick_pitch * -1.50) + 1 + me.fix_pitch_gforce;
-
-		
-		me.pitch_gforce = me.pitch_gforce_vertical / math.cos(DEG2RAD * me.bank);
-
-		me.pitch_rate = (me.stick_pitch * -1 * me.max_pitch_rate) + me.fix_pitch_rate;
-		
-		
-		## Set G-forces to properties for xml to read
-		
-		setprop(fbw_root~"elevator/target-pitch-gforce", me.pitch_gforce);
-
-		setprop(fbw_root~"elevator/target-pitch-rate", me.pitch_rate);
-		#setprop(fbw_root~"elevator/fix-pitch-gforce", me.fix_pitch_gforce);
-		#setprop(fbw_root~"elevator/fix-pitch-rate", me.fix_pitch_rate);
-
 	},
 	set_active_ailerons : func {
 		me.active_bank = 1;
+		me.set_pid_ailerons();
 
-		# FLY-BY-WIRE Servo Control
+		# copy output
+		setprop(fcs~"aileron-fbw-output", getprop(fbw_root~"ailerons/fbw-output-rate"));
 
-		#Proper neutral
-		if(math.abs(me.stick_roll) <= 0.02) me.stick_roll = 0;
-		## Roll Rate Control
 		
-		me.roll_rate = (me.stick_roll * me.max_roll_rate) + me.fix_roll_rate;
+	},
+	blend : func (total, mix, a, b) {
+		# total: total cicles to blend
+		# mix: actial mixing cicle
+		# a : input source 1
+		# b : input source 2
 		
-		## Set G-forces to properties for xml to read
 
-		setprop(fbw_root~"ailerons/target-roll-rate", me.roll_rate);
+		if (mix > total) mix = total;
+		var mix_a = total - mix;
+		var mix_b = mix;
+	
 
-		setprop(fbw_root~"ailerons/fix-roll-rate", me.fix_roll_rate);
+		var output = (getprop(a)/total * mix_a) + (getprop(b)/total * mix_b);
+		return output;
+	},
+	set_blend_elevator : func {
+		me.active_pitch = 1;
+		me.set_pid_elevator();
+
+		var total = 5/me.UPDATE_INTERVAL;
+
+		var output = me.blend(total, me.blend_cicle, input~"elevator", fbw_root~"elevator/fbw-output-rate");
+		setprop(fcs~"elevator-fbw-output", output);
+		
+		me.blend_cicle += 1;
+	},
+	set_blend_ailerons : func {
+		me.active_bank = 1;
+		me.set_pid_ailerons();
+
+		var total = 5/me.UPDATE_INTERVAL;
+
+
+		var output = me.blend(total, me.blend_cicle, input~"aileron", fbw_root~"ailerons/fbw-output-rate");
+		setprop(fcs~"aileron-fbw-output", output);
+		
+		#me.blend_cicle += 1;
 	},
 	set_pids : func {
 		## Activate PIDs
@@ -466,6 +473,55 @@ var fbw = {
 		# RUDDER
 		if (!me.autopilot)
 			setprop(fcs~"rudder-fbw-output", getprop(fcs~"rudder-cmd-norm"));
+	},
+
+	set_pid_elevator : func {
+
+		#Proper neutral
+			if(math.abs(me.stick_pitch) <= 0.02) me.stick_pitch = 0;
+
+		## G-LOAD PID
+
+			setprop(fbw_root~"elevator/PID-load-factor", 1);
+
+			# Convert Stick Position into target G-Force and corrent for bank angle
+				me.pitch_gforce_vertical = (me.stick_pitch * -1.50) + 1 + me.fix_pitch_gforce;
+				me.pitch_gforce = me.pitch_gforce_vertical / math.cos(DEG2RAD * me.bank);
+
+			# output to pit source
+				setprop(fbw_root~"elevator/target-pitch-gforce", me.pitch_gforce);
+				
+
+		## PITCH-RATE PID
+
+			setprop(fbw_root~"elevator/PID-pitch-rate", 1);
+
+			# Convert Stick Position into target Pitch rate
+				me.pitch_rate = (me.stick_pitch * -1 * me.max_pitch_rate) + me.fix_pitch_rate;
+
+			# output to pit source
+				setprop(fbw_root~"elevator/target-pitch-rate", me.pitch_rate);
+
+	},
+	set_pid_ailerons : func {
+
+		#Proper neutral
+			if(math.abs(me.stick_roll) <= 0.02) me.stick_roll = 0;
+
+		## ROLL-RATE PID
+
+			setprop(fbw_root~"ailerons/PID-roll-rate", 1);
+
+			# Convert Stick Position into target roll rate
+				me.roll_rate = (me.stick_roll * me.max_roll_rate) + me.fix_roll_rate;
+		
+			# output to pit source
+				setprop(fbw_root~"ailerons/target-roll-rate", me.roll_rate);
+
+		
+	},	
+	set_pid_rudder : func {
+		setprop(fcs~"rudder-fbw-output", getprop(fcs~"rudder-cmd-norm"));
 	},
 	update : func {
 
@@ -504,8 +560,8 @@ var fbw = {
 
 ##################################################################### 
 		## Activate PIDs
-		me.set_pids();
-		
+		#me.set_pids();
+		me.set_pid_rudder();
 
 
 	}, # Update Fuction end

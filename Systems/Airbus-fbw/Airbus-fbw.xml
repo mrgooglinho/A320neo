@@ -32,7 +32,8 @@
 			<property>/systems/fbw/elevator/target-pitch-gforce</property>
 		</reference>
 		<output>
-			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
+			<!--property>/fdm/jsbsim/fcs/elevator-fbw-output</property-->
+			<property>/systems/fbw/elevator/fbw-output-gforce</property>
 		</output>
 		<!--config>
 			<Kp>-1</Kp>
@@ -81,7 +82,8 @@
 			<property>/systems/fbw/elevator/target-pitch-rate</property>
 		</reference>
 		<output>
-			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
+			<!--property>/fdm/jsbsim/fcs/elevator-fbw-output</property-->
+			<property>/systems/fbw/elevator/fbw-output-rate</property>
 		</output>
 		<!--config>
 			<Kp>-0.5</Kp>
@@ -119,7 +121,8 @@
 			<property>/systems/fbw/ailerons/target-roll-rate</property>
 		</reference>
 		<output>
-			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
+			<!--property>/fdm/jsbsim/fcs/aileron-fbw-output</property-->
+			<property>/systems/fbw/ailerons/fbw-output-rate</property>
 		</output>
 		<!--config>
 			<Kp>0.05</Kp>
@@ -159,7 +162,8 @@
 			<property>/systems/fbw/elevator/target-pitch-deg</property>
 		</reference>
 		<output>
-			<property>/fdm/jsbsim/fcs/elevator-fbw-output</property>
+			<!--property>/fdm/jsbsim/fcs/elevator-fbw-output</property-->
+			<property>/systems/fbw/elevator/fbw-output-hold</property>
 		</output>
 		<!--config>
 			<Kp>-1</Kp>
@@ -198,6 +202,7 @@
 		</reference>
 		<output>
 			<property>/fdm/jsbsim/fcs/aileron-fbw-output</property>
+			<property>/systems/fbw/ailerons/fbw-output-hold</property>
 		</output>
 		<!--config>
 			<Kp>0.05</Kp>
