@@ -38,7 +38,8 @@ var fbw = {
 		me.fix_pitch_rate = 0;
 		me.fix_roll_rate = 0;
 		me.stable_pitch = 0 ;
-	
+		me.mode = "Ground";
+		me.prev_mode = "Ground";
 
 		## Initialize Control Surfaces
 
@@ -95,7 +96,7 @@ var fbw = {
 		#me.law = "NORMAL LAW";
 
 		me.law = getprop(fbw_root~"law");
-		me.mode = getprop(fbw_root~"mode");
+		me.modein = getprop(fbw_root~"mode");
 		me.condition = getprop("/systems/condition");
 
 
@@ -164,20 +165,26 @@ var fbw = {
 	},
 	flight_mode : func {
 
-		var prev_mode = "Ground";
-
-		if (me.agl > 250) prev_mode = "Flight";
-		else if (me.agl > 50 and !getprop("/gear/gear/wow")) prev_mode = "Flare";
-
 		# Find out the current flight phase (Ground/Flight/Flare)
-						
-		if ((me.agl > 250) or ((prev_mode == "Flare") and (me.agl > 50))) me.mode = "Flight";
-		else if ((prev_mode == "Flight") and (me.agl <= 50)) me.mode = "Flare";
-		else if (getprop("/gear/gear/wow")) me.mode = "Ground";
-		else me.mode = "Takeoff";
+				
 
-		#me.mode = "Ground";
-		setprop(fbw_root~"mode", me.mode);
+		# Search for state change
+		if (me.agl > 250) me.mode = "Flight"; 
+		else if ((me.modein == "Flare") and (me.agl > 50)) me.mode = "Go-Around";  
+		else if ((me.modein == "Flight") and (me.agl <= 250) ) me.mode = "Landing";
+		else if (((me.modein == "Landing") or (me.modein == "Go-Around")) and (me.agl <= 50)) me.mode = "Flare";
+		else if (getprop("/gear/gear/wow")) me.mode = "Ground";
+		else if (me.modein == "Ground" and !getprop("/gear/gear/wow")) me.mode = "Takeoff";
+
+
+
+		# output if new state is available
+		if(me.modein != me.mode) {
+			me.prev_mode = me.modein;
+
+			setprop(fbw_root~"prev-mode", me.prev_mode);
+			setprop(fbw_root~"mode", me.mode);
+		}
 
 	},
 	law_ap : func {
