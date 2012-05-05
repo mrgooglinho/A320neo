@@ -1,6 +1,7 @@
 var co_tree = "/database/co_routes/";
-var active_rte = "/flight-management/active-rte/";
-var altn_rte = "/flight-management/alternate/route/";
+var fmgc_root = "/systems/flight-management/";
+var active_rte = fmgc_root~"active-rte/";
+var altn_rte = fmgc_root~"alternate/route/";
 
 setprop("/instrumentation/mcdu/from-to-results/line-length", 40);
 setprop("/instrumentation/mcdu/input", "");
@@ -11,7 +12,7 @@ setprop("/instrumentation/mcdu/brt", 0);
 
 # Set Default Tropo to 36090 (airbus default)
 
-setprop("/flight-management/tropo", "36090");
+setprop(fmgc_root~"tropo", "36090");
 
 # Empty Field Symbols are used when values are "empty" for strings and 0 for numbers, you set values with the functions when programming the FMGC
 
@@ -20,12 +21,12 @@ setprop(active_rte~ "depicao", "empty");
 setprop(active_rte~ "arricao", "empty");
 setprop(active_rte~ "flight-num", "empty");
 
-setprop("/flight-management/alternate/icao", "empty");
+setprop(fmgc_root~"alternate/icao", "empty");
 setprop(altn_rte~ "depicao", "empty");
 setprop(altn_rte~ "arricao", "empty");
 
-setprop("/flight-management/cost-index", 0);
-setprop("/flight-management/crz_fl", 0);
+setprop(fmgc_root~"cost-index", 0);
+setprop(fmgc_root~"crz_fl", 0);
 
 var mCDU_init = {
 
@@ -47,7 +48,7 @@ var mCDU_init = {
 		
 		}
 		
-		setprop("/flight-management/end-flight", 0);
+		setprop(fmgc_root~"end-flight", 0);
 		
 		f_pln.init_f_pln();
 	
@@ -85,7 +86,7 @@ var mCDU_init = {
 					
 						# Use CRZ FL
 						
-						setprop(active_rte~ "route/wp[" ~ wp ~ "]/altitude-ft", getprop("/flight-management/crz_fl") * 100);
+						setprop(active_rte~ "route/wp[" ~ wp ~ "]/altitude-ft", getprop(fmgc_root~"crz_fl") * 100);
 					
 					}
 					
@@ -258,7 +259,7 @@ var mCDU_init = {
 		
 		}
 		
-		setprop("flight-management/alternate/icao", icao);
+		setprop(fmgc_root~"alternate/icao", icao);
 	
 	},
 	
@@ -294,7 +295,7 @@ var mCDU_init = {
 					
 						# Use CRZ FL
 						
-						setprop(active_rte~ "route/wp[" ~ wp ~ "]/altitude-ft", getprop("/flight-management/crz_fl") * 100);
+						setprop(active_rte~ "route/wp[" ~ wp ~ "]/altitude-ft", getprop(fmgc_root~"crz_fl") * 100);
 					
 					}
 					

@@ -1,8 +1,8 @@
 var gps = "/instrumentation/gps/";
 
-var arr = "/flight-management/procedures/star/";
-
-var iap = "/flight-management/procedures/iap/";
+var fmgc_root = "/systems/flight-management/";
+var arr = fmgc_root~"procedures/star/";
+var iap = fmgc_root~"procedures/iap/";
 
 setprop(arr~ "active-star/name", "------");
 
@@ -103,8 +103,8 @@ var star = {
 		
 		setprop(arr~ "active-star/name", me.STARList[n].wp_name);
 		
-		setprop("/flight-management/procedures/star-current", 0);
-		setprop("/flight-management/procedures/star-transit", me.WPmax);
+		setprop(fmgc_root~"procedures/star-current", 0);
+		setprop(fmgc_root~"procedures/star-transit", me.WPmax);
 		
 		setprop("/instrumentation/mcdu/page", "f-pln");
 		
@@ -136,8 +136,8 @@ var star = {
 		
 		setprop(iap~ "active-iap/name", me.ApproachList[0].wp_name);
 		
-		setprop("/flight-management/procedures/iap-current", 0);
-		setprop("/flight-management/procedures/iap-transit", me.WPmax);
+		setprop(fmgc_root~"procedures/iap-current", 0);
+		setprop(fmgc_root~"procedures/iap-transit", me.WPmax);
 		
 	},
 	

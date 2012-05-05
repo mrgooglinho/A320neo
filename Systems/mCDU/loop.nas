@@ -1,4 +1,5 @@
 # This loop Updates every 10 seconds
+var fmgc_root = "/systems/flight-management/";
 
 var mCDU_loop_10 = {
        init : func {
@@ -31,9 +32,9 @@ var mCDU_loop_10 = {
 			
 		# Radio NAV ID Loop
 		
-		var ils = getprop("/flight-management/freq/ils-mode");
+		var ils = getprop(fmgc_root~"freq/ils-mode");
 		
-		var mls = getprop("/flight-management/freq/mls-mode");
+		var mls = getprop(fmgc_root~"freq/mls-mode");
 		
 		var nav1_id = getprop("/instrumentation/nav/nav-id");
 		
@@ -47,29 +48,29 @@ var mCDU_loop_10 = {
 		
 		if (ils) {
 		
-			setprop("/flight-management/freq/vor1-id", "---");
+			setprop(fmgc_root~"freq/vor1-id", "---");
 			
-			setprop("/flight-management/freq/ils-id", nav1_id);
+			setprop(fmgc_root~"freq/ils-id", nav1_id);
 		
 		} else {
 		
-			setprop("/flight-management/freq/ils-id", "---");
+			setprop(fmgc_root~"freq/ils-id", "---");
 			
-			setprop("/flight-management/freq/vor1-id", nav1_id);
+			setprop(fmgc_root~"freq/vor1-id", nav1_id);
 		
 		}
 		
 		if (mls) {
 		
-			setprop("/flight-management/freq/vor2-id", "---");
+			setprop(fmgc_root~"freq/vor2-id", "---");
 			
-			setprop("/flight-management/freq/mls-id", nav2_id);
+			setprop(fmgc_root~"freq/mls-id", nav2_id);
 		
 		} else {
 		
-			setprop("/flight-management/freq/mls-id", "---");
+			setprop(fmgc_root~"freq/mls-id", "---");
 			
-			setprop("/flight-management/freq/vor2-id", nav2_id);
+			setprop(fmgc_root~"freq/vor2-id", nav2_id);
 		
 		}
 

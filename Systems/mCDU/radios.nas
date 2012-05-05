@@ -1,6 +1,7 @@
 # MCDU RADIO NAVIGATION PAGE ###################################################
 
-var radio = "/flight-management/freq/";
+
+var radio = "/systems/flight-management/freq/";
 
 var nav1 = "/instrumentation/nav[0]/";
 

@@ -1,6 +1,7 @@
 var gps = "/instrumentation/gps/";
 
-var dep = "/flight-management/procedures/sid/";
+var fmgc_root = "/systems/flight-management/";
+var dep = "/systems/flight-management/procedures/sid/";
 
 setprop(dep~ "active-sid/name", "------");
 
@@ -101,8 +102,8 @@ var sid = {
 		
 		setprop(dep~ "active-sid/name", me.SIDList[n].wp_name);
 		
-		setprop("/flight-management/procedures/sid-current", 0);
-		setprop("/flight-management/procedures/sid-transit", me.WPmax);
+		setprop(fmgc_root~"procedures/sid-current", 0);
+		setprop(fmgc_root~"procedures/sid-transit", me.WPmax);
 		
 		setprop("/instrumentation/mcdu/page", "f-pln");
 		
