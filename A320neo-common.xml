@@ -98,17 +98,17 @@
 			
 			<autopilot>
 				<name>Auto-throttle</name>
-				<path>Aircraft/A320neo/Systems/FMGC/auto-throttle.xml</path>
+				<path>Aircraft/A320neo/Systems/FMGC/pid/auto-throttle.xml</path>
 			</autopilot>
 			
 			<autopilot>
 				<name>Aileron Control</name>
-				<path>Aircraft/A320neo/Systems/FMGC/aileron-ctrl.xml</path>
+				<path>Aircraft/A320neo/Systems/FMGC/pid/aileron-ctrl.xml</path>
 			</autopilot>
 			
 			<autopilot>
 				<name>Elevator Control</name>
-				<path>Aircraft/A320neo/Systems/FMGC/elevator-ctrl.xml</path>
+				<path>Aircraft/A320neo/Systems/FMGC/pid/elevator-ctrl.xml</path>
 			</autopilot>
 			
 			<!-- Fly-by-wire =============================================== -->
@@ -743,10 +743,10 @@
 		</procedures>
 		
 		<fmgc>
-			<file>Aircraft/A320neo/Nasal/FMGC/deflection.nas</file>
-			<file>Aircraft/A320neo/Nasal/FMGC/procedure.nas</file>
-			<file>Aircraft/A320neo/Nasal/FMGC/fmgc_loop.nas</file>
-			<file>Aircraft/A320neo/Nasal/FMGC/wp_transit.nas</file>
+			<file>Aircraft/A320neo/Systems/FMGC/deflection.nas</file>
+			<file>Aircraft/A320neo/Systems/FMGC/procedure.nas</file>
+			<file>Aircraft/A320neo/Systems/FMGC/fmgc_loop.nas</file>
+			<file>Aircraft/A320neo/Systems/FMGC/wp_transit.nas</file>
 		</fmgc>
 		
 		<hydraulics>
