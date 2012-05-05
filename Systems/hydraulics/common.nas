@@ -26,9 +26,9 @@ var hydraulics = {
 	
 	update_props : func {
 	
-		setprop("/hydraulics/green/pressure-psi", me.green_psi);
-		setprop("/hydraulics/blue/pressure-psi", me.blue_psi);
-		setprop("/hydraulics/yellow/pressure-psi", me.yellow_psi);
+		setprop("/systems/hydraulics/green/pressure-psi", me.green_psi);
+		setprop("/systems/hydraulics/blue/pressure-psi", me.blue_psi);
+		setprop("/systems/hydraulics/yellow/pressure-psi", me.yellow_psi);
 	
 	},
 	
@@ -38,9 +38,9 @@ var hydraulics = {
 		
 		foreach(var output; me.common_outputs) {
 		
-			var blue = getprop("hydraulics/outputs/" ~ output ~ "/available-b");
-			var green = getprop("hydraulics/outputs/" ~ output ~ "/available-g");
-			var yellow = getprop("hydraulics/outputs/" ~ output ~ "/available-y");
+			var blue = getprop("systems/hydraulics/outputs/" ~ output ~ "/available-b");
+			var green = getprop("systems/hydraulics/outputs/" ~ output ~ "/available-g");
+			var yellow = getprop("systems/hydraulics/outputs/" ~ output ~ "/available-y");
 			
 			if (blue == nil)
 				blue = 1;

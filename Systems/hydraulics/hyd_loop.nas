@@ -1,5 +1,5 @@
-var hyd_ctrl = "/hydraulics/control/";
-
+#var hyd_ctrl = "/hydraulics/control/";
+var hyd_ctrl = "/controls/hydraulic/";
 var hydraulics_loop = {
        init : func {
             me.UPDATE_INTERVAL = 2;

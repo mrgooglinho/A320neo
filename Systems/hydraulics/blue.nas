@@ -40,7 +40,7 @@ var hyd_blue = {
 	
 	low_priority_outputs : [], # Slats are controlled with flaps, there isn't a separate output atm
 	
-	high_priority_outputs : ["hydraulics/outputs/aileron/available-b", "hydraulics/outputs/elevator/available-b", "hydraulics/outputs/rudder/available-b"],
+	high_priority_outputs : ["systems/hydraulics/outputs/aileron/available-b", "systems/hydraulics/outputs/elevator/available-b", "systems/hydraulics/outputs/rudder/available-b"],
 	
 	priority_valve : func {
 	

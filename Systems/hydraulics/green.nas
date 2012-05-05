@@ -14,9 +14,9 @@ var hyd_green = {
 	
 	},
 	
-	low_priority_outputs : ["hydraulics/outputs/flaps/available-g", "gear/serviceable"],
+	low_priority_outputs : ["systems/hydraulics/outputs/flaps/available-g", "gear/serviceable"],
 	
-	high_priority_outputs : ["hydraulics/outputs/aileron/available-g", "hydraulics/outputs/elevator/available-g", "hydraulics/outputs/rudder/available-g", "hydraulics/outputs/speedbrake/available-g"],
+	high_priority_outputs : ["systems/hydraulics/outputs/aileron/available-g", "systems/hydraulics/outputs/elevator/available-g", "systems/hydraulics/outputs/rudder/available-g", "systems/hydraulics/outputs/speedbrake/available-g"],
 	
 	priority_valve : func {
 	
