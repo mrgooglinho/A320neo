@@ -750,11 +750,11 @@
 		</fmgc>
 		
 		<hydraulics>
-			<file>Aircraft/A320neo/Nasal/hydraulics/common.nas</file>
-			<file>Aircraft/A320neo/Nasal/hydraulics/green.nas</file>
-			<file>Aircraft/A320neo/Nasal/hydraulics/blue.nas</file>
-			<file>Aircraft/A320neo/Nasal/hydraulics/yellow.nas</file>
-			<file>Aircraft/A320neo/Nasal/hydraulics/hyd_loop.nas</file>
+			<file>Aircraft/A320neo/Systems/hydraulics/common.nas</file>
+			<file>Aircraft/A320neo/Systems/hydraulics/green.nas</file>
+			<file>Aircraft/A320neo/Systems/hydraulics/blue.nas</file>
+			<file>Aircraft/A320neo/Systems/hydraulics/yellow.nas</file>
+			<file>Aircraft/A320neo/Systems/hydraulics/hyd_loop.nas</file>
 		</hydraulics>
 	
 		<fbw>
