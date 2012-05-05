@@ -1,3 +1,5 @@
+var fmgc_root = "/systems/flight-management/";
+
 var wp_transit = {
        init : func {
             me.UPDATE_INTERVAL = 0.1;
@@ -5,15 +7,15 @@ var wp_transit = {
             
             me.current_wp = 0;
             
-            setprop("/flight-management/current-wp", me.current_wp);
+            setprop(fmgc_root~"current-wp", me.current_wp);
                   
             me.reset();
     },
     	update : func {
 		
-		if ((getprop("/autopilot/route-manager/route/num") > 1) and (getprop("/fbw/flight-phase") == "Flight Mode") and (getprop("/flight-management/end-flight") != 1)) {
+		if ((getprop("/autopilot/route-manager/route/num") > 1) and (getprop("/fbw/flight-phase") == "Flight Mode") and (getprop(fmgc_root~"end-flight") != 1)) {
 		
-		me.current_wp = getprop("/flight-management/current-wp");
+		me.current_wp = getprop(fmgc_root~"current-wp");
 		
 		var gps_accur = getprop(settings~ "gps-accur");
 		
@@ -57,8 +59,8 @@ var wp_transit = {
 				if (me.current_wp == last_wp) {
 				
 					print("--------------------------");
-					print("[FMGC] TRANSITION TO ARRIVAL: " ~ getprop("/flight-management/procedures/star/active-star/name"));
-					print("[FMGC] STAR: " ~ getprop("/flight-management/procedures/star/active-star/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/star/active-star/wp/name"));
+					print("[FMGC] TRANSITION TO ARRIVAL: " ~ getprop(fmgc_root~"procedures/star/active-star/name"));
+					print("[FMGC] STAR: " ~ getprop(fmgc_root~"procedures/star/active-star/name") ~ " > TARGET SET: " ~ getprop(fmgc_root~"procedures/star/active-star/wp/name"));
 				
 				} else {
 		
@@ -72,7 +74,7 @@ var wp_transit = {
 			
 				print("--------------------------");
 				print("[FMGC] LAST WP REACHED");
-				setprop("/flight-management/end-flight", 1);
+				setprop(fmgc_root~"end-flight", 1);
 			
 			}
 			
@@ -84,11 +86,11 @@ var wp_transit = {
 		
 		}
 		
-		setprop("/flight-management/current-wp", me.current_wp);
+		setprop(fmgc_root~"current-wp", me.current_wp);
 		
 		} else {
 		
-			setprop("/flight-management/current-wp", 0);
+			setprop(fmgc_root~"current-wp", 0);
 		
 		}
 			

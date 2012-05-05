@@ -1,14 +1,15 @@
-var fmgc = "/flight-management/control/";
-var settings = "/flight-management/settings/";
-var fcu = "/flight-management/fcu-values/";
-var fmgc_val = "/flight-management/fmgc-values/";
+var fmgc_root = "/systems/flight-management/";
+var fmgc_ctr = "/systems/flight-management/control/";
+var settings = "/systems/flight-management/settings/";
+var fcu = "/systems/flight-management/fcu-values/";
+var fmgc_val = "/systems/flight-management/fmgc-values/";
 var servo = "/servo-control/";
 
-setprop("/flight-management/text/qnh", "QNH");
+setprop(fmgc_root~"text/qnh", "QNH");
 
 setprop(settings~ "gps-accur", "LOW");
 
-setprop("/flight-management/end-flight", 0);
+setprop(fmgc_root~"end-flight", 0);
 
 var fmgc_loop = {
        init : func {
@@ -17,39 +18,39 @@ var fmgc_loop = {
             
             me.current_wp = 0;
             
-            setprop("/flight-management/current-wp", me.current_wp);
+            setprop(fmgc_root~"current-wp", me.current_wp);
             
             # ALT SELECT MODE
             
-            setprop(fmgc~ "alt-sel-mode", "100"); # AVAIL MODES : 100 1000
+            setprop(fmgc_ctr~ "alt-sel-mode", "100"); # AVAIL MODES : 100 1000
             
             # AUTO-THROTTLE
             
-            setprop(fmgc~ "spd-mode", "ias"); # AVAIL MODES : ias mach
-            setprop(fmgc~ "spd-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
+            setprop(fmgc_ctr~ "spd-mode", "ias"); # AVAIL MODES : ias mach
+            setprop(fmgc_ctr~ "spd-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
             
-            setprop(fmgc~ "a-thr/ias", 0);
-            setprop(fmgc~ "a-thr/mach", 0);
+            setprop(fmgc_ctr~ "a-thr/ias", 0);
+            setprop(fmgc_ctr~ "a-thr/mach", 0);
             
-            setprop(fmgc~ "fmgc/ias", 0);
-            setprop(fmgc~ "fmgc/mach", 0);
+            setprop(fmgc_ctr~ "fmgc/ias", 0);
+            setprop(fmgc_ctr~ "fmgc/mach", 0);
             
             # AUTOPILOT (LATERAL)
             
-            setprop(fmgc~ "lat-mode", "hdg"); # AVAIL MODES : hdg nav1
-            setprop(fmgc~ "lat-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
+            setprop(fmgc_ctr~ "lat-mode", "hdg"); # AVAIL MODES : hdg nav1
+            setprop(fmgc_ctr~ "lat-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
             
             # AUTOPILOT (VERTICAL)
             
-            setprop(fmgc~ "ver-mode", "alt"); # AVAIL MODES : alt (vs/fpa) ils
-            setprop(fmgc~ "ver-sub", "vs"); # AVAIL MODES : vs fpa
-            setprop(fmgc~ "ver-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
+            setprop(fmgc_ctr~ "ver-mode", "alt"); # AVAIL MODES : alt (vs/fpa) ils
+            setprop(fmgc_ctr~ "ver-sub", "vs"); # AVAIL MODES : vs fpa
+            setprop(fmgc_ctr~ "ver-ctrl", "man-set"); # AVAIL MODES : --- fmgc man-set
             
             # AUTOPILOT (MASTER)
             
-            setprop(fmgc~ "ap1-master", "off");
-            setprop(fmgc~ "ap2-master", "off");
-            setprop(fmgc~ "a-thrust", "off");
+            setprop(fmgc_ctr~ "ap1-master", "off");
+            setprop(fmgc_ctr~ "ap2-master", "off");
+            setprop(fmgc_ctr~ "a-thrust", "off");
             
             # Rate/Load Factor Configuration
             
@@ -58,7 +59,7 @@ var fmgc_loop = {
             
             # Terminal Procedure
             
-            setprop("/flight-management/procedures/active", "off"); # AVAIL MODES : off sid star iap
+            setprop(fmgc_root~"procedures/active", "off"); # AVAIL MODES : off sid star iap
             
             # Set Flight Control Unit Initial Values
             
@@ -100,7 +101,7 @@ var fmgc_loop = {
     	
     	me.fcu_lights();
     	
-    	setprop("flight-management/procedures/active", procedure.check());
+    	setprop(fmgc_root~"procedures/active", procedure.check());
     	
     	setprop(fcu~ "alt-100", me.alt_100());
     	
@@ -108,11 +109,11 @@ var fmgc_loop = {
     	
     	if ((me.spd_ctrl == "off") or (me.a_thr == "off")) {
     	
-    		setprop(fmgc~ "a-thr/ias", 0);
-            setprop(fmgc~ "a-thr/mach", 0);
+    		setprop(fmgc_ctr~ "a-thr/ias", 0);
+            setprop(fmgc_ctr~ "a-thr/mach", 0);
             
-            setprop(fmgc~ "fmgc/ias", 0);
-            setprop(fmgc~ "fmgc/mach", 0);
+            setprop(fmgc_ctr~ "fmgc/ias", 0);
+            setprop(fmgc_ctr~ "fmgc/mach", 0);
     	
     	}
     	
@@ -141,19 +142,19 @@ var fmgc_loop = {
     	
     		if (me.spd_mode == "ias") {
     		
-    			setprop(fmgc~ "a-thr/ias", 1);
-    			setprop(fmgc~ "a-thr/mach", 0);
+    			setprop(fmgc_ctr~ "a-thr/ias", 1);
+    			setprop(fmgc_ctr~ "a-thr/mach", 0);
     			
-    			setprop(fmgc~ "fmgc/ias", 0);
-            	setprop(fmgc~ "fmgc/mach", 0);
+    			setprop(fmgc_ctr~ "fmgc/ias", 0);
+            	setprop(fmgc_ctr~ "fmgc/mach", 0);
     		
     		} else {
     		
-    			setprop(fmgc~ "a-thr/ias", 0);
-    			setprop(fmgc~ "a-thr/mach", 1);
+    			setprop(fmgc_ctr~ "a-thr/ias", 0);
+    			setprop(fmgc_ctr~ "a-thr/mach", 1);
     			
-    			setprop(fmgc~ "fmgc/ias", 0);
-        	    setprop(fmgc~ "fmgc/mach", 0);
+    			setprop(fmgc_ctr~ "fmgc/ias", 0);
+        	    setprop(fmgc_ctr~ "fmgc/mach", 0);
     		
     		}
     	
@@ -277,18 +278,18 @@ var fmgc_loop = {
     	
     	setprop(fmgc_val~ "target-spd", spd);
     	
-    	setprop(fmgc~ "a-thr/ias", 0);
-        setprop(fmgc~ "a-thr/mach", 0);
+    	setprop(fmgc_ctr~ "a-thr/ias", 0);
+        setprop(fmgc_ctr~ "a-thr/mach", 0);
     	
     	if (spd < 1) {
     	
-    		setprop(fmgc~ "fmgc/ias", 0);
-            setprop(fmgc~ "fmgc/mach", 0);
+    		setprop(fmgc_ctr~ "fmgc/ias", 0);
+            setprop(fmgc_ctr~ "fmgc/mach", 0);
     	
     	} else {
     	
-    		setprop(fmgc~ "fmgc/ias", 1);
-            setprop(fmgc~ "fmgc/mach", 0);
+    		setprop(fmgc_ctr~ "fmgc/ias", 1);
+            setprop(fmgc_ctr~ "fmgc/mach", 0);
     	
     	}
     	
@@ -302,7 +303,7 @@ var fmgc_loop = {
     	
     		# If A procedure's NOT being flown, we'll fly the active F-PLN
     	
-    		if (getprop("/flight-management/procedures/active") == "off") {
+    		if (getprop(fmgc_root~"procedures/active") == "off") {
     	
     		var bug = getprop("/autopilot/internal/true-heading-error-deg");
 			
@@ -325,11 +326,11 @@ var fmgc_loop = {
 			
 			} else {
 			
-				if (getprop("/flight-management/procedures/active") == "sid") {
+				if (getprop(fmgc_root~"procedures/active") == "sid") {
 				
 					procedure.fly_sid();
 					
-					var bug = getprop("/flight-management/procedures/sid/course");
+					var bug = getprop(fmgc_root~"procedures/sid/course");
 					
 					var bank = -1 * defl(bug, 25);					
 					
@@ -339,11 +340,11 @@ var fmgc_loop = {
 					
 					setprop(servo~ "target-bank", bank);
 				
-				} elsif (getprop("/flight-management/procedures/active") == "star") {
+				} elsif (getprop(fmgc_root~"procedures/active") == "star") {
 				
 					procedure.fly_star();
 					
-					var bug = getprop("/flight-management/procedures/star/course");
+					var bug = getprop(fmgc_root~"procedures/star/course");
 					
 					var bank = -1 * defl(bug, 25);					
 					
@@ -357,7 +358,7 @@ var fmgc_loop = {
 				
 					procedure.fly_iap();
 					
-					var bug = getprop("/flight-management/procedures/iap/course");
+					var bug = getprop(fmgc_root~"procedures/iap/course");
 					
 					var bank = -1 * defl(bug, 28);					
 					
@@ -422,20 +423,20 @@ var fmgc_loop = {
 	},
 		get_settings : func {
 		
-		me.spd_mode = getprop(fmgc~ "spd-mode");
-		me.spd_ctrl = getprop(fmgc~ "spd-ctrl");
+		me.spd_mode = getprop(fmgc_ctr~ "spd-mode");
+		me.spd_ctrl = getprop(fmgc_ctr~ "spd-ctrl");
 		
-		me.lat_mode = getprop(fmgc~ "lat-mode");
-		me.lat_ctrl = getprop(fmgc~ "lat-ctrl");
+		me.lat_mode = getprop(fmgc_ctr~ "lat-mode");
+		me.lat_ctrl = getprop(fmgc_ctr~ "lat-ctrl");
 		
-		me.ver_mode = getprop(fmgc~ "ver-mode");
-		me.ver_ctrl = getprop(fmgc~ "ver-ctrl");
+		me.ver_mode = getprop(fmgc_ctr~ "ver-mode");
+		me.ver_ctrl = getprop(fmgc_ctr~ "ver-ctrl");
 		
-		me.ver_sub = getprop(fmgc~ "ver-sub");
+		me.ver_sub = getprop(fmgc_ctr~ "ver-sub");
 		
-		me.ap1 = getprop(fmgc~ "ap1-master");
-		me.ap2 = getprop(fmgc~ "ap2-master");
-		me.a_thr = getprop(fmgc~ "a-thrust");
+		me.ap1 = getprop(fmgc_ctr~ "ap1-master");
+		me.ap2 = getprop(fmgc_ctr~ "ap2-master");
+		me.a_thr = getprop(fmgc_ctr~ "a-thrust");
 	
 	},
 	
@@ -446,12 +447,12 @@ var fmgc_loop = {
 			var vs_fps = getprop("/velocities/vertical-speed-fps");
 		
 			if (math.abs(vs_fps) > 8)
-				setprop("/flight-management/fcu/level_ch", 1);
+				setprop(fmgc_root~"fcu/level_ch", 1);
 			else
-				setprop("/flight-management/fcu/level_ch", 0);
+				setprop(fmgc_root~"fcu/level_ch", 0);
 		
 		} else
-			setprop("/flight-management/fcu/level_ch", 0);
+			setprop(fmgc_root~"fcu/level_ch", 0);
 		
 	},
 	
@@ -486,29 +487,29 @@ var fmgc_loop = {
 		fcu_lights : func {
 		
 		if (me.lat_mode == "nav1")
-			setprop(fmgc~ "fcu/nav1", 1);
+			setprop(fmgc_ctr~ "fcu/nav1", 1);
 		else
-			setprop(fmgc~ "fcu/nav1", 0);
+			setprop(fmgc_ctr~ "fcu/nav1", 0);
 			
 		if (me.ver_mode == "ils")
-			setprop(fmgc~ "fcu/ils", 1);
+			setprop(fmgc_ctr~ "fcu/ils", 1);
 		else
-			setprop(fmgc~ "fcu/ils", 0);
+			setprop(fmgc_ctr~ "fcu/ils", 0);
 			
 		if (me.a_thr == "eng")
-			setprop(fmgc~ "fcu/a-thrust", 1);
+			setprop(fmgc_ctr~ "fcu/a-thrust", 1);
 		else
-			setprop(fmgc~ "fcu/a-thrust", 0);
+			setprop(fmgc_ctr~ "fcu/a-thrust", 0);
 			
 		if (me.ap1 == "eng")
-			setprop(fmgc~ "fcu/ap1", 1);
+			setprop(fmgc_ctr~ "fcu/ap1", 1);
 		else
-			setprop(fmgc~ "fcu/ap1", 0);
+			setprop(fmgc_ctr~ "fcu/ap1", 0);
 			
 		if (me.ap2 == "eng")
-			setprop(fmgc~ "fcu/ap2", 1);
+			setprop(fmgc_ctr~ "fcu/ap2", 1);
 		else
-			setprop(fmgc~ "fcu/ap2", 0);
+			setprop(fmgc_ctr~ "fcu/ap2", 0);
 		
 	},
 	

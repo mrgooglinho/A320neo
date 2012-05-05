@@ -1,18 +1,20 @@
+var fmgc_root = "/systems/flight-management/";
+
 var procedure = {
 
 	check : func() {
 	
 		var rte_len = getprop("/autopilot/route-manager/route/num");
 	
-		if ((getprop("/flight-management/procedures/sid/active-sid/name") != "------") and (getprop("/flight-management/current-wp") == 1) and (getprop("/flight-management/procedures/sid-current") != getprop("/flight-management/procedures/sid-transit")) and (getprop("/flight-management/control/lat-ctrl") == "fmgc")) { # Standard Departure
+		if ((getprop(fmgc_root~"procedures/sid/active-sid/name") != "------") and (getprop(fmgc_root~"current-wp") == 1) and (getprop(fmgc_root~"procedures/sid-current") != getprop(fmgc_root~"procedures/sid-transit")) and (getprop(fmgc_root~"control/lat-ctrl") == "fmgc")) { # Standard Departure
 		
 			return "sid";
 		
-		} elsif ((getprop("/flight-management/procedures/sid/active-star/name") != "------") and (getprop("/flight-management/current-wp") == (rte_len - 1)) and (getprop("/flight-management/procedures/star-current") != getprop("/flight-management/procedures/star-transit")) and (getprop("/flight-management/control/lat-ctrl") == "fmgc")) {
+		} elsif ((getprop(fmgc_root~"procedures/sid/active-star/name") != "------") and (getprop(fmgc_root~"current-wp") == (rte_len - 1)) and (getprop(fmgc_root~"procedures/star-current") != getprop(fmgc_root~"procedures/star-transit")) and (getprop(fmgc_root~"control/lat-ctrl") == "fmgc")) {
 		
 			return "star";
 		
-		} elsif ((getprop("/flight-management/procedures/iap/active-iap/name") != "------") and (getprop("/flight-management/procedures/star-current") == getprop("/flight-management/procedures/star-transit")) and (getprop("/flight-management/procedures/iap-current") != getprop("/flight-management/procedures/iap-transit")) and (getprop("/flight-management/control/lat-ctrl") == "fmgc")) { 
+		} elsif ((getprop(fmgc_root~"procedures/iap/active-iap/name") != "------") and (getprop(fmgc_root~"procedures/star-current") == getprop(fmgc_root~"procedures/star-transit")) and (getprop(fmgc_root~"procedures/iap-current") != getprop(fmgc_root~"procedures/iap-transit")) and (getprop(fmgc_root~"control/lat-ctrl") == "fmgc")) { 
 
 			return "iap";
 		
@@ -26,30 +28,30 @@ var procedure = {
 	
 	reset_tp : func() {
 	
-		setprop("/flight-management/procedures/active", "off");
+		setprop(fmgc_root~"procedures/active", "off");
 		
-		setprop("/flight-management/procedures/sid-current", 0);
+		setprop(fmgc_root~"procedures/sid-current", 0);
 		
-		setprop("/flight-management/procedures/star-current", 0);
+		setprop(fmgc_root~"procedures/star-current", 0);
 		
-		setprop("/flight-management/procedures/iap-current", 0);
+		setprop(fmgc_root~"procedures/iap-current", 0);
 	
 	},
 	
 	fly_sid : func() {
 	
-		var current_wp = getprop("/flight-management/procedures/sid-current");
+		var current_wp = getprop(fmgc_root~"procedures/sid-current");
 		
-		var target_lat = getprop("/flight-management/procedures/sid/active-sid/wp[" ~ current_wp ~ "]/latitude-deg");
+		var target_lat = getprop(fmgc_root~"procedures/sid/active-sid/wp[" ~ current_wp ~ "]/latitude-deg");
 		
-		var target_lon = getprop("/flight-management/procedures/sid/active-sid/wp[" ~ current_wp ~ "]/longitude-deg");
+		var target_lon = getprop(fmgc_root~"procedures/sid/active-sid/wp[" ~ current_wp ~ "]/longitude-deg");
 		
 		if ((target_lat == 0) or (target_lon == 0))
-			setprop("/flight-management/procedures/sid-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/sid-current", current_wp + 1);
 			
-		var current_wp = getprop("/flight-management/procedures/sid-current");
+		var current_wp = getprop(fmgc_root~"procedures/sid-current");
 		
-		setprop("/flight-management/procedures/sid/course", me.course_to(target_lat, target_lon));
+		setprop(fmgc_root~"procedures/sid/course", me.course_to(target_lat, target_lon));
 		
 		var pos_lat = getprop("/position/latitude-deg");
 		
@@ -59,17 +61,17 @@ var procedure = {
 		
 		if ((math.abs(pos_lat - target_lat) <= accuracy) and (math.abs(pos_lon - target_lon) <= accuracy)) {
 		
-			setprop("/flight-management/procedures/sid-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/sid-current", current_wp + 1);
 			
-			var current_wp = getprop("/flight-management/procedures/sid-current");
+			var current_wp = getprop(fmgc_root~"procedures/sid-current");
 			
-			var transit_wp = getprop("/flight-management/procedures/sid-transit");
+			var transit_wp = getprop(fmgc_root~"procedures/sid-transit");
 		
 			if (current_wp < transit_wp) {
 		
 				print("--------------------------");
-				print("[FMGC] SID: " ~ getprop("/flight-management/procedures/sid/active-sid/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
-				print("[FMGC] SID: " ~ getprop("/flight-management/procedures/sid/active-sid/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/sid/active-sid/wp[" ~ current_wp ~ "]/name"));
+				print("[FMGC] SID: " ~ getprop(fmgc_root~"procedures/sid/active-sid/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
+				print("[FMGC] SID: " ~ getprop(fmgc_root~"procedures/sid/active-sid/name") ~ " > TARGET SET: " ~ getprop(fmgc_root~"procedures/sid/active-sid/wp[" ~ current_wp ~ "]/name"));
 			
 			} else {
 			
@@ -84,18 +86,18 @@ var procedure = {
 	
 	fly_star : func() {
 	
-		var current_wp = getprop("/flight-management/procedures/star-current");
+		var current_wp = getprop(fmgc_root~"procedures/star-current");
 		
-		var target_lat = getprop("/flight-management/procedures/star/active-star/wp[" ~ current_wp ~ "]/latitude-deg");
+		var target_lat = getprop(fmgc_root~"procedures/star/active-star/wp[" ~ current_wp ~ "]/latitude-deg");
 		
-		var target_lon = getprop("/flight-management/procedures/star/active-star/wp[" ~ current_wp ~ "]/longitude-deg");
+		var target_lon = getprop(fmgc_root~"procedures/star/active-star/wp[" ~ current_wp ~ "]/longitude-deg");
 		
 		if ((target_lat == 0) or (target_lon == 0))
-			setprop("/flight-management/procedures/star-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/star-current", current_wp + 1);
 			
-		var current_wp = getprop("/flight-management/procedures/star-current");
+		var current_wp = getprop(fmgc_root~"procedures/star-current");
 		
-		setprop("/flight-management/procedures/star/course", me.course_to(target_lat, target_lon));
+		setprop(fmgc_root~"procedures/star/course", me.course_to(target_lat, target_lon));
 		
 		var pos_lat = getprop("/position/latitude-deg");
 		
@@ -105,17 +107,17 @@ var procedure = {
 		
 		if ((math.abs(pos_lat - target_lat) <= accuracy) and (math.abs(pos_lon - target_lon) <= accuracy)) {
 		
-			setprop("/flight-management/procedures/star-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/star-current", current_wp + 1);
 			
-			var current_wp = getprop("/flight-management/procedures/star-current");
+			var current_wp = getprop(fmgc_root~"procedures/star-current");
 			
-			var transit_wp = getprop("/flight-management/procedures/star-transit");
+			var transit_wp = getprop(fmgc_root~"procedures/star-transit");
 		
 			if (current_wp < transit_wp) {
 		
 				print("--------------------------");
-				print("[FMGC] STAR: " ~ getprop("/flight-management/procedures/star/active-star/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
-				print("[FMGC] STAR: " ~ getprop("/flight-management/procedures/star/active-star/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/star/active-star/wp[" ~ current_wp ~ "]/name"));
+				print("[FMGC] STAR: " ~ getprop(fmgc_root~"procedures/star/active-star/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
+				print("[FMGC] STAR: " ~ getprop(fmgc_root~"procedures/star/active-star/name") ~ " > TARGET SET: " ~ getprop(fmgc_root~"procedures/star/active-star/wp[" ~ current_wp ~ "]/name"));
 			
 			} else {
 			
@@ -130,18 +132,18 @@ var procedure = {
 	
 	fly_iap : func() {
 	
-	var current_wp = getprop("/flight-management/procedures/iap-current");
+	var current_wp = getprop(fmgc_root~"procedures/iap-current");
 		
-		var target_lat = getprop("/flight-management/procedures/iap/active-iap/wp[" ~ current_wp ~ "]/latitude-deg");
+		var target_lat = getprop(fmgc_root~"procedures/iap/active-iap/wp[" ~ current_wp ~ "]/latitude-deg");
 		
-		var target_lon = getprop("/flight-management/procedures/iap/active-iap/wp[" ~ current_wp ~ "]/longitude-deg");
+		var target_lon = getprop(fmgc_root~"procedures/iap/active-iap/wp[" ~ current_wp ~ "]/longitude-deg");
 		
 		if ((target_lat == 0) or (target_lon == 0))
-			setprop("/flight-management/procedures/iap-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/iap-current", current_wp + 1);
 			
-		var current_wp = getprop("/flight-management/procedures/iap-current");
+		var current_wp = getprop(fmgc_root~"procedures/iap-current");
 		
-		setprop("/flight-management/procedures/iap/course", me.course_to(target_lat, target_lon));
+		setprop(fmgc_root~"procedures/iap/course", me.course_to(target_lat, target_lon));
 		
 		var pos_lat = getprop("/position/latitude-deg");
 		
@@ -151,17 +153,17 @@ var procedure = {
 		
 		if ((math.abs(pos_lat - target_lat) <= accuracy) and (math.abs(pos_lon - target_lon) <= accuracy)) {
 		
-			setprop("/flight-management/procedures/iap-current", current_wp + 1);
+			setprop(fmgc_root~"procedures/iap-current", current_wp + 1);
 			
-			var current_wp = getprop("/flight-management/procedures/iap-current");
+			var current_wp = getprop(fmgc_root~"procedures/iap-current");
 			
-			var transit_wp = getprop("/flight-management/procedures/iap-transit");
+			var transit_wp = getprop(fmgc_root~"procedures/iap-transit");
 		
 			if (current_wp < transit_wp) {
 		
 				print("--------------------------");
-				print("[FMGC] IAP: " ~ getprop("/flight-management/procedures/iap/active-iap/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
-				print("[FMGC] IAP: " ~ getprop("/flight-management/procedures/iap/active-iap/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/iap/active-iap/wp[" ~ current_wp ~ "]/name"));
+				print("[FMGC] IAP: " ~ getprop(fmgc_root~"procedures/iap/active-iap/name") ~ " > WP" ~ (current_wp - 1) ~ " Reached...");
+				print("[FMGC] IAP: " ~ getprop(fmgc_root~"procedures/iap/active-iap/name") ~ " > TARGET SET: " ~ getprop(fmgc_root~"procedures/iap/active-iap/wp[" ~ current_wp ~ "]/name"));
 			
 			} else {
 			
