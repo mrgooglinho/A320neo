@@ -736,10 +736,10 @@
 		</mcdu>
 		
 		<procedures>
-			<file>Aircraft/A320neo/Nasal/procedures/fmsDB.nas</file>
-			<file>Aircraft/A320neo/Nasal/procedures/fmsWP.nas</file>
-			<file>Aircraft/A320neo/Nasal/procedures/fmsTP.nas</file>
-			<file>Aircraft/A320neo/Nasal/procedures/fmsTransition.nas</file>
+			<file>Aircraft/A320neo/Systems/procedures/fmsDB.nas</file>
+			<file>Aircraft/A320neo/Systems/procedures/fmsWP.nas</file>
+			<file>Aircraft/A320neo/Systems/procedures/fmsTP.nas</file>
+			<file>Aircraft/A320neo/Systems/procedures/fmsTransition.nas</file>
 		</procedures>
 		
 		<fmgc>
