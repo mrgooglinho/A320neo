@@ -895,41 +895,61 @@
 				<ias-mach>0.60</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>AKI</wp-id>
+				<wp-id>VMI</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>LIPRO</wp-id>
+				<wp-id>VBU</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>LEBIN</wp-id>
+				<wp-id>GONAD</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>LUSMO</wp-id>
+				<wp-id>PILAX</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>RN</wp-id>
+				<wp-id>VKG</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>TERIX</wp-id>
+				<wp-id>ATETI</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>OLKIT</wp-id>
+				<wp-id>OBGET</wp-id>
 				<ias-mach>0.78</ias-mach>
 			</wp>
 			<wp>
-				<wp-id>ANIRU</wp-id>
-				<ias-mach>0.78</ias-mach>
-			</wp>
-			<wp>
-				<wp-id>DOGOG</wp-id>
-				<altitude-ft>18000</altitude-ft>
+				<wp-id>TOMAN</wp-id>
+				<altitude-ft>22000</altitude-ft>
 				<ias-mach>0.62</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIASINSGN1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>VVTS</arricao>
+		<route>
+			<wp>
+				<wp-id>VMR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ENREP</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ESPOB</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>CS</wp-id>
+				<ias-mach>0.78</ias-mach>
 			</wp>
 		</route>
 	</route>

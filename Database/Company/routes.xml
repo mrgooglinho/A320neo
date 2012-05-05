@@ -929,5 +929,67 @@
 			</wp>
 		</route>
 	</route>
+	
+	<route>
+		<rte_id>MIASINSGN1</rte_id>
+		<depicao>WSSS</depicao>
+		<arricao>VVTS</arricao>
+		<route>
+			<wp>
+				<wp-id>VMR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ENREP</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>ESPOB</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>CS</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+		</route>
+	</route>
+	
+	<route>
+		<rte_id>MIAMNLSIN1</rte_id>
+		<depicao>RPLL</depicao>
+		<arricao>WSSS</arricao>
+		<route>
+			<wp>
+				<wp-id>OLRAX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LEGED</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LULBU</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAXOR</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>LAGOT</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>DOLOX</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<wp>
+				<wp-id>VEPLI</wp-id>
+				<ias-mach>0.78</ias-mach>
+			</wp>
+			<!-- USE PAPSU STAR FOR ARRIVAL -->
+		</route>
+	</route>
+
 
 </PropertyList>

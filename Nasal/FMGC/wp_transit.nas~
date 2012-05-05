@@ -54,7 +54,13 @@ var wp_transit = {
 		
 			if (getprop("/autopilot/route-manager/route/wp[" ~ me.current_wp ~ "]/id") != nil) {
 		
-				if (me.current_wp == last_wp) {
+				if (me.current_wp == 1) {
+				
+					print("--------------------------");
+					print("[FMGC] STANDARD DEPARTURE: " ~ getprop("/flight-management/procedures/sid/active-sid/name"));
+					print("[FMGC] SID: " ~ getprop("/flight-management/procedures/sid/active-sid/name") ~ " > TARGET SET: " ~ getprop("/flight-management/procedures/sid/active-sid/wp/name"));
+				
+				} elsif (me.current_wp == last_wp) {
 				
 					print("--------------------------");
 					print("[FMGC] TRANSITION TO ARRIVAL: " ~ getprop("/flight-management/procedures/star/active-star/name"));

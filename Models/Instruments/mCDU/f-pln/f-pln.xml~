@@ -357,7 +357,7 @@
 		 			
 		 			if (first != 0)
 		 			
-		 				mcdu.lat_rev.revise(first);
+		 				mcdu.lat_rev.revise(first + 1);
 		 				
 		 			else
 		 				
@@ -381,7 +381,7 @@
 		 			var first = getprop("/instrumentation/mcdu/f-pln/disp/first");
 		 			
 		 			if (first != 0)
-			 			mcdu.lat_rev.revise(first + 1);
+			 			mcdu.lat_rev.revise(first + 2);
 			 		else
 			 			mcdu.lat_rev.revise(1);
 		 					 		
@@ -403,7 +403,7 @@
 		 			var first = getprop("/instrumentation/mcdu/f-pln/disp/first");
 		 			
 		 			if (first != 0)
-			 			mcdu.lat_rev.revise(first + 2);
+			 			mcdu.lat_rev.revise(first + 3);
 			 		else
 			 			mcdu.lat_rev.revise(2);
 		 					 		
@@ -425,7 +425,7 @@
 		 			var first = getprop("/instrumentation/mcdu/f-pln/disp/first");
 		 			
 		 			if (first != 0)
-			 			mcdu.lat_rev.revise(first + 3);
+			 			mcdu.lat_rev.revise(first + 4);
 			 		else
 			 			mcdu.lat_rev.revise(3);
 		 					 		
