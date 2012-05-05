@@ -2,9 +2,9 @@ var hyd_blue = {
 
 	elec_pump : func(lbus, rbus) {
 	
-		if (lbus + rbus >= 24) {
+		if (lbus + rbus >= 12) {
 		
-			var out_basic = (lbus + rbus) * 108.33;
+			var out_basic = (lbus + rbus) * 92.68;
 		
 			if (out_basic > 3000)
 				hydraulics.blue_psi = 3000; # Filter
@@ -84,7 +84,7 @@ var hyd_blue = {
 		
 		}
 
-		me.priority_value();
+		me.priority_valve();
 	
 	}
 

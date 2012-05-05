@@ -2,12 +2,34 @@ var hyd_yellow = {
 
 	eng2_pump : func(epr) {
 	
-		var out_basic = epr * 2400;
+		var out_basic = 0;
 		
-		if (out_basic > 3000)
-			hydraulics.yellow_psi = 3000; # Filter
+		if (epr > 1)		
+			out_basic = epr * 2400;
+		
+		if (out_basic > 6000)
+			hydraulics.yellow_psi = 6000; # Filter
 		else
 			hydraulics.yellow_psi = out_basic;
+	
+	},
+	
+	elec_pump : func(rbus) {
+	
+		if (rbus >= 12) {
+		
+			var out_basic = (2 * rbus) * 108.33;
+		
+			if (out_basic > 3000)
+				hydraulics.yellow_psi = 3000; # Filter
+			else
+				hydraulics.yellow_psi = out_basic;
+				
+		} else {
+		
+			hydraulics.yellow_psi = 0;
+		
+		}
 	
 	},
 	
@@ -57,7 +79,7 @@ var hyd_yellow = {
 		
 		}
 
-		me.priority_value();
+		me.priority_valve();
 	
 	}
 

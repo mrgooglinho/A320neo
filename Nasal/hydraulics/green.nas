@@ -2,10 +2,13 @@ var hyd_green = {
 
 	eng1_pump : func(epr) {
 	
-		var out_basic = epr * 2400;
+		var out_basic = 0;
 		
-		if (out_basic > 3000)
-			hydraulics.green_psi = 3000; # Filter
+		if (epr > 1)		
+			out_basic = epr * 2400;
+		
+		if (out_basic > 6000)
+			hydraulics.green_psi = 6000; # Filter
 		else
 			hydraulics.green_psi = out_basic;
 	
@@ -57,7 +60,7 @@ var hyd_green = {
 		
 		}
 
-		me.priority_value();
+		me.priority_valve();
 	
 	}
 

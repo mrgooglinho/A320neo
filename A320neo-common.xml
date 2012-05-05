@@ -748,6 +748,14 @@
 			<file>Aircraft/A320neo/Nasal/FMGC/fmgc_loop.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/wp_transit.nas</file>
 		</fmgc>
+		
+		<hydraulics>
+			<file>Aircraft/A320neo/Nasal/hydraulics/common.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/green.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/blue.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/yellow.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/hyd_loop.nas</file>
+		</hydraulics>
 	
 		<fbw>
 			<file>Aircraft/A320neo/Systems/FBW/Airbus-fbw.nas</file>
