@@ -1,6 +1,14 @@
 # AIRBUS A320 SYSTEMS FILE
 ##########################
 
+# globals
+
+var NDMODE = ["LS", "VOR", "NAV", "ARC", "PLAN"];
+var DISPMODE = ["ROSE", "ROSE", "ROSE", "ARC", "PLAN"];
+var NDY     = [0.427,  0.427,  0.427,  0.399, 0.399];
+var NDX     = [0.503,  0.503,  0.503,  0.182, 0.182];
+
+
 ## LIVERY SELECT
 ################
 
@@ -501,3 +509,27 @@ var triggerDoor = func(door, doorName, doorDesc)
    }
   }
  };
+
+
+## EFIS ND display
+setlistener("instrumentation/efis[0]/nd/display-mode-knob", func(n) {
+  var dispMode = DISPMODE[n.getValue()];
+  var ndMode   = NDMODE[n.getValue()];
+  setprop("instrumentation/efis[0]/nd/display-mode", dispMode);
+  setprop("instrumentation/efis[0]/nd/nd-mode", ndMode);
+  var y = NDY[n.getValue()];
+  var x = NDX[n.getValue()];
+  setprop("instrumentation/nd[0]/x-center", x);
+  setprop("instrumentation/nd[0]/y-center", y);
+});
+
+setlistener("instrumentation/efis[1]/nd/display-mode-knob", func(n) {
+  var dispMode = DISPMODE[n.getValue()];
+  var ndMode   = NDMODE[n.getValue()];
+  setprop("instrumentation/efis[1]/nd/display-mode", dispMode);
+  setprop("instrumentation/efis[1]/nd/nd-mode", ndMode);
+  var y = NDY[n.getValue()];
+  var x = NDX[n.getValue()];
+  setprop("instrumentation/nd[1]/x-center", x);
+  setprop("instrumentation/nd[1]/y-center", y);
+ });
