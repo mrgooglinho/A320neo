@@ -108,6 +108,10 @@
 		 				setprop("/autopilot/route-manager/input", "@JUMP" ~ id);
 		 				
 		 				setprop("/flight-management/current-wp", id);
+		 				
+		 				setprop("/instrumentation/mcdu/page", "f-pln");
+		 			
+		 				mcdu.f_pln.update_disp();
 		 			
 				</script>
             </binding>
@@ -127,6 +131,8 @@
 		 			# Remove WP
 		 			
 		 				mcdu.lat_rev.rm_wp(getprop("/instrumentation/mcdu/lat_rev/id"));
+		 				
+		 			setprop("/instrumentation/mcdu/page", "f-pln");
 		 				
 		 			mcdu.f_pln.update_disp();
 		 			
@@ -169,6 +175,8 @@
 		 				mcdu.lat_rev.next_wp(getprop("/instrumentation/mcdu/lat_rev/id"), getprop("/instrumentation/mcdu/input"));
 		 				
 		 				mcdu.clear_inp();
+		 				
+		 				mcdu.lat_rev.revise(getprop("/instrumentation/mcdu/lat_rev/id") + 1);
 		 			
 				</script>
             </binding>
@@ -185,11 +193,7 @@
 				<command>nasal</command>
 		 		<script>
 		 			
-		 			# Remove WP
-		 			
-		 				mcdu.lat_rev.new_dest(getprop("/instrumentation/mcdu/lat_rev/id"), getprop("/instrumentation/mcdu/input"));
-		 				
-		 			mcdu.clear_inp();
+		 			# NEW DESTINATION (COME BACK LATER)
 		 			
 				</script>
             </binding>

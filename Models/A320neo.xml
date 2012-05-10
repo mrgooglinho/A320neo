@@ -216,7 +216,6 @@
 		<object-name>Fuselage</object-name>
 		<object-name>Vstab</object-name>
 		<!-- Wings -->
-		<object-name>Wings</object-name>
 		<object-name>WingletL</object-name>
 		<object-name>WingletR</object-name>
 		<!-- Engines -->
