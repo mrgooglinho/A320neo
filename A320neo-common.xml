@@ -456,7 +456,8 @@
 	</gear>
 
 	<instrumentation>
-		<efis>
+	
+		<efis n="0">
 
 			<ecam>
 					<display-mode type="string">FUEL</display-mode>
@@ -470,19 +471,50 @@
 			<input>
 				<vor-adf-1 type="int">1</vor-adf-1>
 				<vor-adf-2 type="int">1</vor-adf-2>
-				<CSTR type="bool">1</CSTR>
-				<WPT type="bool">1</WPT>
-				<VORD type="bool">1</VORD>
-				<NDB type="bool">1</NDB>
-				<ARPT type="bool">1</ARPT>
-				<WX type="bool">1</WX>
-				<TERR type="bool">1</TERR>
-				<TRAF type="bool">1</TRAF>
-				<taxi type="bool">1</taxi>
 			</input>
+			<inputs>
+				<CSTR type="bool">true</CSTR>
+				<WPT type="bool">true</WPT>
+				<VORD type="bool">true</VORD>
+				<NDB type="bool">true</NDB>
+				<ARPT type="bool">true</ARPT>
+				<WX type="bool">true</WX>
+				<TERR type="bool">true</TERR>
+				<TRAF type="bool">true</TRAF>
+				<taxi type="bool">true</taxi>
+			</inputs>
 
-		
 		</efis>
+	
+		<efis n="1">
+
+			<ecam>
+					<display-mode type="string">FUEL</display-mode>
+			</ecam>
+			<nd>
+					<display-mode type="string">VOR</display-mode>
+					<display-mode-knob type="int">2</display-mode-knob>
+					<display-range type="int">40</display-range>
+				
+			</nd>
+			<input>
+				<vor-adf-1 type="int">1</vor-adf-1>
+				<vor-adf-2 type="int">1</vor-adf-2>
+			</input>
+			<inputs>
+				<CSTR type="bool">true</CSTR>
+				<WPT type="bool">true</WPT>
+				<VORD type="bool">true</VORD>
+				<NDB type="bool">true</NDB>
+				<ARPT type="bool">true</ARPT>
+				<WX type="bool">true</WX>
+				<TERR type="bool">true</TERR>
+				<TRAF type="bool">true</TRAF>
+				<taxi type="bool">true</taxi>
+			</inputs>
+
+		</efis>
+		
 		<tcas><!-- http://wiki.flightgear.org/index.php/TCAS -->
 			<serviceable type="bool">true</serviceable><!-- TCAS ENABLE -->
 			<inputs>
