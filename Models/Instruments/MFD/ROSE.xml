@@ -10,6 +10,7 @@
         <lh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-1</lh-vor-adf>
         <rh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-2</rh-vor-adf>
       </inputs>
+      <nd-range>instrumentation/nd[0]/range</nd-range>
     </params>
 
     <layers>

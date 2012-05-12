@@ -47,7 +47,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis/nd/display-mode</property>
+		    <property alias="/params/nd-mode"/>
                     <value>NAV</value>
                 </equals>
             </and>
@@ -67,8 +67,8 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis/nd/display-mode</property>
-                    <value>ILS</value>
+		    <property alias="/params/nd-mode"/>
+                    <value>LS</value>
                 </equals>
             </and>
         </condition>

@@ -2,13 +2,13 @@
 
 
 <PropertyList>
-    <name>ROSEtext</name>
+    <name>ARCtext</name>
     <w-base>256</w-base>
     <h-base>256</h-base>
     <params>
       <inputs>
-        <lh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-1</lh-vor-adf>
-        <rh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-2</rh-vor-adf>
+        <lh-vor-adf>instrumentation/efis[0]/inputs/lh-vor-adf</lh-vor-adf>
+        <rh-vor-adf>instrumentation/efis[0]/inputs/rh-vor-adf</rh-vor-adf>
       </inputs>
       <nd-range>instrumentation/nd[0]/range</nd-range>
     </params>
@@ -27,6 +27,113 @@
                 <y2>1</y2>
             </texture>
         <emissive>true</emissive>
+        </layer>
+
+        <layer>
+            <condition>
+                <greater-than>
+                    <property>autopilot/route-manager/route/num</property>
+                    <value>0</value>
+                </greater-than>
+            </condition>
+            <name>WP ID</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <!-- font>helvetica_bold</font -->
+            <point-size>9</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>autopilot/route-manager/wp/id</property>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>75</offset>       <!-- was 95 SAH 2010-12-04 -->
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>115</offset>      <!-- was 115 SAH 2011-04-24 -->
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+                <greater-than>
+                    <property>autopilot/route-manager/route/num</property>
+                    <value>0</value>
+                </greater-than>
+            </condition>
+            <name>WP ETA</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <!-- font>helvetica_bold</font -->
+            <point-size>9</point-size>
+            <color>
+                <red>0.1</red>
+                <green>1.0</green>
+                <blue>0.1</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>instrumentation/gps/wp/wp[1]/TTW</property>
+                    <!-- property>autopilot/route-manager/wp/eta</property -->
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>75</offset>   <!-- was 95 SAH 2010-12-04 -->
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>100</offset> <!-- was 100 SAH 2011-04-24 -->
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+                <greater-than>
+                    <property>autopilot/route-manager/route/num</property>
+                    <value>0</value>
+                </greater-than>
+            </condition>
+            <name>WP DIST</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <!-- font>helvetica_bold</font -->
+            <point-size>9</point-size>
+            <color>
+                <red>0.1</red>
+                <green>1.0</green>
+                <blue>0.1</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+                    <property>autopilot/route-manager/wp/dist</property>
+                    <format>%3.1f</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>75</offset>  <!-- was 95 SAH 2010-12-04 -->
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>85</offset>   <!-- was 85 SAH 2011-04-24 -->
+                </transformation>
+            </transformations>
         </layer>
 
         <layer>
@@ -132,21 +239,21 @@
             </transformations>
         </layer>
 
-
-<!-- ROSE -->
+<!-- arc -->
         <layer>
-            <name>WXR range</name>
+            <name>inner-range-left</name>
             <type>text</type>
             <font>arial_black</font>
             <point-size>8</point-size>
             <color>
                 <red>0.8</red>
                 <green>0.8</green>
-                <blue>0.8</blue>
+                <blue>1.0</blue>
             </color>
             <chunks>
                 <chunk>
                     <type>number-value</type>
+                    <!-- property>instrumentation/nd/range</property -->
 		    <property alias="/params/nd-range"/>
                     <format>%3.0f</format>
                 </chunk>
@@ -154,14 +261,45 @@
             <transformations>
                 <transformation>
                     <type>x-shift</type>
-                    <offset>-30</offset>
+                    <offset>-50</offset>
                 </transformation>
                 <transformation>
                     <type>y-shift</type>
-                    <offset>15</offset>
+                    <offset>6</offset>
                 </transformation>
             </transformations>
         </layer>
+
+        <layer>
+            <name>inner-range-right</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>8</point-size>
+            <color>
+                <red>0.8</red>
+                <green>0.8</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+                    <!-- property>instrumentation/nd/range</property -->
+		    <property alias="/params/nd-range"/>
+                    <format>%3.0f</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>30</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>6</offset>
+                </transformation>
+            </transformations>
+        </layer>
+        
 
         <!-- layer>
             <name>HDG ind</name>
@@ -186,7 +324,7 @@
                 </transformation>
                 <transformation>
                     <type>y-shift</type>
-                    <offset>88</offset>
+                    <offset>105</offset>
                 </transformation>
             </transformations>
         </layer -->
@@ -215,7 +353,7 @@
                 </transformation>
                 <transformation>
                     <type>y-shift</type>
-                    <offset>88</offset>
+                    <offset>105</offset>
                 </transformation>
             </transformations>
         </layer>
@@ -243,11 +381,10 @@
                 </transformation>
                 <transformation>
                     <type>y-shift</type>
-                    <offset>88</offset>
+                    <offset>105</offset>
                 </transformation>
             </transformations>
         </layer -->
-
 
 <!-- L VOR-->
 
@@ -255,8 +392,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
-		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -296,8 +432,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
-		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -341,8 +476,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
-		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -390,8 +524,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
-		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -431,8 +564,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
-		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -476,8 +608,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
-		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -525,8 +656,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
-		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -566,8 +696,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
-		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -609,8 +738,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
-		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -650,8 +778,7 @@
             <condition>
               <and>
                 <equals>
-                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
-		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                 </equals>
                 <equals>
@@ -714,7 +841,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -723,7 +850,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[0]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -764,13 +891,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[1]/brg-offset</property>
@@ -778,7 +900,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[1]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -819,13 +941,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[2]/brg-offset</property>
@@ -833,7 +950,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[2]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -874,13 +991,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[3]/brg-offset</property>
@@ -888,7 +1000,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[3]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -929,13 +1041,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[4]/brg-offset</property>
@@ -943,7 +1050,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[4]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -984,13 +1091,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[5]/brg-offset</property>
@@ -998,7 +1100,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[5]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1039,13 +1141,8 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-80</offset>
             </transformation>
-            <!-- transformation>
-              <type>rotation</type>
-              <property>orientation/heading-magnetic-deg</property>
-              <scale>-1.0</scale>
-            </transformation -->
             <transformation>
                 <type>rotation</type>
                 <property>instrumentation/radar/mp[6]/brg-offset</property>
@@ -1053,7 +1150,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/mp[6]/norm-dist</property>
-               <scale>80</scale>
+               <scale>160</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1093,7 +1190,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1102,7 +1199,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/navaid-dist-norm</property>
-               <scale>80</scale>
+               <scale>165</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1145,7 +1242,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1154,7 +1251,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/wp[0]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1195,7 +1292,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1204,7 +1301,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/wp[1]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1245,7 +1342,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1254,7 +1351,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/wp[2]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1295,7 +1392,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1304,7 +1401,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/wp[3]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1348,7 +1445,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1357,7 +1454,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/airports[0]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1398,7 +1495,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1407,7 +1504,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/airports[1]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1448,7 +1545,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1457,7 +1554,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/airports[2]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>
@@ -1498,7 +1595,7 @@
           <transformations>
             <transformation>
                <type>y-shift</type>
-               <offset>-12</offset>
+               <offset>-78</offset>
             </transformation>
             <transformation>
                 <type>rotation</type>
@@ -1507,7 +1604,7 @@
             <transformation>
                <type>y-shift</type>
                <property>instrumentation/radar/airports[3]/dist-norm</property>
-               <scale>80</scale>
+               <scale>161</scale>
             </transformation>
             <transformation>
                <type>rotation</type>

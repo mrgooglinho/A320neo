@@ -4,9 +4,9 @@
 # globals
 
 var NDMODE = ["LS", "VOR", "NAV", "ARC", "PLAN"];
-var DISPMODE = ["ROSE", "ROSE", "ROSE", "ARC", "PLAN"];
-var NDY     = [0.427,  0.427,  0.427,  0.399, 0.399];
-var NDX     = [0.503,  0.503,  0.503,  0.182, 0.182];
+var DISPMODE = ["ARC", "ROSE", "ROSE", "ARC", "ROSE"];
+var NDY     = [0.21,  0.432,  0.432,  0.21, 0.432];
+var NDX     = [0.498,  0.498,  0.498,  0.498, 0.498];
 
 
 ## LIVERY SELECT

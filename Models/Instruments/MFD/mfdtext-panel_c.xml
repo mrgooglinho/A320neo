@@ -72,7 +72,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis[0]/nd-mode</property>
+		    <property alias="/params/nd-mode"/>
                     <value>NAV</value>
                 </equals>
 		<not><property alias="/params/inputs/taxi"/></not>
@@ -93,7 +93,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis[0]/nd-mode</property>
+		    <property alias="/params/nd-mode"/>
                     <value>LS</value>
                 </equals>
 		<not><property alias="/params/inputs/taxi"/></not>
