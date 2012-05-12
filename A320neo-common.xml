@@ -120,10 +120,13 @@
 
 			<!-- =========================================================== -->
 
-			<autopilot>
+			<!-- autopilot>
 				<name>Autobrake</name>
 				<path>Aircraft/A320neo/Systems/a320-autobrake.xml</path>
-			</autopilot>
+			</autopilot -->
+			
+			<!-- The new autobrake system is managed with nasal separately -->
+			
 			<autopilot>
 				<name>Spoilers</name>
 				<path>Aircraft/A320neo/Systems/a320-spoilers.xml</path>
@@ -832,8 +835,15 @@
 			<file>Aircraft/A320neo/Nasal/hydraulics/green.nas</file>
 			<file>Aircraft/A320neo/Nasal/hydraulics/blue.nas</file>
 			<file>Aircraft/A320neo/Nasal/hydraulics/yellow.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/brakes.nas</file>
 			<file>Aircraft/A320neo/Nasal/hydraulics/hyd_loop.nas</file>
+			<file>Aircraft/A320neo/Nasal/hydraulics/brk_loop.nas</file>
 		</hydraulics>
+		
+		<cp_panels>
+			<file>Aircraft/A320neo/Nasal/cp_panels/gear_pnl.nas</file>
+			<file>Aircraft/A320neo/Nasal/cp_panels/cp_panels.nas</file>
+		</cp_panels>
 	
 		<fbw>
 			<file>Aircraft/A320neo/Systems/FBW/Airbus-fbw.nas</file>
