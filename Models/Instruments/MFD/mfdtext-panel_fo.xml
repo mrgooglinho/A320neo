@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <PropertyList>
   <params>
-    <display-mode>instrumentation/efis[0]/nd/display-mode</display-mode>
-    <nd-mode>instrumentation/efis[0]/nd/nd-mode</nd-mode>
-    <radar-path>Aircraft/A320neo/Models/Instruments/MFD/od_ndradar_1.png</radar-path>
-    <nd-range>instrumentation/nd[0]/range</nd-range>
+    <display-mode>instrumentation/efis[1]/nd/display-mode</display-mode>
+    <nd-mode>instrumentation/efis[1]/nd/nd-mode</nd-mode>
+    <radar-path>Aircraft/A320neo/Models/Instruments/MFD/od_ndradar_2.png</radar-path>
+    <nd-range>instrumentation/nd[1]/range</nd-range>
     <inputs>
-      <lh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-1</lh-vor-adf>
-      <rh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-2</rh-vor-adf>
-      <taxi>instrumentation/efis[0]/inputs/taxi</taxi>
+      <lh-vor-adf>instrumentation/efis[1]/inputs/vor-adf-1</lh-vor-adf>
+      <rh-vor-adf>instrumentation/efis[1]/inputs/vor-adf-2</rh-vor-adf>
+      <taxi>instrumentation/efis[1]/inputs/taxi</taxi>
     </inputs>
   </params>
 
@@ -40,10 +40,7 @@
         <h>256</h>
     </instrument>
     
-    <instrument include="ROSEtext.xml">
-      <params>
-	<nd-range alias="/params/nd-range"/>
-      </params>
+    <instrument include="ROSEtext.xml">      
         <condition>
             <and>
               <greater-than>
@@ -72,7 +69,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-		    <property alias="/params/nd-mode"/>
+                    <property>instrumentation/efis[0]/nd-mode</property>
                     <value>NAV</value>
                 </equals>
 		<not><property alias="/params/inputs/taxi"/></not>
@@ -93,7 +90,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-		    <property alias="/params/nd-mode"/>
+                    <property>instrumentation/efis[0]/nd-mode</property>
                     <value>LS</value>
                 </equals>
 		<not><property alias="/params/inputs/taxi"/></not>

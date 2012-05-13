@@ -13,7 +13,7 @@
   </params>
 
 <name>MFD Panel</name>
-<background>Aircraft/A320neo/Models/Instruments/MFD/transparent.png</background>
+<background>Aircraft/A320neo/Models/Instruments/ND/res/transparent.png</background>
 <w>256</w>
 <h>256</h>
 

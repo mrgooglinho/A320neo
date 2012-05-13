@@ -96,23 +96,14 @@
 		</condition>
 	</model>
 	
-<<<<<<< HEAD
+
 	<!-- Navigational Displays -->
-	
-	<model>
-		<path>Aircraft/A320neo/Models/Instruments/ND/ND.xml</path>
-		<offsets>
-			<x-m>-0.5807</x-m>
-			<y-m>-0.3227</y-m>
-=======
-	
 	<model>
 		<path>Aircraft/A320neo/Models/Instruments/MFD/ND.xml</path>
 		<name>nd_capt</name>
 		<offsets>
 			<x-m>-0.5807</x-m>
-			<y-m>-0.32</y-m>
->>>>>>> base and ROSE mode for ND.
+			<y-m>-0.3227</y-m>
 			<z-m>-0.0442</z-m>
 			<pitch-deg>-15</pitch-deg>
 		</offsets>
@@ -122,33 +113,6 @@
 				<value>12</value>
 			</greater-than-equals>
 		</condition>
-<<<<<<< HEAD
-	</model>
-	
-	<model>
-		<path>Aircraft/A320neo/Models/Instruments/ND/ND.xml</path>
-		<offsets>
-			<x-m>-0.5807</x-m>
-			<y-m>0.3161</y-m>
-			<z-m>-0.0442</z-m>
-			<pitch-deg>-15</pitch-deg>
-		</offsets>
-		<condition>
-			<greater-than-equals>
-				<property>/systems/electrical/outputs/efis</property>
-				<value>12</value>
-			</greater-than-equals>
-		</condition>
-	</model>
-	
-	<!-- Engine Indications and Crew Alerting System (Upper ECAM) -->
-	
-	<model>
-		<path>Aircraft/A320neo/Models/Instruments/Upper-ECAM/Upper-ECAM.xml</path>
-		<offsets>
-			<x-m>-0.5807</x-m>
-			<y-m>0</y-m>
-=======
 		<overlay>
 		  <params>
                     <panel-path>Aircraft/A320neo/Models/Instruments/MFD/mfd-panel_c.xml</panel-path>
@@ -285,7 +249,6 @@
 		<offsets>
 			<x-m>-0.5807</x-m>
 			<y-m>0.32</y-m>
->>>>>>> base and ROSE mode for ND.
 			<z-m>-0.0442</z-m>
 			<pitch-deg>-15</pitch-deg>
 		</offsets>
@@ -295,27 +258,6 @@
 				<value>12</value>
 			</greater-than-equals>
 		</condition>
-<<<<<<< HEAD
-	</model>
-	
-	<!-- Lower ECAM -->
-	
-	<model>
-		<path>Aircraft/A320neo/Models/Instruments/ECAM/ECAM.xml</path>
-		<offsets>
-			<x-m>-0.53631</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.21132</z-m>
-			<pitch-deg>-15</pitch-deg>
-		</offsets>
-		<condition>
-			<greater-than-equals>
-				<property>/systems/electrical/outputs/efis</property>
-				<value>12</value>
-			</greater-than-equals>
-		</condition>
-	</model>
-=======
 		<overlay>
 		  <params>
                     <panel-path>Aircraft/A320neo/Models/Instruments/MFD/mfd-panel_fo.xml</panel-path>
@@ -442,7 +384,42 @@
         </binding>
       </action>
   </animation>
->>>>>>> base and ROSE mode for ND.
+
+	<!-- Engine Indications and Crew Alerting System (Upper ECAM) -->
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/Upper-ECAM/Upper-ECAM.xml</path>
+		<offsets>
+			<x-m>-0.5807</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.21132</z-m>
+			<pitch-deg>-15</pitch-deg>
+		</offsets>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>12</value>
+			</greater-than-equals>
+		</condition>
+	</model>
+	
+	<!-- Lower ECAM -->
+	
+	<model>
+		<path>Aircraft/A320neo/Models/Instruments/ECAM/ECAM.xml</path>
+		<offsets>
+			<x-m>-0.53631</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.21132</z-m>
+			<pitch-deg>-15</pitch-deg>
+		</offsets>
+		<condition>
+			<greater-than-equals>
+				<property>/systems/electrical/outputs/efis</property>
+				<value>12</value>
+			</greater-than-equals>
+		</condition>
+	</model>		
 	
 	<!-- Flight Control Unit Animations -->
 	
