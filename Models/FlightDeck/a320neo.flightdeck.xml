@@ -96,10 +96,11 @@
 		</condition>
 	</model>
 	
+
 	<!-- Navigational Displays -->
-	
 	<model>
-		<path>Aircraft/A320neo/Models/Instruments/ND/ND.xml</path>
+		<path>Aircraft/A320neo/Models/Instruments/MFD/ND.xml</path>
+		<name>nd_capt</name>
 		<offsets>
 			<x-m>-0.5807</x-m>
 			<y-m>-0.3227</y-m>
@@ -112,13 +113,142 @@
 				<value>12</value>
 			</greater-than-equals>
 		</condition>
+		<overlay>
+		  <params>
+                    <panel-path>Aircraft/A320neo/Models/Instruments/MFD/mfd-panel_c.xml</panel-path>
+		    <text-path>Aircraft/A320neo/Models/Instruments/MFD/mfdtext-panel_c.xml</text-path>
+                  </params>
+		</overlay>
 	</model>
 	
+<animation>
+   <type>pick</type>
+   <object-name>ndmode.knob0</object-name>
+   <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-adjust</command>
+      <property>/instrumentation/efis[0]/nd/display-mode-knob</property>
+      <step>1.0</step>
+      <min>0</min>
+      <max>4</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>
+   <action>
+     <button>1</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-adjust</command>
+      <property>instrumentation/efis[0]/nd/display-mode-knob</property>
+      <step>-1.0</step>
+      <min>0</min>
+      <max>4</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>   
+ </animation>
+
+ <animation>
+   <type>pick</type>
+   <object-name>ndrange.knob0</object-name>
+   <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-multiply</command>
+      <property>/instrumentation/nd[0]/range</property>
+      <factor>2.0</factor>
+      <min>5</min>
+      <max>640</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>
+   <action>
+     <button>1</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-multiply</command>
+      <property>/instrumentation/nd[0]/range</property>
+      <factor>0.5</factor>
+      <min>5</min>
+      <max>640</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>   
+ </animation>
+ 
+ <animation>
+    <type>pick</type>
+    <object-name>CSTR0</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[0]/inputs/CSTR</property>
+        </binding>
+      </action>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+    <object-name>WPT0</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[0]/inputs/WPT</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>VORD0</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[0]/inputs/VORD</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>NDB0</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[0]/inputs/NDB</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>ARPT0</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[0]/inputs/ARPT</property>
+        </binding>
+      </action>
+  </animation>
+
+ 
+	
+	
+	
 	<model>
-		<path>Aircraft/A320neo/Models/Instruments/ND/ND.xml</path>
+		<path>Aircraft/A320neo/Models/Instruments/MFD/ND.xml</path>
+		<name>nd_fo</name>
 		<offsets>
 			<x-m>-0.5807</x-m>
-			<y-m>0.3161</y-m>
+			<y-m>0.32</y-m>
 			<z-m>-0.0442</z-m>
 			<pitch-deg>-15</pitch-deg>
 		</offsets>
@@ -128,8 +258,133 @@
 				<value>12</value>
 			</greater-than-equals>
 		</condition>
+		<overlay>
+		  <params>
+                    <panel-path>Aircraft/A320neo/Models/Instruments/MFD/mfd-panel_fo.xml</panel-path>
+		    <text-path>Aircraft/A320neo/Models/Instruments/MFD/mfdtext-panel_fo.xml</text-path>
+                  </params>
+		</overlay>
 	</model>
 	
+	
+	 <animation>
+   <type>pick</type>
+   <object-name>ndmode.knob1</object-name>
+   <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-adjust</command>
+      <property>instrumentation/efis[1]/nd/display-mode-knob</property>
+      <step>1.0</step>
+      <min>0</min>
+      <max>4</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>
+   <action>
+     <button>1</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-adjust</command>
+      <property>instrumentation/efis[1]/nd/display-mode-knob</property>
+      <step>-1.0</step>
+      <min>0</min>
+      <max>4</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>   
+ </animation>
+
+ <animation>
+   <type>pick</type>
+   <object-name>ndrange.knob1</object-name>
+   <action>
+     <button>0</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-multiply</command>
+      <property>/instrumentation/nd[1]/range</property>
+      <factor>2.0</factor>
+      <min>5</min>
+      <max>640</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>
+   <action>
+     <button>1</button>
+     <repeatable>false</repeatable>
+     <binding>
+      <command>property-multiply</command>
+      <property>/instrumentation/nd[1]/range</property>
+      <factor>0.5</factor>
+      <min>5</min>
+      <max>640</max>
+      <wrap>false</wrap>
+     </binding>
+   </action>   
+ </animation>
+ 
+  <animation>
+    <type>pick</type>
+    <object-name>CSTR1</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[1]/inputs/CSTR</property>
+        </binding>
+      </action>
+  </animation>
+
+  <animation>
+    <type>pick</type>
+    <object-name>WPT1</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[1]/inputs/WPT</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>VORD1</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[1]/inputs/VORD</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>NDB1</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[1]/inputs/NDB</property>
+        </binding>
+      </action>
+  </animation>
+  
+  <animation>
+    <type>pick</type>
+    <object-name>ARPT1</object-name>
+    <action>
+        <button>0</button>
+	<binding>
+          <command>property-toggle</command>
+          <property>/instrumentation/efis[1]/inputs/ARPT</property>
+        </binding>
+      </action>
+  </animation>
+
 	<!-- Engine Indications and Crew Alerting System (Upper ECAM) -->
 	
 	<model>
@@ -137,7 +392,7 @@
 		<offsets>
 			<x-m>-0.5807</x-m>
 			<y-m>0</y-m>
-			<z-m>-0.0442</z-m>
+			<z-m>-0.21132</z-m>
 			<pitch-deg>-15</pitch-deg>
 		</offsets>
 		<condition>
@@ -164,7 +419,7 @@
 				<value>12</value>
 			</greater-than-equals>
 		</condition>
-	</model>
+	</model>		
 	
 	<!-- Flight Control Unit Animations -->
 	

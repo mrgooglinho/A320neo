@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <PropertyList>
+  <params>
+    <display-mode>instrumentation/efis[1]/nd/display-mode</display-mode>
+    <nd-mode>instrumentation/efis[1]/nd/nd-mode</nd-mode>
+    <radar-path>Aircraft/A320neo/Models/Instruments/MFD/od_ndradar_2.png</radar-path>
+    <nd-range>instrumentation/nd[1]/range</nd-range>
+    <inputs>
+      <lh-vor-adf>instrumentation/efis[1]/inputs/vor-adf-1</lh-vor-adf>
+      <rh-vor-adf>instrumentation/efis[1]/inputs/vor-adf-2</rh-vor-adf>
+      <taxi>instrumentation/efis[1]/inputs/taxi</taxi>
+    </inputs>
+  </params>
 
 <name>MFD text</name>
 <background>Aircraft/A320neo/Models/Instruments/ND/res/transparent.png</background>
@@ -36,7 +47,7 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis/nd/display-mode</property>
+		    <property alias="/params/nd-mode"/>
                     <value>NAV</value>
                 </equals>
             </and>
@@ -56,8 +67,8 @@
                 <value>15</value>
             </greater-than>
                 <equals>
-                    <property>instrumentation/efis/nd/display-mode</property>
-                    <value>ILS</value>
+		    <property alias="/params/nd-mode"/>
+                    <value>LS</value>
                 </equals>
             </and>
         </condition>
