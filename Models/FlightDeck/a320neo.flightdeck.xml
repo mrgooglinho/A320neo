@@ -126,6 +126,7 @@
    <object-name>ndmode.knob0</object-name>
    <action>
      <button>0</button>
+     <button>3</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-adjust</command>
@@ -138,6 +139,7 @@
    </action>
    <action>
      <button>1</button>
+     <button>4</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-adjust</command>
@@ -155,25 +157,27 @@
    <object-name>ndrange.knob0</object-name>
    <action>
      <button>0</button>
+     <button>3</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-multiply</command>
       <property>/instrumentation/nd[0]/range</property>
       <factor>2.0</factor>
-      <min>5</min>
-      <max>640</max>
+      <min>10</min>
+      <max>320</max>
       <wrap>false</wrap>
      </binding>
    </action>
    <action>
      <button>1</button>
+     <button>4</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-multiply</command>
       <property>/instrumentation/nd[0]/range</property>
       <factor>0.5</factor>
-      <min>5</min>
-      <max>640</max>
+      <min>10</min>
+      <max>320</max>
       <wrap>false</wrap>
      </binding>
    </action>   
@@ -239,9 +243,141 @@
       </action>
   </animation>
 
- 
+	<animation>
+		<type>textranslate</type>
+		<object-name>CSTR0</object-name>
+		<property>/instrumentation/efis[0]/inputs/CSTR</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
+	<animation>
+		<type>textranslate</type>
+		<object-name>WPT0</object-name>
+		<property>/instrumentation/efis[0]/inputs/WPT</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
+	<animation>
+		<type>textranslate</type>
+		<object-name>VORD0</object-name>
+		<property>/instrumentation/efis[0]/inputs/VORD</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>NDB0</object-name>
+		<property>/instrumentation/efis[0]/inputs/NDB</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>ARPT0</object-name>
+		<property>/instrumentation/efis[0]/inputs/ARPT</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<!-- EFIS Rotate Animations -->
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ndmode.knob0</object-name>
+		<property>/instrumentation/efis[0]/nd/display-mode-knob</property>
+		<factor>45</factor>
+		<axis>
+			<x1-m>-0.4668</x1-m>
+			<y1-m>-0.2124</y1-m>
+			<z1-m>0.1452</z1-m>
+			<x2-m>-0.4808</x2-m>
+			<y2-m>-0.2124</y2-m>
+			<z2-m>0.1419</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ndmode.knob1</object-name>
+		<property>/instrumentation/efis[1]/nd/display-mode-knob</property>
+		<factor>45</factor>
+		<axis>
+			<x1-m>-0.4668</x1-m>
+			<y1-m>0.1718</y1-m>
+			<z1-m>0.1452</z1-m>
+			<x2-m>-0.4808</x2-m>
+			<y2-m>0.1718</y2-m>
+			<z2-m>0.1419</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ndrange.knob0</object-name>
+		<property>/instrumentation/nd[0]/range</property>
+		<interpolation>
+			<entry><ind>10</ind><dep>0</dep></entry>
+			<entry><ind>20</ind><dep>45</dep></entry>
+			<entry><ind>40</ind><dep>90</dep></entry>
+			<entry><ind>80</ind><dep>135</dep></entry>
+			<entry><ind>160</ind><dep>180</dep></entry>
+			<entry><ind>320</ind><dep>225</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.4668</x1-m>
+			<y1-m>-0.1718</y1-m>
+			<z1-m>0.1452</z1-m>
+			<x2-m>-0.4808</x2-m>
+			<y2-m>-0.1718</y2-m>
+			<z2-m>0.1419</z2-m>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>ndrange.knob1</object-name>
+		<property>/instrumentation/nd[1]/range</property>
+		<interpolation>
+			<entry><ind>10</ind><dep>0</dep></entry>
+			<entry><ind>20</ind><dep>45</dep></entry>
+			<entry><ind>40</ind><dep>90</dep></entry>
+			<entry><ind>80</ind><dep>135</dep></entry>
+			<entry><ind>160</ind><dep>180</dep></entry>
+			<entry><ind>320</ind><dep>225</dep></entry>
+		</interpolation>
+		<axis>
+			<x1-m>-0.4668</x1-m>
+			<y1-m>0.2124</y1-m>
+			<z1-m>0.1452</z1-m>
+			<x2-m>-0.4808</x2-m>
+			<y2-m>0.2124</y2-m>
+			<z2-m>0.1419</z2-m>
+		</axis>
+	</animation>
 	
 	<model>
 		<path>Aircraft/A320neo/Models/Instruments/MFD/ND.xml</path>
@@ -272,6 +408,7 @@
    <object-name>ndmode.knob1</object-name>
    <action>
      <button>0</button>
+     <button>3</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-adjust</command>
@@ -284,6 +421,7 @@
    </action>
    <action>
      <button>1</button>
+     <button>4</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-adjust</command>
@@ -301,25 +439,27 @@
    <object-name>ndrange.knob1</object-name>
    <action>
      <button>0</button>
+     <button>3</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-multiply</command>
       <property>/instrumentation/nd[1]/range</property>
       <factor>2.0</factor>
-      <min>5</min>
-      <max>640</max>
+      <min>10</min>
+      <max>320</max>
       <wrap>false</wrap>
      </binding>
    </action>
    <action>
      <button>1</button>
+     <button>4</button>
      <repeatable>false</repeatable>
      <binding>
       <command>property-multiply</command>
       <property>/instrumentation/nd[1]/range</property>
       <factor>0.5</factor>
-      <min>5</min>
-      <max>640</max>
+      <min>10</min>
+      <max>320</max>
       <wrap>false</wrap>
      </binding>
    </action>   
@@ -384,6 +524,66 @@
         </binding>
       </action>
   </animation>
+  
+  <animation>
+		<type>textranslate</type>
+		<object-name>CSTR1</object-name>
+		<property>/instrumentation/efis[1]/inputs/CSTR</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>WPT1</object-name>
+		<property>/instrumentation/efis[1]/inputs/WPT</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>VORD1</object-name>
+		<property>/instrumentation/efis[1]/inputs/VORD</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>NDB1</object-name>
+		<property>/instrumentation/efis[1]/inputs/NDB</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>ARPT1</object-name>
+		<property>/instrumentation/efis[1]/inputs/ARPT</property>
+		<factor>0.0625</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 	<!-- Engine Indications and Crew Alerting System (Upper ECAM) -->
 	
@@ -2307,190 +2507,6 @@
 		</axis>
 	</animation>
 	
-	<!-- EFIS Pick and Textranslate Animations -->
-	
-	<animation>
-		<type>pick</type>
-		<object-name>cstr</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/CSTR</property>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>wpt</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/WPT</property>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>vord</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/VORD</property>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>ndb</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/NDB</property>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>arpt</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-toggle</command>
-				<property>/instrumentation/efis[1]/inputs/ARPT</property>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>cstr</object-name>
-		<property>/instrumentation/efis[1]/inputs/CSTR</property>
-		<factor>0.0625</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>wpt</object-name>
-		<property>/instrumentation/efis[1]/inputs/WPT</property>
-		<factor>0.0625</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>vord</object-name>
-		<property>/instrumentation/efis[1]/inputs/VORD</property>
-		<factor>0.0625</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>ndb</object-name>
-		<property>/instrumentation/efis[1]/inputs/NDB</property>
-		<factor>0.0625</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>arpt</object-name>
-		<property>/instrumentation/efis[1]/inputs/ARPT</property>
-		<factor>0.0625</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>nd-mode</object-name>
-		<object-name>nd-mode-right</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>/instrumentation/efis/nd/display-mode</property>
-				<value>ILS</value>
-				<value>VOR</value>
-				<value>NAV</value>
-				<value>ARC</value>
-				<value>PLAN</value>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>
-					var nd_disp = getprop("/instrumentation/efis/nd/display-mode");
-					
-					if (nd_disp == "ILS")
-						setprop("/instrumentation/efis/nd/display-mode-num", 0);
-					elsif (nd_disp == "VOR")
-						setprop("/instrumentation/efis/nd/display-mode-num", 1);
-					elsif (nd_disp == "NAV")
-						setprop("/instrumentation/efis/nd/display-mode-num", 2);
-					elsif (nd_disp == "ARC")
-						setprop("/instrumentation/efis/nd/display-mode-num", 3);
-					else
-						setprop("/instrumentation/efis/nd/display-mode-num", 4);
-						
-				</script>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>nd-range</object-name>
-		<object-name>nd-range-right</object-name>
-		<action>
-			<button>0</button>
-			<repeatable type="bool">false</repeatable>
-			<binding>
-				<command>property-cycle</command>
-				<property>/instrumentation/nd[1]/range</property>
-				<value>10</value>
-				<value>20</value>
-				<value>40</value>
-				<value>80</value>
-				<value>160</value>
-				<value>320</value>
-			</binding>
-		</action>
-	</animation>
-	
 	<animation>
 		<type>pick</type>
 		<object-name>vor-adf-1</object-name>
@@ -2523,82 +2539,6 @@
 				<value>2</value> <!-- ADF -->
 			</binding>
 		</action>
-	</animation>
-	
-	<!-- EFIS Rotate Animations -->
-	
-	<animation>
-		<type>rotate</type>
-		<object-name>nd-mode</object-name>
-		<property>/instrumentation/efis/nd/display-mode-num</property>
-		<factor>45</factor>
-		<axis>
-			<x1-m>-0.4668</x1-m>
-			<y1-m>-0.2124</y1-m>
-			<z1-m>0.1452</z1-m>
-			<x2-m>-0.4808</x2-m>
-			<y2-m>-0.2124</y2-m>
-			<z2-m>0.1419</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>rotate</type>
-		<object-name>nd-mode-right</object-name>
-		<property>/instrumentation/efis/nd/display-mode-num</property>
-		<factor>45</factor>
-		<axis>
-			<x1-m>-0.4668</x1-m>
-			<y1-m>0.1718</y1-m>
-			<z1-m>0.1452</z1-m>
-			<x2-m>-0.4808</x2-m>
-			<y2-m>0.1718</y2-m>
-			<z2-m>0.1419</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>rotate</type>
-		<object-name>nd-range</object-name>
-		<property>/instrumentation/nd[1]/range</property>
-		<interpolation>
-			<entry><ind>10</ind><dep>0</dep></entry>
-			<entry><ind>20</ind><dep>45</dep></entry>
-			<entry><ind>40</ind><dep>90</dep></entry>
-			<entry><ind>80</ind><dep>135</dep></entry>
-			<entry><ind>160</ind><dep>180</dep></entry>
-			<entry><ind>320</ind><dep>225</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-0.4668</x1-m>
-			<y1-m>-0.1718</y1-m>
-			<z1-m>0.1452</z1-m>
-			<x2-m>-0.4808</x2-m>
-			<y2-m>-0.1718</y2-m>
-			<z2-m>0.1419</z2-m>
-		</axis>
-	</animation>
-	
-	<animation>
-		<type>rotate</type>
-		<object-name>nd-range-right</object-name>
-		<property>/instrumentation/nd[1]/range</property>
-		<interpolation>
-			<entry><ind>10</ind><dep>0</dep></entry>
-			<entry><ind>20</ind><dep>45</dep></entry>
-			<entry><ind>40</ind><dep>90</dep></entry>
-			<entry><ind>80</ind><dep>135</dep></entry>
-			<entry><ind>160</ind><dep>180</dep></entry>
-			<entry><ind>320</ind><dep>225</dep></entry>
-		</interpolation>
-		<axis>
-			<x1-m>-0.4668</x1-m>
-			<y1-m>0.2124</y1-m>
-			<z1-m>0.1452</z1-m>
-			<x2-m>-0.4808</x2-m>
-			<y2-m>0.2124</y2-m>
-			<z2-m>0.1419</z2-m>
-		</axis>
 	</animation>
 	
 	<!-- Standby Attitude Indicator -->
