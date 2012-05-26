@@ -924,7 +924,7 @@
             <transformations>
                 <transformation>
                     <type>y-shift</type>
-                    <offset>-22</offset>
+                    <offset>-17</offset>
                 </transformation>
             </transformations>
             <emissive>true</emissive>

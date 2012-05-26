@@ -7,8 +7,8 @@
     <h-base>256</h-base>
     <params>
       <inputs>
-	<lh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-1</lh-vor-adf>
-        <rh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-2</rh-vor-adf>
+	<lh-vor-adf>instrumentation/efis[0]/input/vor-adf-1</lh-vor-adf>
+        <rh-vor-adf>instrumentation/efis[0]/input/vor-adf-2</rh-vor-adf>
       </inputs>
     </params>
 
@@ -33,7 +33,7 @@
 			<w>20</w>
 			<h>177</h>
 			<texture>
-				<path>Aircraft/A320neo/Models/Instruments/ND/res/A320neo_symbols.png</path>
+				<path>Aircraft/A320neo/Models/Instruments/MFD/A320neo_symbols.png</path>
 
 				<!-- Orign is down left-->
 				<x1>0.162</x1>
@@ -80,7 +80,7 @@
 			<w>4</w>
 			<h>77</h>
 			<texture>
-				<path>Aircraft/A320neo/Models/Instruments/ND/res/A320neo_symbols.png</path>
+				<path>Aircraft/A320neo/Models/Instruments/MFD/A320neo_symbols.png</path>
 
 				<!-- Orign is down left-->
 				<x1>0.289</x1>
@@ -132,7 +132,7 @@
 			<w>7</w>
 			<h>77</h>
 			<texture>
-				<path>Aircraft/A320neo/Models/Instruments/ND/res/A320neo_symbols.png</path>
+				<path>Aircraft/A320neo/Models/Instruments/MFD/A320neo_symbols.png</path>
 
 				<!-- Orign is down left-->
 				<x1>0.121</x1>
@@ -171,7 +171,7 @@
 			<w>12</w>
 			<h>90</h>
 			<texture>
-				<path>Aircraft/A320neo/Models/Instruments/ND/res/symbols.png</path>
+				<path>Aircraft/A320neo/Models/Instruments/MFD/symbols.png</path>
 				<x1>0.528</x1>
 				<y1>0.470</y1>
 				<x2>0.579</x2>
@@ -201,7 +201,7 @@
 			<w>10</w>
 			<h>16</h>
 			<texture>
-				<path>Aircraft/A320neo/Models/Instruments/ND/res/symbols.png</path>
+				<path>Aircraft/A320neo/Models/Instruments/MFD/symbols.png</path>
 				<x1>0.686</x1>
 				<y1>0.833</y1>
 				<x2>0.761</x2>

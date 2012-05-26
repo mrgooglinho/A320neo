@@ -67,7 +67,6 @@
                 <type>y-shift</type>
                 <offset>-78</offset>
             </transformation>
-	    
 	    <transformation>
                 <type>rotation</type>
 		<property>flight-management/fcu-values/hdg</property>
@@ -77,24 +76,18 @@
                 <property>orientation/heading-magnetic-deg</property>
                 <scale>-1</scale>
             </transformation>
-	    
-            <!-- transformation>
-                <type>rotation</type>
-                <property>autopilot/internal/fdm-heading-bug-error-deg</property>
-            </transformation -->
-	    
             <transformation>
                 <type>y-shift</type>
                 <offset>164</offset> 
             </transformation>
-        </transformations>
+          </transformations>
         </layer>
 
         <layer>
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
+                    <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -143,7 +136,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
+                    <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -192,7 +185,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
+                    <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -245,7 +238,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/lh-vor-adf</property --> <property alias="/params/inputs/lh-vor-adf"/>
+                    <property alias="/params/inputs/lh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -294,7 +287,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
+                    <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -343,7 +336,7 @@
             <condition>
               <and>
                 <equals>
-                  <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
+                  <property alias="/params/inputs/rh-vor-adf"/>
                    <value>1</value>
                 </equals>
                 <equals>
@@ -392,7 +385,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
+                    <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>
@@ -441,7 +434,7 @@
             <condition>
                 <and>
                   <equals>
-                    <!-- property>instrumentation/efis[0]/inputs/rh-vor-adf</property --> <property alias="/params/inputs/rh-vor-adf"/>
+                    <property alias="/params/inputs/rh-vor-adf"/>
                     <value>1</value>
                   </equals>
                   <equals>

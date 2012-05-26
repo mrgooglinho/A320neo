@@ -5,7 +5,14 @@
     <name>PLANtext</name>
     <w-base>256</w-base>
     <h-base>256</h-base>
-
+    <params>
+      <inputs>
+        <lh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-1</lh-vor-adf>
+        <rh-vor-adf>instrumentation/efis[0]/inputs/vor-adf-2</rh-vor-adf>
+      </inputs>
+      <nd-range>instrumentation/nd[0]/range</nd-range>
+    </params>
+    
     <layers>
 
         <layer>
@@ -23,113 +30,10 @@
         </layer>
 
         <layer>
-            <condition>
-                <greater-than>
-                    <property>autopilot/route-manager/route/num</property>
-                    <value>0</value>
-                </greater-than>
-            </condition>
-            <name>WP ID</name>
-            <type>text</type>
-            <font>arial_black</font>
-            <point-size>8</point-size>
-            <color>
-                <red>1.0</red>
-                <green>0.0</green>
-                <blue>1.0</blue>
-            </color>
-            <chunks>
-                <chunk>
-                    <type>text-value</type>
-                    <property>autopilot/route-manager/wp/id</property>
-                </chunk>
-            </chunks>
-            <transformations>
-                <transformation>
-                    <type>x-shift</type>
-                    <offset>95</offset>
-                </transformation>
-                <transformation>
-                    <type>y-shift</type>
-                    <offset>115</offset>
-                </transformation>
-            </transformations>
-        </layer>
-
-        <layer>
-            <condition>
-                <greater-than>
-                    <property>autopilot/route-manager/route/num</property>
-                    <value>0</value>
-                </greater-than>
-            </condition>
-            <name>WP ETA</name>
-            <type>text</type>
-            <font>arial_black</font>
-            <point-size>7</point-size>
-            <color>
-                <red>1.0</red>
-                <green>1.0</green>
-                <blue>1.0</blue>
-            </color>
-            <chunks>
-                <chunk>
-                    <type>text-value</type>
-                    <property>autopilot/route-manager/wp/eta</property>
-                </chunk>
-            </chunks>
-            <transformations>
-                <transformation>
-                    <type>x-shift</type>
-                    <offset>95</offset>
-                </transformation>
-                <transformation>
-                    <type>y-shift</type>
-                    <offset>100</offset>
-                </transformation>
-            </transformations>
-        </layer>
-
-        <layer>
-            <condition>
-                <greater-than>
-                    <property>autopilot/route-manager/route/num</property>
-                    <value>0</value>
-                </greater-than>
-            </condition>
-            <name>WP DIST</name>
-            <type>text</type>
-            <font>arial_black</font>
-            <point-size>7</point-size>
-            <color>
-                <red>1.0</red>
-                <green>1.0</green>
-                <blue>1.0</blue>
-            </color>
-            <chunks>
-                <chunk>
-                    <type>number-value</type>
-                    <property>autopilot/route-manager/wp/dist</property>
-                    <format>%3.1f</format>
-                </chunk>
-            </chunks>
-            <transformations>
-                <transformation>
-                    <type>x-shift</type>
-                    <offset>95</offset>
-                </transformation>
-                <transformation>
-                    <type>y-shift</type>
-                    <offset>85</offset>
-                </transformation>
-            </transformations>
-        </layer>
-
-        <layer>
             <name>GSPD</name>
             <type>text</type>
             <font>arial_black</font>
-            <point-size>7</point-size>
+            <point-size>8.5</point-size>
             <color>
                 <red>1.0</red>
                 <green>1.0</green>
@@ -158,7 +62,7 @@
             <name>TAS</name>
             <type>text</type>
             <font>arial_black</font>
-            <point-size>7</point-size>
+            <point-size>8.5</point-size>
             <color>
                 <red>1.0</red>
                 <green>1.0</green>
@@ -196,9 +100,9 @@
             <font>arial_black</font>
             <point-size>8</point-size>
             <color>
-                <red>1.0</red>
+                <red>0.1</red>
                 <green>1.0</green>
-                <blue>1.0</blue>
+                <blue>0.1</blue>
             </color>
             <chunks>
                 <chunk>
@@ -224,6 +128,561 @@
                 <transformation>
                     <type>y-shift</type>
                     <offset>100</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+
+<!-- ROSE -->
+        <layer>
+            <name>WXR range</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>8</point-size>
+            <color>
+                <red>0.8</red>
+                <green>0.8</green>
+                <blue>0.8</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+		    <property alias="/params/nd-range"/>
+                    <format>%3.0f</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-30</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>15</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <!-- layer>
+            <name>HDG ind</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>0.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>HDG</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-40</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>88</offset>
+                </transformation>
+            </transformations>
+        </layer -->
+
+        <layer>
+            <name>HDG</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>10</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+                    <property>orientation/heading-magnetic-deg</property>
+                    <format>%03.0f</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-13</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>88</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <!-- layer>
+            <name>MAG ind</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>0.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>MAG</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>14</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>88</offset>
+                </transformation>
+            </transformations>
+        </layer -->
+
+
+<!-- L VOR-->
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
+		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-lh</property>
+                    <value>VOR</value>
+                  </equals>
+              </and>
+            </condition>
+            <name>L VOR</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>VOR 1</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-116</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-100</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
+		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-lh</property>
+                    <value>VOR</value>
+                  </equals>
+                <equals>
+                    <property>/instrumentation/nav[0]/in-range</property>
+                    <value>1</value>
+                </equals>
+              </and>
+            </condition>
+            <name>L VOR ID</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>instrumentation/nav/nav-id</property>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-116</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-110</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
+		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-lh</property>
+                    <value>VOR</value>
+                  </equals>
+                <equals>
+                    <property>/instrumentation/nav[0]/in-range</property>
+                    <value>1</value>
+                </equals>
+              </and>
+            </condition>
+            <name>L VOR dme</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6.5</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>0.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+                    <property>instrumentation/nav/nav-distance</property>
+                    <scale>0.000539</scale>
+                    <format>%3.1f NM</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-126</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-120</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+<!-- R VOR-->
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
+		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-rh</property>
+                    <value>VOR</value>
+                </equals>
+              </and>
+            </condition>
+            <name>R VOR</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>VOR 2</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>92</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-100</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
+		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-rh</property>
+                    <value>VOR</value>
+                  </equals>
+                <equals>
+                    <property>/instrumentation/nav[1]/in-range</property>
+                    <value>1</value>
+                </equals>
+              </and>
+            </condition>
+            <name>R VOR ID</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>7</point-size>
+            <color>
+                <red>1.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>instrumentation/nav[1]/nav-id</property>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>92</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-110</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
+		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-rh</property>
+                    <value>VOR</value>
+                  </equals>
+                <equals>
+                    <property>/instrumentation/nav[1]/in-range</property>
+                    <value>1</value>
+                </equals>
+              </and>
+            </condition>
+            <name>R VOR dme</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6.5</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>0.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>number-value</type>
+                    <property>instrumentation/nav[1]/nav-distance</property>
+                    <scale>0.000539</scale>
+                    <format>%3.1f NM</format>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>82</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-120</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+<!-- L ADF-->
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
+		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-lh</property>
+                    <value>ADF</value>
+                </equals>
+              </and>
+            </condition>
+            <name>L adf</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>ADF L</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-116</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-100</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/lh-vor-adf</property -->
+		    <property alias="/params/inputs/lh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-lh</property>
+                    <value>ADF</value>
+                </equals>
+              </and>
+            </condition>
+            <name>L adf ID</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>instrumentation/adf/ident</property>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>-116</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-110</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+<!-- R ADF-->
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
+		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-rh</property>
+                    <value>ADF</value>
+                </equals>
+              </and>
+            </condition>
+            <name>R adf</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>literal</type>
+                    <text>ADF R</text>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>92</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-100</offset>
+                </transformation>
+            </transformations>
+        </layer>
+
+        <layer>
+            <condition>
+              <and>
+                <equals>
+                    <!-- property>instrumentation/efis/inputs/rh-vor-adf</property -->
+		    <property alias="/params/inputs/rh-vor-adf"/>
+                    <value>1</value>
+                </equals>
+                <equals>
+                    <property>instrumentation/afs/approach-radio-rh</property>
+                    <value>ADF</value>
+                  </equals>
+              </and>
+            </condition>
+            <name>R adf ID</name>
+            <type>text</type>
+            <font>arial_black</font>
+            <point-size>6</point-size>
+            <color>
+                <red>0.0</red>
+                <green>1.0</green>
+                <blue>1.0</blue>
+            </color>
+            <chunks>
+                <chunk>
+                    <type>text-value</type>
+                    <property>instrumentation/adf[1]/ident</property>
+                </chunk>
+            </chunks>
+            <transformations>
+                <transformation>
+                    <type>x-shift</type>
+                    <offset>92</offset>
+                </transformation>
+                <transformation>
+                    <type>y-shift</type>
+                    <offset>-110</offset>
                 </transformation>
             </transformations>
         </layer>

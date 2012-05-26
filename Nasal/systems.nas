@@ -4,7 +4,7 @@
 # globals
 
 var NDMODE = ["LS", "VOR", "NAV", "ARC", "PLAN"];
-var DISPMODE = ["ARC", "ROSE", "ROSE", "ARC", "ROSE"];
+var DISPMODE = ["ARC", "ROSE", "ROSE", "ARC", "PLAN"];
 var NDY     = [0.21,  0.432,  0.432,  0.21, 0.432];
 var NDX     = [0.498,  0.498,  0.498,  0.498, 0.498];
 
@@ -521,6 +521,11 @@ setlistener("instrumentation/efis[0]/nd/display-mode-knob", func(n) {
   var x = NDX[n.getValue()];
   setprop("instrumentation/nd[0]/x-center", x);
   setprop("instrumentation/nd[0]/y-center", y);
+  if (dispMode == "PLAN") {
+    setprop("instrumentation/nd[0]/aircraft-heading-up", 0);
+  } else {
+    setprop("instrumentation/nd[0]/aircraft-heading-up", 1);
+  }
 });
 
 setlistener("instrumentation/efis[1]/nd/display-mode-knob", func(n) {
@@ -532,4 +537,9 @@ setlistener("instrumentation/efis[1]/nd/display-mode-knob", func(n) {
   var x = NDX[n.getValue()];
   setprop("instrumentation/nd[1]/x-center", x);
   setprop("instrumentation/nd[1]/y-center", y);
+  if (dispMode == "PLAN") {
+    setprop("instrumentation/nd[1]/aircraft-heading-up", 0);
+  } else {
+    setprop("instrumentation/nd[1]/aircraft-heading-up", 1);
+  }
  });

@@ -13,7 +13,7 @@
   </params>
 
 <name>MFD Panel</name>
-<background>Aircraft/A320neo/Models/Instruments/ND/res/transparent.png</background>
+<background>Aircraft/A320neo/Models/Instruments/MFD/transparent.png</background>
 <w>256</w>
 <h>256</h>
 
@@ -72,6 +72,27 @@
         <w>256</w>
         <h>256</h>
     </instrument>
+    
+    <instrument include="PLAN.xml">
+        <condition>
+            <and>
+                <greater-than>
+                    <property>systems/electrical/outputs/efis</property>
+                    <value>15</value>
+                </greater-than>
+                <equals>
+		    <property alias="/params/nd-mode"/>
+                    <value>PLAN</value>
+                </equals>
+		<not><property alias="/params/inputs/taxi"/></not>
+            </and>
+        </condition>
+        <name>plan</name>
+        <x>128</x>
+        <y>128</y>
+        <w>256</w>
+        <h>256</h>
+    </instrument>
 
 
     <instrument include="radar.xml">
@@ -81,10 +102,6 @@
                     <property>systems/electrical/outputs/efis</property>
                     <value>15</value>
                 </greater-than>
-                <not-equals>
-		    <property alias="/params/display-mode"/>
-                    <value>PLAN</value>
-                </not-equals>
 		<not-equals>
 		    <property alias="/params/nd-mode"/>
                     <value>LS</value>
@@ -224,27 +241,7 @@
         <w>256</w>
 	<h>256</h>
     </instrument>
-    
-    <instrument include="PLAN.xml">
-        <condition>
-            <and>
-                <greater-than>
-                    <property>systems/electrical/outputs/efis</property>
-                    <value>15</value>
-                </greater-than>
-                <equals>
-		    <property alias="/params/display-mode"/>
-                    <value>PLAN</value>
-                </equals>
-		<not><property alias="/params/inputs/taxi"/></not>
-            </and>
-        </condition>
-        <name>plan</name>
-        <x>128</x>
-        <y>128</y>
-        <w>256</w>
-        <h>256</h>
-    </instrument> 
+     
     
     <instrument include="TAXI.xml">
         <condition>
