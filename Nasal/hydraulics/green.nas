@@ -42,7 +42,7 @@ var hyd_green = {
 	
 	power_outputs : func {
 	
-		if (hydraulics.green_psi >= 2000) {
+		if (hydraulics.green_psi >= 1200) {
 		
 			foreach(var hp_output; me.high_priority_outputs) {
 			
