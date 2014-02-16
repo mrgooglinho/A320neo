@@ -1,6 +1,12 @@
 # AIRBUS A320 SYSTEMS FILE
 ##########################
 
+  setprop("/instrumentation/efis/baro-std-mode",0);
+  setprop("/instrumentation/efis/inhg",0);
+  setprop("/instrumentation/efis/kpa",0);
+  setprop("/instrumentation/efis/baro-mode",1);
+  setprop("/instrumentation/efis/inhg-previous",0);
+
 ## LIVERY SELECT
 ################
 
@@ -203,6 +209,8 @@ var startup = func
  setprop("controls/fuel/tank[4]/boost-pump", 1);
  setprop("controls/APU/master-switch", 1);
  setprop("controls/APU/starter", 1);
+ 
+
 
  var listener1 = setlistener("engines/apu/running", func
   {
@@ -328,7 +336,7 @@ var instruments =
   },
  loop: func
   {
-  instruments.setHSIBugsDeg();
+ 
   instruments.setSpeedBugs();
   instruments.setMPProps();
   instruments.calcEGTDegC();

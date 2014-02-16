@@ -564,7 +564,31 @@
     <!-- ONH -->
 
 	<text>
-		<name>osgtext-cyan</name>
+		<name>pfd_qnh_hpa</name>
+		<offsets>
+			<x-m>0.0010</x-m>
+			<y-m>0.05</y-m>
+			<z-m>-0.049</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type type="string">number-value</type>
+		<format type="string">%4.0f</format>
+		<property>instrumentation/altimeter/setting-hpa</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.006</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>pfd_qnh_inhg</name>
 		<offsets>
 			<x-m>0.0010</x-m>
 			<y-m>0.05</y-m>
@@ -588,7 +612,7 @@
 	</text>
 
 	<text>
-		<name>osgtext-cyan</name>
+		<name>pfd_qnh_text</name>
 		<offsets>
 			<x-m>0.0010</x-m>
 			<y-m>0.05</y-m>
@@ -610,6 +634,83 @@
 			<height type="int">32</height>
 		</font-resolution>
 	</text>
+	
+	<text>
+		<name>pfd_std_text</name>
+		<offsets>
+			<x-m>0.0010</x-m>
+			<y-m>0.05</y-m>
+			<z-m>-0.055</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type>literal</type>
+        <text type="string">STD</text>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+
+		<draw-text type="bool">true</draw-text>
+
+		<character-size>0.006</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<animation>
+    <type>select</type>
+    <object-name>pfd_qnh_text</object-name>
+    <condition>
+        <not>
+          <property>/instrumentation/efis/baro-std-mode</property>
+          <value>1</value>
+        </not>
+    </condition>
+  </animation>
+  
+  <animation>
+    <type>select</type>
+    <object-name>pfd_qnh_hpa</object-name>
+    <condition>
+		<and>
+		<equals>
+		<property>/instrumentation/efis/baro-mode</property>
+          <value>1</value>
+		</equals>
+		<not-equals>
+		<property>/instrumentation/efis/baro-std-mode</property>
+          <value>1</value>
+		</not-equals>
+		</and>
+    </condition>
+  </animation>
+  
+  <animation>
+    <type>select</type>
+    <object-name>pfd_qnh_inhg</object-name>
+    <condition>       
+		<and>
+		<equals>
+		<property>/instrumentation/efis/baro-mode</property>
+          <value>0</value>
+		</equals>
+		<not-equals>
+		<property>/instrumentation/efis/baro-std-mode</property>
+          <value>1</value>
+		</not-equals>
+		</and>
+    </condition>
+  </animation>
+  
+  <animation>
+    <type>select</type>
+    <object-name>pfd_std_text</object-name>
+    <condition>        
+          <property>/instrumentation/efis/baro-std-mode</property>
+          <value>1</value>
+       </condition>
+  </animation>
 	
 	<!-- Altitude -->
 	
@@ -705,6 +806,34 @@
     </animation>
 	
 	<!-- Material Animation -->
+	
+	<animation>
+		<type>material</type>
+		<object-name>pfd_qnh_text</object-name>
+		<object-name>pfd_qnh_inhg</object-name>
+		<object-name>pfd_qnh_hpa</object-name>
+		<object-name>pfd_std_text</object-name>
+		<diffuse>
+			<red>0</red>
+			<green>0.886</green>
+			<blue>0.933</blue>
+		</diffuse>
+		<ambient>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</ambient>
+		<specular>
+			<red>0</red>
+			<green>0</green>
+			<blue>0</blue>
+		</specular>
+		<emission>
+			<red>0</red>
+			<green>0.886</green>
+			<blue>0.933</blue>
+		</emission>
+	</animation>
 	
 	<animation>
 		<type>material</type>
