@@ -3212,7 +3212,7 @@
 		</font-resolution>
   </text>
   
-   <text>
+    <text>
     <name>baro.value.inhg</name>
 	<offsets>
 			<x-m>-0.4856</x-m>
@@ -3378,6 +3378,22 @@
         </equals>
     </condition>
   </animation>
+  
+  <!-- Parking Brake animation -->
+  
+	<animation>
+		<type>pick</type>
+		<object-name>ParkBrk</object-name>
+		<action>
+			<button>0</button>
+			<repeatable type="bool">false</repeatable>
+			<binding>
+				<command>property-toggle</command>
+				<property>/controls/gear/brake-parking</property>
+			</binding>
+		</action>
+	</animation>
+
 
 
 </PropertyList>
