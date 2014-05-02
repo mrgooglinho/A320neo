@@ -25,6 +25,41 @@
 			<z-m>0.2399</z-m>
 		</offsets>
 	</model>
+	
+	<!-- Fuel Truck -->
+
+	<model>
+		<name>fuel-truck</name>
+		<path>Aircraft/A320neo/Models/Services/Fuel-Truck/volvo_fuel_truck.ac</path>
+		<condition>
+			<equals>
+				<property>/services/fuel-truck/enable</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</model>
+
+	<animation>
+		<type>select</type>
+		<object-name>fuel_pipe</object-name>
+		<condition>
+			<equals>
+				<property>/services/fuel-truck/connect</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>fuel_pipe_disconnected</object-name>
+		<condition>
+			<equals>
+				<property>/services/fuel-truck/connect</property>
+				<value>0</value>
+			</equals>
+		</condition>
+	</animation>
 
 	<!-- model>
 		<name>Interior</name>

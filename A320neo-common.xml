@@ -268,6 +268,16 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>Fuel Truck</label>
+							<binding>
+								<command>nasal</command>
+								<script>
+								var fuel = gui.Dialog.new("/sim/gui/dialogs/fuel/dialog","Aircraft/A320neo/Systems/fuel-truck.xml");
+								fuel.open();
+								</script>
+							</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -533,7 +543,7 @@
 					<display-mode type="string">FUEL</display-mode>
 			</ecam>
 			<nd>
-					<display-mode type="string">VOR</display-mode>
+					<display-mode type="string">ILS</display-mode>
 					<display-mode-knob type="int">2</display-mode-knob>
 					<display-range type="int">40</display-range>
 				
@@ -1056,6 +1066,9 @@
 		<yoke>
 			<file>Aircraft/A320neo/Nasal/yoke.nas</file>
 		</yoke>
+		<ground_services>
+			<file>Aircraft/A320neo/Nasal/ground-services.nas</file>
+		</ground_services>
 	</nasal>
 
 	
