@@ -359,6 +359,16 @@
 	</hydraulics>
 	
 	<flight-management>
+		<hold>
+			<crs type="int">0</crs>
+			<turn type="string">R</turn>
+			<time type="int">1</time>
+			<dist type="float">5</dist>
+			<phase type="int">0</phase> <!-- 0: OFF | 1: FIX | 2: MIN_END_TURN | 3: PAR_START | 4: PAR_END | 5: ENTRY-->
+			<entry type="string">direct</entry>
+			<wp type="string">---</wp>
+			<wp_id type="int">0</wp_id>
+		</hold>
 		<phase type="string">T/O</phase>
 		<spd-manager>
 			<climb>
@@ -1001,6 +1011,7 @@
 		</procedures>
 		
 		<fmgc>
+			<file>Aircraft/A320neo/Nasal/FMGC/hold-pattern.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/autoland.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/new_flight.nas</file>
 			<file>Aircraft/A320neo/Nasal/FMGC/manage-speeds.nas</file>
@@ -1063,9 +1074,9 @@
 		<warnings>
 			<file>Aircraft/A320neo/Nasal/warnings.nas</file>
 		</warnings>
-		<yoke>
+		<!-- yoke>
 			<file>Aircraft/A320neo/Nasal/yoke.nas</file>
-		</yoke>
+		</yoke -->
 		<ground_services>
 			<file>Aircraft/A320neo/Nasal/ground-services.nas</file>
 		</ground_services>

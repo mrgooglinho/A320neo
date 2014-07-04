@@ -2,6 +2,8 @@ setprop("/instrumentation/fmc/vspeeds/V1", 0);
 setprop("/instrumentation/fmc/vspeeds/VR", 0);
 setprop("/instrumentation/fmc/vspeeds/V2", 0);
 
+var hold = "/flight-management/hold/";
+
 var target = func(prop, value, step, deadband) {
 
 	if (math.abs(getprop(prop) - value) >= deadband) {
@@ -27,12 +29,16 @@ var general_loop_1 = {
     },
     	update : func {
     	
+    	# Rudder Trim Control
+
+    	setprop("/controls/flight/rudder-trim-deg", getprop("/controls/flight/rudder-trim") * 10);
+    	
     	# Engine Fuel Flow Conversion
     	
     	setprop("/engines/engine/fuel-flow-kgph", getprop("/engines/engine/fuel-flow_pph") * 0.45359237);
     	setprop("/engines/engine[1]/fuel-flow-kgph", getprop("/engines/engine[1]/fuel-flow_pph") * 0.45359237);
     	
-    	tyresmoke();
+    	setprop(hold~"time-dist-string", getprop());
     	
 	},
 

@@ -2,6 +2,8 @@ setprop("/instrumentation/fmc/vspeeds/V1", 0);
 setprop("/instrumentation/fmc/vspeeds/VR", 0);
 setprop("/instrumentation/fmc/vspeeds/V2", 0);
 
+var hold = "/flight-management/hold/";
+
 var target = func(prop, value, step, deadband) {
 
 	if (math.abs(getprop(prop) - value) >= deadband) {
@@ -35,6 +37,8 @@ var general_loop_1 = {
     	
     	setprop("/engines/engine/fuel-flow-kgph", getprop("/engines/engine/fuel-flow_pph") * 0.45359237);
     	setprop("/engines/engine[1]/fuel-flow-kgph", getprop("/engines/engine[1]/fuel-flow_pph") * 0.45359237);
+    	
+    	setprop(hold~"time-dist-string", getprop(hold~"time")~"/"~int(getprop(hold~"dist")));
     	
 	},
 

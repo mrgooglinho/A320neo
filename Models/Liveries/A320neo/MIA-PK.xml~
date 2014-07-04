@@ -4,8 +4,8 @@
 	<sim>
 		<model>
 			<livery>
-				<name>Merlion Europe</name>
-				<neo-texture>Liveries/A320neo-MerlionBLUE.png</neo-texture>
+				<name>Merlion | Based at Lahore</name>
+				<neo-texture>Liveries/A320neo-MIA-PK.png</neo-texture>
 			</livery>
 		</model>
 	</sim>
