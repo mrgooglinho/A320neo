@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Source for generating aerodynamic models with yaamatic
+     <https://github.com/jan-hudec/yaamatic>
+
+     All the code is designed for JSBSim and switching it to YASim is not
+     trivial because of the differences between exported properties. I am not
+     sure whether YASim even exports all properties we might need.
+     Unfortunately JSBSim requires aerodynamic and performance data that we
+     don't really have. So yaamatic is used to guesstimate or fudge them from
+     whatever scarce data we do have.
+
+     Also yaamatic supports pre- and post-processing the models with Genshi,
+     which allows generating all the makes and variants from this one common
+     source so the models match in those places where they should.
+
+     Parameters:
+        model
+-->
+<?python
+engines = {
+    'A319neo': {
+        'name': 'CFM_Leap_1A24',
+        'thrust': '24500 lbf',
+    },
+    'A320neo': {
+        'name': 'CFM_Leap_1A28',
+        'thrust': '28000 lbf',
+    },
+    'A321neo': {
+        'name': 'CFM_Leap_1A32',
+        'thrust': '32900 lbf',
+    },
+}
+engine = engines[model]
+?>
+<airplane
+    xmlns:py="http://genshi.edgewall.org/"
+    mass="90927 lb"> <!-- TODO: Parametrize -->
+
+    <!-- Yaamatic 0.0.1 only supports turbine engines, so that is the only
+         thing defined here so far. -->
+    <!--
+         NOTES:
+         thrust::
+            see https://en.wikipedia.org/wiki/Airbus_A320neo_family
+         weight::
+            estimate; I couldn't find it anywhere (CFM56 had 4995 lb)
+         n1/2-idle/max::
+            FIXME I had them from somewhere for the CFM56 engines; reduced
+            the idle values a bit
+         tsfc::
+            http://www.jet-engine.net/civtfspec.html gives 0.330 lb/lbf/h at
+            static sea-level and 0.596 lb/lbf/h at M0.8 cruise at FL350. And
+            CFM International claims Leap is 15% more fuel efficient.
+
+            Now the problem is that JSBSim tweaks the TSFC using factor:
+
+                OAT/-56.65°C ⋅ (0.84 + (1 - Throttle)²)
+
+            so the TSFC will actually be multiplied by ~0.88 to get the
+            cruise TSFC and by ~1.118 to get the static TSFC.
+
+            Since the engine model can't contain functions, there is no way
+            to model both values. So until I create a nasal fixer that would
+            inflate the fuel appropriately when transfering it from the main
+            tank to the feed tanks, I am choosing to make the cruise value
+            match.
+
+            We want the actual value to be 0.596 * 0.85 ≅ 0.507, so we have
+
+                0.507 = 0.88 ⋅ tsfc
+                tsfc = 0.507/0.88 ≅ 0.576
+         bypassratio::
+            11:1 according to https://en.wikipedia.org/wiki/CFM_International_LEAP
+            Actually JSBSim only uses this value for spool-up time. Yaamatic
+            0.0.1 just passes it thgough, but future version may calculate
+            that from the spool-time. On the other hand in future Yaamatic
+            might use it for something else like guessing the exhaust-speed.
+         cruise::
+            http://www.cfmaeroengines.com/engines/cfm56-5a gives performance
+            at FL350 and M0.8 as 5260 lbf max climb and 5000 lbf cruise.
+            Since the rest of the aircraft is the same for CFM_Leap_1A28,
+            I am assuming it needs to be developing the same amount of
+            thrust. I don't know the power setting, so I venture a wild guess
+            and declare it as 0.94, because that is what the model had for
+            max auto-throttle, i.e. climb, setting.
+
+         -->
+    <jet name="${engine.name}"
+        x="3.30 m" y="5.57 m" z="-0.6 m" mass="6000 lb"
+        thrust="${engine.thrust}" n1-idle="16" n1-max="104" n2-idle="47" n2-max="103"
+        tsfc="0.576 lb/lbf/h" bypassratio="11" exhaust-speed="420 m/s">
+        <!-- XXX: The 420 m/s is a bit too much, but it is needed to get the
+             5000 lbf at 35000 ft and M0.8 and not fully open thrust levers -->
+        <!-- cruise thrust="5260 lbf" alt="35000 ft" mach="0.8" throttle="0.94" / -->
+    </jet>
+    <jet name="${engine.name}"> <!-- NOTE: yaamatic copies performance properties if the names match -->
+    </jet>
+</airplane>

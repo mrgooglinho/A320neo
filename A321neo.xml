@@ -415,7 +415,7 @@ YAW MOI_________3950000______23089847_______24848934
 </ground_reactions>
 
 <propulsion>
-	<engine file="cfm_leapx">
+	<engine file="CFM_Leap_1A32">
 	<location unit="IN">
 		<x> 589.735 </x>
 		<y> -226.575 </y>
@@ -445,7 +445,7 @@ YAW MOI_________3950000______23089847_______24848934
 		</orient>
 	</thruster>
 	</engine>
-	<engine file="cfm_leapx">
+	<engine file="CFM_Leap_1A32">
 	<location unit="IN">
 		<x> 589.735 </x>
 		<y> 226.575 </y>
